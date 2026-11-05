@@ -2,20 +2,32 @@
 
 # PRAKTIKUM JARINGAN KOMPUTER - MODUL 4
 
-## Subnetting dan Routing - GNS3 (CIDR)
+## Subnetting dan Routing - VLSM dan CIDR
 
 ### Anggota Kelompok
 
-| Nama | NRP |
-| --- | --- |
-| Ronnin Raditya Putra Purbono | 5027251119 |
-| Keisya Halimah Mulia | 5027251068 |
+| Nama | NRP | Tugas |
+| --- | --- | --- |
+| Ronnin Raditya Putra Purbono | 5027251119 | VLSM Cisco Packet Tracer |
+| Keisya Halimah Mulia | 5027251068 | CIDR GNS3 |
 
 ## Laporan
 
 - Spreadsheet subnetting: [Buka spreadsheet subnetting](https://docs.google.com/spreadsheets/d/1tnrkMIINtIfA9lkkEz2IxHoiGxdWwslZ/edit?usp=sharing&ouid=105300267501229657358&rtpof=true&sd=true)
 
-Laporan ini membahas bagian GNS3 dengan metode CIDR. Bagian Cisco Packet Tracer (VLSM) tidak disertakan karena bukti dan laporan yang disiapkan berfokus pada GNS3. Perhitungan VLSM tetap dilampirkan sebagai bukti pada spreadsheet.
+Pada laporan ini, kami membahas subnetting dan routing menggunakan VLSM pada Cisco Packet Tracer serta CIDR pada GNS3. Bagian VLSM masih kami tandai sebagai placeholder sampai uraian dan bukti pelaksanaannya dilengkapi.
+
+## Daftar Isi
+
+1. [Topologi GNS3](#1-topologi-gns3)
+2. [Analisis Kebutuhan Subnet](#2-analisis-kebutuhan-subnet)
+3. [Perhitungan Penggabungan CIDR](#3-perhitungan-penggabungan-cidr-supernetting)
+4. [Pembagian Alamat IP](#4-pembagian-alamat-ip-subnetting)
+5. [Konfigurasi Router dan Static Routing](#5-konfigurasi-router-dan-static-routing)
+6. [Konfigurasi Static IP Client](#6-konfigurasi-static-ip-client)
+7. [Pengujian Konektivitas](#7-pengujian-konektivitas)
+8. [Kesimpulan Sementara](#8-kesimpulan-sementara)
+9. [VLSM Cisco Packet Tracer](#9-vlsm-cisco-packet-tracer-placeholder)
 
 ### Bukti Screenshot Spreadsheet
 
@@ -27,13 +39,13 @@ Laporan ini membahas bagian GNS3 dengan metode CIDR. Bagian Cisco Packet Tracer 
 
 ## 1. Topologi GNS3
 
-Topologi disusun dengan Cyberia sebagai router tepi yang terhubung ke NAT, Wired sebagai router distribusi, serta cabang Navi, Tachibana–Deus–Protocol7–Knights–Phantoma–Shibuya, dan Psyche/Copland/Schumann–Accela. Setiap segmen LAN menggunakan alamat IP sesuai hasil pembagian CIDR pada spreadsheet.
+Pada bagian GNS3, kami menyusun topologi dengan Cyberia sebagai router tepi yang terhubung ke NAT, Wired sebagai router distribusi, serta cabang Navi, Tachibana–Deus–Protocol7–Knights–Phantoma–Shibuya, dan Psyche/Copland/Schumann–Accela. Kami menetapkan alamat setiap segmen LAN berdasarkan hasil pembagian CIDR pada spreadsheet.
 
 [PLACEHOLDER GAMBAR TOPOLOGI FINAL] Simpan screenshot seluruh topologi dengan nama `Assets/topologi-gns3.png`.
 
 ## 2. Analisis Kebutuhan Subnet
 
-Berdasarkan tab Rute pada spreadsheet, terdapat 25 subnet (A1–A25), dengan total kebutuhan 2.814 IP dan jumlah kapasitas blok 4.188 alamat. Kapasitas tersebut merupakan penjumlahan block size tiap subnet, termasuk alamat network dan broadcast; bukan jumlah seluruh host yang dapat digunakan.
+Berdasarkan tab Rute pada spreadsheet, kami mendapatkan 25 subnet (A1–A25), dengan total kebutuhan 2.814 IP dan jumlah kapasitas blok 4.188 alamat. Kapasitas tersebut merupakan penjumlahan block size tiap subnet, termasuk alamat network dan broadcast, bukan jumlah seluruh host yang dapat digunakan.
 
 Subnet terdiri atas jaringan LAN client, satu LAN multi-router bersama (A5), dan link antar-router dengan prefix kecil (umumnya /30).
 
@@ -73,11 +85,11 @@ Ilustrasi pembagian subnet A1–A25
 
 ## 3. Perhitungan Penggabungan CIDR (Supernetting)
 
-CIDR digunakan untuk meringkas sejumlah jaringan yang memiliki jalur keluar sama. Penggabungan subnet dihitung bertahap pada tab Penggabungan - CIDR, lalu alamat setiap subnet ditetapkan pada tab Pembagian IP - CIDR.
+Kami menggunakan CIDR untuk meringkas sejumlah jaringan yang memiliki jalur keluar sama. Kami menghitung penggabungan subnet secara bertahap pada tab Penggabungan - CIDR, lalu menetapkan alamat setiap subnet pada tab Pembagian IP - CIDR.
 
 ### Tree Pembagian CIDR A1–A25
 
-Diagram berikut menunjukkan pembagian hierarkis dari blok induk `10.66.0.0/19` sampai seluruh subnet akhir. Gunakan Mermaid Preview untuk memperbesar dan menggeser diagram.
+Kami menggunakan diagram berikut untuk menunjukkan pembagian hierarkis dari blok induk `10.66.0.0/19` sampai seluruh subnet akhir. Kami menyarankan Mermaid Preview untuk memperbesar dan menggeser diagram.
 
 <div style="overflow:auto; resize:both; width:100%; min-height:420px; border:1px solid #ccc; padding:8px;">
 
@@ -204,7 +216,7 @@ flowchart TD
 
 [![Screenshot lanjutan tab Penggabungan CIDR](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/gabungCIDR2.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/gabungCIDR2.png)
 
-Contoh ringkasan rute yang digunakan dalam implementasi:
+Berikut adalah contoh ringkasan rute yang kami gunakan dalam implementasi:
 
 | Router | Route ringkasan / static route | Next hop |
 |---|---|---|
@@ -216,17 +228,17 @@ Contoh ringkasan rute yang digunakan dalam implementasi:
 | Schumann | 10.66.8.0/22 | 10.66.0.10 (Accela) |
 | Phantoma | 10.66.19.0/26 | 10.66.18.22 (Shibuya) |
 
-Rute yang langsung terhubung ke interface memiliki prefix yang lebih spesifik dan tetap dipilih melalui mekanisme longest prefix match. Karena itu, agregasi rute tidak menggantikan route connected pada router.
+Kami mempertahankan rute yang langsung terhubung ke interface dengan prefix yang lebih spesifik agar tetap dipilih melalui mekanisme longest prefix match. Karena itu, agregasi rute tidak menggantikan route connected pada router.
 
 ## 4. Pembagian Alamat IP (Subnetting)
 
-Setelah supernet dihitung, Network ID, netmask, broadcast, dan usable range ditetapkan pada tab Pembagian IP - CIDR. Hasilnya digunakan sebagai dasar penentuan IP setiap interface router dan client.
+Setelah menghitung supernet, kami menetapkan Network ID, netmask, broadcast, dan usable range pada tab Pembagian IP - CIDR. Hasil tersebut kami gunakan sebagai dasar penentuan IP setiap interface router dan client.
 
 [![Pembagian alamat IP CIDR](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/subnet2.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/subnet2.png)
 
 ### Contoh perhitungan: A13 (Protocol7–Chisa–Hodgeson)
 
-Pada spreadsheet, A13 mempunyai kebutuhan 33 IP. Prefix /27 menyediakan 32 alamat (30 usable), sehingga belum mencukupi. Prefix /26 menyediakan 64 alamat (62 usable), sehingga digunakan 10.66.18.64/26:
+Pada spreadsheet, kami menemukan bahwa A13 mempunyai kebutuhan 33 IP. Prefix /27 menyediakan 32 alamat (30 usable), sehingga belum mencukupi. Kami menggunakan prefix /26 yang menyediakan 64 alamat (62 usable), yaitu 10.66.18.64/26:
 
 - Netmask: 255.255.255.192
 - Network ID: 10.66.18.64
@@ -236,7 +248,7 @@ Pada spreadsheet, A13 mempunyai kebutuhan 33 IP. Prefix /27 menyediakan 32 alama
 
 ### Catatan VLSM
 
-Perhitungan VLSM (Cisco Packet Tracer) didokumentasikan pada spreadsheet dan tidak diimplementasikan pada laporan GNS3 ini.
+Perhitungan VLSM (Cisco Packet Tracer) sudah kami lampirkan pada spreadsheet, tetapi uraian konfigurasi dan bukti lengkapnya masih kami siapkan pada bagian placeholder di akhir laporan ini.
 
 [![Screenshot tab Rute VLSM](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/rutevlsm.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/rutevlsm.png)
 
@@ -244,7 +256,7 @@ Perhitungan VLSM (Cisco Packet Tracer) didokumentasikan pada spreadsheet dan tid
 
 ## 5. Konfigurasi Router dan Static Routing
 
-Konfigurasi pada 13 router menggunakan `ip link`, `ip addr`, `ip route`, dan `net.ipv4.ip_forward=1`. Cyberia menangani koneksi NAT dengan `iptables -t nat ... MASQUERADE` pada eth0; router lain meneruskan paket mengikuti rute yang ditentukan. Seluruh file konfigurasi tersimpan dalam direktori `script/CIDR GNS/router/`.
+Kami mengonfigurasi 13 router menggunakan `ip link`, `ip addr`, `ip route`, dan `net.ipv4.ip_forward=1`. Cyberia menangani koneksi NAT dengan `iptables -t nat ... MASQUERADE` pada eth0, sedangkan router lain meneruskan paket mengikuti rute yang kami tentukan. Seluruh file konfigurasi kami simpan dalam direktori `script/CIDR GNS/router/`.
 
 Pola menjalankan script pada masing-masing router:
 
@@ -294,7 +306,7 @@ iptables -t nat -A POSTROUTING -s 10.66.0.0/19 -o eth0 -j MASQUERADE
 
 ## 6. Konfigurasi Static IP Client
 
-Sebanyak 25 client menggunakan satu interface eth0, IP statis sesuai subnet masing-masing, dan default gateway menuju router LAN. Setiap script berada di direktori `clients/`.
+Kami menggunakan satu interface eth0 pada 25 client, dengan IP statis sesuai subnet masing-masing dan default gateway menuju router LAN. Setiap script berada di direktori `clients/`.
 
 Contoh konfigurasi pada Chisa:
 
@@ -337,7 +349,7 @@ ip route replace default via 10.66.18.65 dev eth0
 
 ## 7. Pengujian Konektivitas
 
-Pengujian dibagi menjadi ping tetangga antar-router, router ke LAN client, lintas cabang (cross-subnet), dan akses Internet ke 8.8.8.8. Status ditulis berdasarkan screenshot yang tersedia, bukan asumsi bahwa seluruh node telah lulus.
+Kami membagi pengujian menjadi ping tetangga antar-router, router ke LAN client, lintas cabang (cross-subnet), dan akses Internet ke 8.8.8.8. Kami menulis status berdasarkan screenshot yang tersedia, bukan berdasarkan asumsi bahwa seluruh node telah lulus.
 
 ### 7.1. Bukti pengujian yang sudah tersedia
 
@@ -385,10 +397,14 @@ Pengujian dibagi menjadi ping tetangga antar-router, router ke LAN client, linta
 | Alice | Internet | `ping -c 3 8.8.8.8` | [PLACEHOLDER] `Assets/alice-internet.png` |
 | Lin | Internet | `ping -c 3 8.8.8.8` | [PLACEHOLDER] `Assets/lin-internet.png` |
 
-Catatan Protocol7–Knights: pada salah satu screenshot yang dikirim, ping 10.66.18.14 dari Protocol7 masih menghasilkan Destination Host Unreachable. Karena itu, tautan `protocol7-to-knights.png` baru boleh diisi dengan screenshot pengujian ulang yang berhasil, bukan screenshot lama tersebut.
+Catatan Protocol7–Knights: pada salah satu screenshot yang kami kirim, ping 10.66.18.14 dari Protocol7 masih menghasilkan Destination Host Unreachable. Karena itu, kami hanya akan mengisi tautan `protocol7-to-knights.png` dengan screenshot pengujian ulang yang berhasil, bukan screenshot lama tersebut.
 
 [PLACEHOLDER PING CLIENT] Untuk setiap client, lampirkan screenshot `ping -c 3 <gateway>` bila diwajibkan oleh asisten praktikum. Hasil sukses yang diharapkan adalah `3 packets transmitted, 3 received, 0% packet loss`; status belum dinyatakan lulus tanpa bukti.
 
 ## 8. Kesimpulan Sementara
 
-Pembagian CIDR berhasil diterapkan ke konfigurasi 13 router dan 25 client dalam rancangan A1–A25. Bukti yang tersedia menunjukkan pengalamatan IP, static routing, dan forwarding pada router, konektivitas backbone, serta akses Internet pada sejumlah router telah berfungsi. Pengujian Navi ke enam client lokal juga berhasil. Namun, kelengkapan hasil akhir jaringan belum dapat dinyatakan 100% sebelum screenshot uji ulang Protocol7–Knights, ping semua client, dan pengujian lintas cabang yang masih berupa placeholder ditambahkan.
+Kami berhasil menerapkan pembagian CIDR pada konfigurasi 13 router dan 25 client dalam rancangan A1–A25. Bukti yang tersedia menunjukkan bahwa pengalamatan IP, static routing, forwarding pada router, konektivitas backbone, serta akses Internet pada sejumlah router telah berfungsi. Pengujian Navi ke enam client lokal juga berhasil. Namun, kami belum dapat menyatakan hasil akhir jaringan 100% lengkap sebelum screenshot uji ulang Protocol7–Knights, ping semua client, dan pengujian lintas cabang yang masih berupa placeholder ditambahkan.
+
+## 9. VLSM Cisco Packet Tracer (PLACEHOLDER)
+
+> **PLACEHOLDER VLSM:** Bagian ini akan diisi oleh Ronnin dengan topologi Cisco Packet Tracer, perhitungan VLSM, konfigurasi perangkat, tabel IP, dan bukti pengujian konektivitas.
