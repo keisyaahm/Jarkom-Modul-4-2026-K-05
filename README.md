@@ -13,8 +13,7 @@
 
 ## Laporan
 
-- Spreadsheet perhitungan: **LINK SPREADSHEET — ISI URL GOOGLE SHEETS**
-- Berkas perhitungan lokal: `SUBNETTING YG INI (1)(1).xlsx` (unggah atau sesuaikan nama berkas dalam repository).
+- Spreadsheet subnetting: `https://docs.google.com/spreadsheets/d/1tnrkMIINtIfA9lkkEz2IxHoiGxdWwslZ/edit?usp=sharing&ouid=105300267501229657358&rtpof=true&sd=true`
 
 Laporan ini membahas bagian GNS3 dengan metode CIDR. Bagian Cisco Packet Tracer (VLSM) tidak disertakan karena bukti dan laporan yang disiapkan berfokus pada GNS3. Perhitungan VLSM tetap dilampirkan sebagai bukti pada spreadsheet.
 
@@ -44,7 +43,7 @@ Subnet terdiri atas jaringan LAN client, satu LAN multi-router bersama (A5), dan
 
 Ilustrasi pembagian subnet A1–A25
 
-[PLACEHOLDER] Masukkan gambar lingkaran subnet yang sudah dimiliki dengan nama persis `Assets/subnet1.png`.
+![Ilustrasi pembagian subnet A1–A25](Assets/subnet1.png)
 
 ### Daftar Network ID dan Prefix CIDR
 
@@ -80,6 +79,63 @@ Ilustrasi pembagian subnet A1–A25
 
 CIDR digunakan untuk meringkas sejumlah jaringan yang memiliki jalur keluar sama. Penggabungan subnet dihitung bertahap pada tab Penggabungan - CIDR, lalu alamat setiap subnet ditetapkan pada tab Pembagian IP - CIDR.
 
+### Tree Pembagian CIDR A1–A25
+
+Diagram berikut menunjukkan pembagian hierarkis dari blok induk `10.66.0.0/19` sampai seluruh subnet akhir. Gunakan Mermaid Preview untuk memperbesar dan menggeser diagram.
+
+<div style="overflow:auto; resize:both; width:100%; min-height:420px; border:1px solid #ccc; padding:8px;">
+
+```mermaid
+%%{init: {"flowchart": {"htmlLabels": true, "nodeSpacing": 30, "rankSpacing": 45, "curve": "basis"}}}%%
+flowchart TD
+    ROOT["10.66.0.0/19"]
+    ROOT --> B0["10.66.0.0/20"]
+    ROOT --> B16["10.66.16.0/20"]
+    ROOT --> B24["10.66.24.0/21"]
+
+    B0 --> B00["10.66.0.0/22"]
+    B0 --> B04["10.66.4.0/22"]
+    B0 --> B08["10.66.8.0/21"]
+    B00 --> A5["A5 - 10.66.0.16/29"]
+    B00 --> A21["A21 - 10.66.2.0/23"]
+    B00 --> A22["A22 - 10.66.0.64/26"]
+    B00 --> A23["A23 - 10.66.0.0/29"]
+    B00 --> A24["A24 - 10.66.0.8/30"]
+    B04 --> A20["A20 - 10.66.4.0/22"]
+    B08 --> A25["A25 - 10.66.8.0/22"]
+
+    B16 --> B160["10.66.16.0/22"]
+    B16 --> B180["10.66.18.0/22"]
+    B160 --> A9["A9 - 10.66.16.0/23"]
+    B180 --> A4["A4 - 10.66.18.0/30"]
+    B180 --> A10["A10 - 10.66.18.4/30"]
+    B180 --> A11["A11 - 10.66.18.128/25"]
+    B180 --> A12["A12 - 10.66.18.8/30"]
+    B180 --> A13["A13 - 10.66.18.64/26"]
+    B180 --> A14["A14 - 10.66.18.12/30"]
+    B180 --> A15["A15 - 10.66.18.24/29"]
+    B180 --> A16["A16 - 10.66.18.16/30"]
+    B180 --> A17["A17 - 10.66.18.32/27"]
+    B180 --> A18["A18 - 10.66.18.20/30"]
+    B16 --> A19["A19 - 10.66.19.0/26"]
+
+    B24 --> A1["A1 - 10.66.24.0/25"]
+    B24 --> A2["A2 - 10.66.24.128/30"]
+    B24 --> A3["A3 - 10.66.22.64/30"]
+    B24 --> A6["A6 - 10.66.20.0/24"]
+    B24 --> A7["A7 - 10.66.22.0/26"]
+    B24 --> A8["A8 - 10.66.21.0/24"]
+
+    classDef root fill:#234e70,stroke:#79b8ff,color:#fff,stroke-width:3px;
+    classDef branch fill:#252525,stroke:#888,color:#fff;
+    classDef subnet fill:#fff,stroke:#bbb,color:#111,stroke-width:2px;
+    class ROOT root;
+    class B0,B16,B24,B00,B04,B08,B160,B180 branch;
+    class A1,A2,A3,A4,A5,A6,A7,A8,A9,A10,A11,A12,A13,A14,A15,A16,A17,A18,A19,A20,A21,A22,A23,A24,A25 subnet;
+```
+
+</div>
+
 [PLACEHOLDER] Screenshot tab **Penggabungan CIDR** spreadsheet: `Assets/penggabungan-cidr.png`.
 
 Contoh ringkasan rute yang digunakan dalam implementasi:
@@ -104,7 +160,7 @@ Setelah supernet dihitung, Network ID, netmask, broadcast, dan usable range dite
 
 [PLACEHOLDER] Screenshot tab **Pembagian IP CIDR** spreadsheet: `Assets/pembagian-ip-cidr.png`.
 
-[PLACEHOLDER] Masukkan gambar pembagian lengkap CIDR dengan nama persis `Assets/subnet2.png`.
+![Pembagian alamat IP CIDR](Assets/subnet2.png)
 
 ### Contoh perhitungan: A13 (Protocol7–Chisa–Hodgeson)
 
@@ -320,4 +376,4 @@ JARKOM-MODUL4-GNS3-CIDR/
 └── SUBNETTING YG INI (1)(1).xlsx    # unggah manual
 ```
 
-Catatan: Ganti semua penanda `[PLACEHOLDER]`, unggah gambar rute, rute VLSM, pembagian IP VLSM, penggabungan CIDR, pembagian IP CIDR, subnet1.png, dan subnet2.png ke `Assets/`, lengkapi identitas kelompok, serta isi URL spreadsheet sebelum laporan dinyatakan final.
+Catatan: Ganti penanda `[PLACEHOLDER]` yang masih tersisa dengan bukti gambar yang sesuai, unggah gambar rute, rute VLSM, pembagian IP VLSM, penggabungan CIDR, dan pembagian IP CIDR ke `Assets/`, lengkapi identitas kelompok, serta isi URL spreadsheet sebelum laporan dinyatakan final.
