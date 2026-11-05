@@ -41,7 +41,7 @@ Pada laporan ini, kami membahas subnetting dan routing menggunakan VLSM pada Cis
 
 Pada bagian GNS3, kami menyusun topologi dengan Cyberia sebagai router tepi yang terhubung ke NAT, Wired sebagai router distribusi, serta cabang Navi, Tachibana–Deus–Protocol7–Knights–Phantoma–Shibuya, dan Psyche/Copland/Schumann–Accela. Kami menetapkan alamat setiap segmen LAN berdasarkan hasil pembagian CIDR pada spreadsheet.
 
-[PLACEHOLDER GAMBAR TOPOLOGI FINAL] Simpan screenshot seluruh topologi dengan nama `Assets/topologi-gns3.png`.
+[![Topologi GNS3](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/topologi-gns3.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/topologi-gns3.png)
 
 ## 2. Analisis Kebutuhan Subnet
 
