@@ -21,11 +21,11 @@ Laporan ini membahas bagian GNS3 dengan metode CIDR. Bagian Cisco Packet Tracer 
 
 | No | Tab Spreadsheet | Bukti Screenshot |
 |---|---|---|
-| 1 | Rute | [PLACEHOLDER] `Assets/rute.png` |
-| 2 | Rute VLSM | [PLACEHOLDER] `Assets/rute-vlsm.png` |
-| 3 | Pembagian IP - VLSM | [PLACEHOLDER] `Assets/pembagian-ip-vlsm.png` |
-| 4 | Penggabungan CIDR | [PLACEHOLDER] `Assets/penggabungan-cidr.png` |
-| 5 | Pembagian IP CIDR | [PLACEHOLDER] `Assets/pembagian-ip-cidr.png` |
+| 1 | Rute | ![Rute](Assets/rute1.png) |
+| 2 | Rute VLSM | ![Rute VLSM](Assets/rutevlsm.png) |
+| 3 | Pembagian IP - VLSM | ![Pembagian IP VLSM](Assets/bagiipvlsm.png) |
+| 4 | Penggabungan CIDR | ![Penggabungan CIDR](Assets/gabungCIDR.png)<br>![Penggabungan CIDR 2](Assets/gabungCIDR2.png) |
+| 5 | Pembagian IP CIDR | ![Pembagian IP CIDR](Assets/bagiIPCIDR.png) |
 
 ## 1. Topologi GNS3
 
@@ -134,7 +134,9 @@ flowchart TD
 
 </div>
 
-[PLACEHOLDER] Screenshot tab **Penggabungan CIDR** spreadsheet: `Assets/penggabungan-cidr.png`.
+![Screenshot tab Penggabungan CIDR](Assets/gabungCIDR.png)
+
+![Screenshot lanjutan tab Penggabungan CIDR](Assets/gabungCIDR2.png)
 
 Contoh ringkasan rute yang digunakan dalam implementasi:
 
@@ -149,8 +151,6 @@ Contoh ringkasan rute yang digunakan dalam implementasi:
 | Phantoma | 10.66.19.0/26 | 10.66.18.22 (Shibuya) |
 
 Rute yang langsung terhubung ke interface memiliki prefix yang lebih spesifik dan tetap dipilih melalui mekanisme longest prefix match. Karena itu, agregasi rute tidak menggantikan route connected pada router.
-
-[PLACEHOLDER] Tambahkan ilustrasi penggabungan CIDR, misalnya `Assets/cidr-tree.png`, apabila gambar tersebut tersedia.
 
 ## 4. Pembagian Alamat IP (Subnetting)
 
@@ -172,9 +172,9 @@ Pada spreadsheet, A13 mempunyai kebutuhan 33 IP. Prefix /27 menyediakan 32 alama
 
 Perhitungan VLSM (Cisco Packet Tracer) didokumentasikan pada spreadsheet dan tidak diimplementasikan pada laporan GNS3 ini.
 
-[PLACEHOLDER] Screenshot tab **Rute VLSM** spreadsheet: `Assets/rute-vlsm.png`.
+![Screenshot tab Rute VLSM](Assets/rutevlsm.png)
 
-[PLACEHOLDER] Screenshot tab **Pembagian IP - VLSM** spreadsheet: `Assets/pembagian-ip-vlsm.png`.
+![Screenshot tab Pembagian IP VLSM](Assets/bagiipvlsm.png)
 
 ## 5. Konfigurasi Router dan Static Routing
 
