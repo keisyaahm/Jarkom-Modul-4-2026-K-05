@@ -19,13 +19,11 @@ Laporan ini membahas bagian GNS3 dengan metode CIDR. Bagian Cisco Packet Tracer 
 
 ### Bukti Screenshot Spreadsheet
 
-| No | Tab Spreadsheet | Bukti Screenshot |
-|---|---|---|
-| 1 | Rute | ![Rute](Assets/rute1.png) |
-| 2 | Rute VLSM | ![Rute VLSM](Assets/rutevlsm.png) |
-| 3 | Pembagian IP - VLSM | ![Pembagian IP VLSM](Assets/bagiipvlsm.png) |
-| 4 | Penggabungan CIDR | ![Penggabungan CIDR](Assets/gabungCIDR.png)<br>![Penggabungan CIDR 2](Assets/gabungCIDR2.png) |
-| 5 | Pembagian IP CIDR | ![Pembagian IP CIDR](Assets/bagiIPCIDR.png) |
+1. **Rute** — [![Rute](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/rute1.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/rute1.png)
+2. **Rute VLSM** — [![Rute VLSM](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/rutevlsm.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/rutevlsm.png)
+3. **Pembagian IP - VLSM** — [![Pembagian IP VLSM](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/bagiipvlsm.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/bagiipvlsm.png)
+4. **Penggabungan CIDR** — [![Penggabungan CIDR](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/gabungCIDR.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/gabungCIDR.png) [![Penggabungan CIDR 2](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/gabungCIDR2.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/gabungCIDR2.png)
+5. **Pembagian IP CIDR** — [![Pembagian IP CIDR](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/bagiIPCIDR.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/bagiIPCIDR.png)
 
 ## 1. Topologi GNS3
 
@@ -41,7 +39,7 @@ Subnet terdiri atas jaringan LAN client, satu LAN multi-router bersama (A5), dan
 
 Ilustrasi pembagian subnet A1–A25
 
-![Ilustrasi pembagian subnet A1–A25](Assets/subnet1.png)
+[![Ilustrasi pembagian subnet A1–A25](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/subnet1.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/subnet1.png)
 
 ### Daftar Network ID dan Prefix CIDR
 
@@ -84,7 +82,7 @@ Diagram berikut menunjukkan pembagian hierarkis dari blok induk `10.66.0.0/19` s
 <div style="overflow:auto; resize:both; width:100%; min-height:420px; border:1px solid #ccc; padding:8px;">
 
 ```mermaid
-%%{init: {"flowchart": {"htmlLabels": true, "nodeSpacing": 30, "rankSpacing": 45, "curve": "basis"}}}%%
+%%{init: {"flowchart": {"htmlLabels": true, "nodeWidth": 240, "padding": 18, "nodeSpacing": 30, "rankSpacing": 45, "curve": "basis"}}}%%
 flowchart TD
     R["10.66.0.0/19"]
 
@@ -202,9 +200,9 @@ flowchart TD
 
 </div>
 
-![Screenshot tab Penggabungan CIDR](Assets/gabungCIDR.png)
+[![Screenshot tab Penggabungan CIDR](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/gabungCIDR.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/gabungCIDR.png)
 
-![Screenshot lanjutan tab Penggabungan CIDR](Assets/gabungCIDR2.png)
+[![Screenshot lanjutan tab Penggabungan CIDR](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/gabungCIDR2.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/gabungCIDR2.png)
 
 Contoh ringkasan rute yang digunakan dalam implementasi:
 
@@ -224,7 +222,7 @@ Rute yang langsung terhubung ke interface memiliki prefix yang lebih spesifik da
 
 Setelah supernet dihitung, Network ID, netmask, broadcast, dan usable range ditetapkan pada tab Pembagian IP - CIDR. Hasilnya digunakan sebagai dasar penentuan IP setiap interface router dan client.
 
-![Pembagian alamat IP CIDR](Assets/subnet2.png)
+[![Pembagian alamat IP CIDR](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/subnet2.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/subnet2.png)
 
 ### Contoh perhitungan: A13 (Protocol7–Chisa–Hodgeson)
 
@@ -240,9 +238,9 @@ Pada spreadsheet, A13 mempunyai kebutuhan 33 IP. Prefix /27 menyediakan 32 alama
 
 Perhitungan VLSM (Cisco Packet Tracer) didokumentasikan pada spreadsheet dan tidak diimplementasikan pada laporan GNS3 ini.
 
-![Screenshot tab Rute VLSM](Assets/rutevlsm.png)
+[![Screenshot tab Rute VLSM](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/rutevlsm.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/rutevlsm.png)
 
-![Screenshot tab Pembagian IP VLSM](Assets/bagiipvlsm.png)
+[![Screenshot tab Pembagian IP VLSM](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/bagiipvlsm.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/bagiipvlsm.png)
 
 ## 5. Konfigurasi Router dan Static Routing
 
@@ -267,21 +265,32 @@ iptables -t nat -A POSTROUTING -s 10.66.0.0/19 -o eth0 -j MASQUERADE
 
 ### Rekap konfigurasi dan bukti per router
 
-| Router / script | IP interface utama | Bukti screenshot |
-|---|---|---|
-| [Cyberia](script/CIDR%20GNS/router/config-cyberia.sh) | 10.66.24.1/25, 10.66.24.129/30 | ![Konfigurasi Cyberia](Assets/01-cyberia-config.png) |
-| [Wired](script/CIDR%20GNS/router/config-wired.sh) | 10.66.24.130/30, 10.66.22.65/30, 10.66.0.17/29, 10.66.18.1/30 | ![Konfigurasi Wired 1](Assets/02-1wired-config.png)<br>![Konfigurasi Wired 2](Assets/02-2wired-config.png) |
-| [Navi](script/CIDR%20GNS/router/config-navi.sh) | 10.66.22.66/30, 10.66.20.1/24, 10.66.22.1/26, 10.66.21.1/24 | ![Konfigurasi Navi](Assets/03-navi-config.png) |
-| [Tachibana](script/CIDR%20GNS/router/config-tachibana.sh) | 10.66.18.2/30, 10.66.16.1/23, 10.66.18.5/30 | ![Konfigurasi Tachibana 1](Assets/04-1tachibana-config.png)<br>![Konfigurasi Tachibana 2](Assets/04-2tachibana-config.png) |
-| [Deus](script/CIDR%20GNS/router/config-deus.sh) | 10.66.18.6/30, 10.66.18.129/25, 10.66.18.9/30 | ![Konfigurasi Deus](Assets/05-deus-config.png) |
-| [Protocol7](script/CIDR%20GNS/router/config-protocol7.sh) | 10.66.18.10/30, 10.66.18.65/26, 10.66.18.13/30 | ![Konfigurasi Protocol7](Assets/06-protocol7-config.png) |
-| [Knights](script/CIDR%20GNS/router/config-knights.sh) | 10.66.18.14/30, 10.66.18.25/29, 10.66.18.17/30 | ![Konfigurasi Knights](Assets/07-knights-config.png) |
-| [Phantoma](script/CIDR%20GNS/router/config-phantoma.sh) | 10.66.18.18/30, 10.66.18.33/27, 10.66.18.21/30 | ![Konfigurasi Phantoma](Assets/08-phantoma-config.png) |
-| [Shibuya](script/CIDR%20GNS/router/config-shibuya.sh) | 10.66.18.22/30, 10.66.19.1/26 | ![Konfigurasi Shibuya](Assets/09-shibuya-config.png) |
-| [Psyche](script/CIDR%20GNS/router/config-psyche.sh) | 10.66.0.18/29, 10.66.4.1/22 | ![Konfigurasi Psyche](Assets/10-psyche-config.png) |
-| [Copland](script/CIDR%20GNS/router/config-copland.sh) | 10.66.0.19/29, 10.66.2.1/23, 10.66.0.65/26 | ![Konfigurasi Copland](Assets/11-copland-config.png) |
-| [Schumann](script/CIDR%20GNS/router/config-schumann.sh) | 10.66.0.20/29, 10.66.0.1/29, 10.66.0.9/30 | ![Konfigurasi Schumann](Assets/12-schumann-config.png) |
-| [Accela](script/CIDR%20GNS/router/config-accela.sh) | 10.66.0.10/30, 10.66.8.1/22 | ![Konfigurasi Accela](Assets/13-accela-config.png) |
+1. **Cyberia** — [script](script/CIDR%20GNS/router/config-cyberia.sh), interface `10.66.24.1/25`, `10.66.24.129/30`<br>
+   [![Konfigurasi Cyberia](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/01-cyberia-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/01-cyberia-config.png)
+2. **Wired** — [script](script/CIDR%20GNS/router/config-wired.sh), interface `10.66.24.130/30`, `10.66.22.65/30`, `10.66.0.17/29`, `10.66.18.1/30`<br>
+   [![Konfigurasi Wired 1](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/02-1wired-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/02-1wired-config.png) [![Konfigurasi Wired 2](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/02-2wired-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/02-2wired-config.png)
+3. **Navi** — [script](script/CIDR%20GNS/router/config-navi.sh), interface `10.66.22.66/30`, `10.66.20.1/24`, `10.66.22.1/26`, `10.66.21.1/24`<br>
+   [![Konfigurasi Navi](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/03-navi-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/03-navi-config.png)
+4. **Tachibana** — [script](script/CIDR%20GNS/router/config-tachibana.sh), interface `10.66.18.2/30`, `10.66.16.1/23`, `10.66.18.5/30`<br>
+   [![Konfigurasi Tachibana 1](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/04-1tachibana-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/04-1tachibana-config.png) [![Konfigurasi Tachibana 2](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/04-2tachibana-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/04-2tachibana-config.png)
+5. **Deus** — [script](script/CIDR%20GNS/router/config-deus.sh), interface `10.66.18.6/30`, `10.66.18.129/25`, `10.66.18.9/30`<br>
+   [![Konfigurasi Deus](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/05-deus-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/05-deus-config.png)
+6. **Protocol7** — [script](script/CIDR%20GNS/router/config-protocol7.sh), interface `10.66.18.10/30`, `10.66.18.65/26`, `10.66.18.13/30`<br>
+   [![Konfigurasi Protocol7](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/06-protocol7-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/06-protocol7-config.png)
+7. **Knights** — [script](script/CIDR%20GNS/router/config-knights.sh), interface `10.66.18.14/30`, `10.66.18.25/29`, `10.66.18.17/30`<br>
+   [![Konfigurasi Knights](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/07-knights-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/07-knights-config.png)
+8. **Phantoma** — [script](script/CIDR%20GNS/router/config-phantoma.sh), interface `10.66.18.18/30`, `10.66.18.33/27`, `10.66.18.21/30`<br>
+   [![Konfigurasi Phantoma](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/08-phantoma-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/08-phantoma-config.png)
+9. **Shibuya** — [script](script/CIDR%20GNS/router/config-shibuya.sh), interface `10.66.18.22/30`, `10.66.19.1/26`<br>
+   [![Konfigurasi Shibuya](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/09-shibuya-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/09-shibuya-config.png)
+10. **Psyche** — [script](script/CIDR%20GNS/router/config-psyche.sh), interface `10.66.0.18/29`, `10.66.4.1/22`<br>
+    [![Konfigurasi Psyche](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/10-psyche-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/10-psyche-config.png)
+11. **Copland** — [script](script/CIDR%20GNS/router/config-copland.sh), interface `10.66.0.19/29`, `10.66.2.1/23`, `10.66.0.65/26`<br>
+    [![Konfigurasi Copland](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/11-copland-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/11-copland-config.png)
+12. **Schumann** — [script](script/CIDR%20GNS/router/config-schumann.sh), interface `10.66.0.20/29`, `10.66.0.1/29`, `10.66.0.9/30`<br>
+    [![Konfigurasi Schumann](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/12-schumann-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/12-schumann-config.png)
+13. **Accela** — [script](script/CIDR%20GNS/router/config-accela.sh), interface `10.66.0.10/30`, `10.66.8.1/22`<br>
+    [![Konfigurasi Accela](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/13-accela-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/13-accela-config.png)
 
 ## 6. Konfigurasi Static IP Client
 
