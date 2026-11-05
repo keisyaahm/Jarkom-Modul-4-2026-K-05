@@ -39,8 +39,6 @@ Berdasarkan tab Rute pada spreadsheet, terdapat 25 subnet (A1–A25), dengan tot
 
 Subnet terdiri atas jaringan LAN client, satu LAN multi-router bersama (A5), dan link antar-router dengan prefix kecil (umumnya /30).
 
-[PLACEHOLDER] Screenshot tab **Rute** spreadsheet: `Assets/rute.png`.
-
 Ilustrasi pembagian subnet A1–A25
 
 ![Ilustrasi pembagian subnet A1–A25](Assets/subnet1.png)
@@ -157,8 +155,6 @@ Rute yang langsung terhubung ke interface memiliki prefix yang lebih spesifik da
 ## 4. Pembagian Alamat IP (Subnetting)
 
 Setelah supernet dihitung, Network ID, netmask, broadcast, dan usable range ditetapkan pada tab Pembagian IP - CIDR. Hasilnya digunakan sebagai dasar penentuan IP setiap interface router dan client.
-
-[PLACEHOLDER] Screenshot tab **Pembagian IP CIDR** spreadsheet: `Assets/pembagian-ip-cidr.png`.
 
 ![Pembagian alamat IP CIDR](Assets/subnet2.png)
 
