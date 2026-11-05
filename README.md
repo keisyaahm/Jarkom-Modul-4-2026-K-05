@@ -201,47 +201,19 @@ iptables -t nat -A POSTROUTING -s 10.66.0.0/19 -o eth0 -j MASQUERADE
 
 | Router / script | IP interface utama | Bukti screenshot |
 |---|---|---|
-| [Cyberia](script/CIDR%20GNS/router/config-cyberia.sh) | 10.66.24.1/25, 10.66.24.129/30 | [Lihat konfigurasi](Assets/01-cyberia-config.png) |
-| [Wired](script/CIDR%20GNS/router/config-wired.sh) | 10.66.24.130/30, 10.66.22.65/30, 10.66.0.17/29, 10.66.18.1/30 | [Lihat konfigurasi](Assets/02-1wired-config.png) |
-| [Navi](script/CIDR%20GNS/router/config-navi.sh) | 10.66.22.66/30, 10.66.20.1/24, 10.66.22.1/26, 10.66.21.1/24 | [Lihat konfigurasi](Assets/03-navi-config.png) |
-| [Tachibana](script/CIDR%20GNS/router/config-tachibana.sh) | 10.66.18.2/30, 10.66.16.1/23, 10.66.18.5/30 | [Lihat konfigurasi](Assets/04-1tachibana-config.png) |
-| [Deus](script/CIDR%20GNS/router/config-deus.sh) | 10.66.18.6/30, 10.66.18.129/25, 10.66.18.9/30 | [Lihat konfigurasi](Assets/05-deus-config.png) |
-| [Protocol7](script/CIDR%20GNS/router/config-protocol7.sh) | 10.66.18.10/30, 10.66.18.65/26, 10.66.18.13/30 | [Lihat konfigurasi](Assets/06-protocol7-config.png) |
-| [Knights](script/CIDR%20GNS/router/config-knights.sh) | 10.66.18.14/30, 10.66.18.25/29, 10.66.18.17/30 | [Lihat konfigurasi](Assets/07-knights-config.png) |
-| [Phantoma](script/CIDR%20GNS/router/config-phantoma.sh) | 10.66.18.18/30, 10.66.18.33/27, 10.66.18.21/30 | [Lihat konfigurasi](Assets/08-phantoma-config.png) |
-| [Shibuya](script/CIDR%20GNS/router/config-shibuya.sh) | 10.66.18.22/30, 10.66.19.1/26 | [Lihat konfigurasi](Assets/09-shibuya-config.png) |
-| [Psyche](script/CIDR%20GNS/router/config-psyche.sh) | 10.66.0.18/29, 10.66.4.1/22 | [Lihat konfigurasi](Assets/10-psyche-config.png) |
-| [Copland](script/CIDR%20GNS/router/config-copland.sh) | 10.66.0.19/29, 10.66.2.1/23, 10.66.0.65/26 | [Lihat konfigurasi](Assets/11-copland-config.png) |
-| [Schumann](script/CIDR%20GNS/router/config-schumann.sh) | 10.66.0.20/29, 10.66.0.1/29, 10.66.0.9/30 | [Lihat konfigurasi](Assets/12-schumann-config.png) |
-| [Accela](script/CIDR%20GNS/router/config-accela.sh) | 10.66.0.10/30, 10.66.8.1/22 | [Lihat konfigurasi](Assets/13-accela-config.png) |
-
-Berikut screenshot konfigurasi yang sudah tersedia, tanpa mengganti dengan hasil ilustrasi atau output rekaan:
-
-1. **Cyberia** — Gateway NAT, ringkasan rute internal. Script: [`script/CIDR GNS/router/config-cyberia.sh`](script/CIDR%20GNS/router/config-cyberia.sh).
-
-2. **Wired** — Router distribusi cabang. Script: [`script/CIDR GNS/router/config-wired.sh`](script/CIDR%20GNS/router/config-wired.sh).
-
-3. **Navi** — Gateway Alice, Reika, Taro, Yasuo, Miho, Kuma. Script: [`script/CIDR GNS/router/config-navi.sh`](script/CIDR%20GNS/router/config-navi.sh).
-
-4. **Tachibana** — Gateway Collective/Ghost; cabang Deus. Script: [`script/CIDR GNS/router/config-tachibana.sh`](script/CIDR%20GNS/router/config-tachibana.sh).
-
-5. **Deus** — Gateway Lillith/Specter; cabang Protocol7. Script: [`script/CIDR GNS/router/config-deus.sh`](script/CIDR%20GNS/router/config-deus.sh).
-
-6. **Protocol7** — Gateway Chisa/Hodgeson; cabang Knights. Script: [`script/CIDR GNS/router/config-protocol7.sh`](script/CIDR%20GNS/router/config-protocol7.sh).
-
-7. **Knights** — Gateway Eiri; cabang Phantoma. Script: [`script/CIDR GNS/router/config-knights.sh`](script/CIDR%20GNS/router/config-knights.sh).
-
-8. **Phantoma** — Gateway Semi; cabang Shibuya. Script: [`script/CIDR GNS/router/config-phantoma.sh`](script/CIDR%20GNS/router/config-phantoma.sh).
-
-9. **Shibuya** — Gateway Lain/Mika. Script: [`script/CIDR GNS/router/config-shibuya.sh`](script/CIDR%20GNS/router/config-shibuya.sh).
-
-10. **Psyche** — Gateway Karl/Lin. Script: [`script/CIDR GNS/router/config-psyche.sh`](script/CIDR%20GNS/router/config-psyche.sh).
-
-11. **Copland** — Gateway Masayuki/Juri. Script: [`script/CIDR GNS/router/config-copland.sh`](script/CIDR%20GNS/router/config-copland.sh).
-
-12. **Schumann** — Gateway Akashic; cabang Accela. Script: [`script/CIDR GNS/router/config-schumann.sh`](script/CIDR%20GNS/router/config-schumann.sh).
-
-13. **Accela** — Gateway OmniPresence/Denpa. Script: [`script/CIDR GNS/router/config-accela.sh`](script/CIDR%20GNS/router/config-accela.sh).
+| [Cyberia](script/CIDR%20GNS/router/config-cyberia.sh) | 10.66.24.1/25, 10.66.24.129/30 | ![Konfigurasi Cyberia](Assets/01-cyberia-config.png) |
+| [Wired](script/CIDR%20GNS/router/config-wired.sh) | 10.66.24.130/30, 10.66.22.65/30, 10.66.0.17/29, 10.66.18.1/30 | ![Konfigurasi Wired 1](Assets/02-1wired-config.png)<br>![Konfigurasi Wired 2](Assets/02-2wired-config.png) |
+| [Navi](script/CIDR%20GNS/router/config-navi.sh) | 10.66.22.66/30, 10.66.20.1/24, 10.66.22.1/26, 10.66.21.1/24 | ![Konfigurasi Navi](Assets/03-navi-config.png) |
+| [Tachibana](script/CIDR%20GNS/router/config-tachibana.sh) | 10.66.18.2/30, 10.66.16.1/23, 10.66.18.5/30 | ![Konfigurasi Tachibana 1](Assets/04-1tachibana-config.png)<br>![Konfigurasi Tachibana 2](Assets/04-2tachibana-config.png) |
+| [Deus](script/CIDR%20GNS/router/config-deus.sh) | 10.66.18.6/30, 10.66.18.129/25, 10.66.18.9/30 | ![Konfigurasi Deus](Assets/05-deus-config.png) |
+| [Protocol7](script/CIDR%20GNS/router/config-protocol7.sh) | 10.66.18.10/30, 10.66.18.65/26, 10.66.18.13/30 | ![Konfigurasi Protocol7](Assets/06-protocol7-config.png) |
+| [Knights](script/CIDR%20GNS/router/config-knights.sh) | 10.66.18.14/30, 10.66.18.25/29, 10.66.18.17/30 | ![Konfigurasi Knights](Assets/07-knights-config.png) |
+| [Phantoma](script/CIDR%20GNS/router/config-phantoma.sh) | 10.66.18.18/30, 10.66.18.33/27, 10.66.18.21/30 | ![Konfigurasi Phantoma](Assets/08-phantoma-config.png) |
+| [Shibuya](script/CIDR%20GNS/router/config-shibuya.sh) | 10.66.18.22/30, 10.66.19.1/26 | ![Konfigurasi Shibuya](Assets/09-shibuya-config.png) |
+| [Psyche](script/CIDR%20GNS/router/config-psyche.sh) | 10.66.0.18/29, 10.66.4.1/22 | ![Konfigurasi Psyche](Assets/10-psyche-config.png) |
+| [Copland](script/CIDR%20GNS/router/config-copland.sh) | 10.66.0.19/29, 10.66.2.1/23, 10.66.0.65/26 | ![Konfigurasi Copland](Assets/11-copland-config.png) |
+| [Schumann](script/CIDR%20GNS/router/config-schumann.sh) | 10.66.0.20/29, 10.66.0.1/29, 10.66.0.9/30 | ![Konfigurasi Schumann](Assets/12-schumann-config.png) |
+| [Accela](script/CIDR%20GNS/router/config-accela.sh) | 10.66.0.10/30, 10.66.8.1/22 | ![Konfigurasi Accela](Assets/13-accela-config.png) |
 
 ## 6. Konfigurasi Static IP Client
 
@@ -343,33 +315,3 @@ Catatan Protocol7–Knights: pada salah satu screenshot yang dikirim, ping 10.66
 ## 8. Kesimpulan Sementara
 
 Pembagian CIDR berhasil diterapkan ke konfigurasi 13 router dan 25 client dalam rancangan A1–A25. Bukti yang tersedia menunjukkan pengalamatan IP, static routing, dan forwarding pada router, konektivitas backbone, serta akses Internet pada sejumlah router telah berfungsi. Pengujian Navi ke enam client lokal juga berhasil. Namun, kelengkapan hasil akhir jaringan belum dapat dinyatakan 100% sebelum screenshot uji ulang Protocol7–Knights, ping semua client, dan pengujian lintas cabang yang masih berupa placeholder ditambahkan.
-
-## 9. Struktur Repository
-
-```text
-JARKOM-MODUL4-GNS3-CIDR/
-├── README.md
-├── Assets/
-│   ├── topologi-gns3.png            # PLACEHOLDER
-│   ├── subnet1.png                  # tersedia: lingkaran A1–A25
-│   ├── subnet2.png                  # tersedia: pembagian CIDR lengkap
-│   ├── cidr-tree.png                # PLACEHOLDER: pohon supernetting
-│   ├── rute.png                     # PLACEHOLDER: tab Rute
-│   ├── rute-vlsm.png                # PLACEHOLDER: tab Rute VLSM
-│   ├── pembagian-ip-vlsm.png        # PLACEHOLDER: tab Pembagian IP - VLSM
-│   ├── penggabungan-cidr.png        # PLACEHOLDER: tab Penggabungan CIDR
-│   ├── pembagian-ip-cidr.png        # PLACEHOLDER: tab Pembagian IP CIDR
-│   ├── 01-cyberia-config.png        # tersedia
-│   ├── ...                          # screenshot router yang tersedia
-│   └── client-<nama>-config.png     # PLACEHOLDER
-├── script/
-│   ├── CIDR GNS/
-│   │   ├── router/                  # 13 script .sh
-│   │   └── client/                  # 25 script .sh
-│   └── VLSM CPT/                    # perhitungan VLSM (Cisco Packet Tracer)
-├── project/
-│   └── K-05-MODUL-4.gns3project
-└── SUBNETTING YG INI (1)(1).xlsx    # unggah manual
-```
-
-Catatan: Ganti penanda `[PLACEHOLDER]` yang masih tersisa dengan bukti gambar yang sesuai, unggah gambar rute, rute VLSM, pembagian IP VLSM, penggabungan CIDR, dan pembagian IP CIDR ke `Assets/`, lengkapi identitas kelompok, serta isi URL spreadsheet sebelum laporan dinyatakan final.
