@@ -9,6 +9,7 @@
 | Ronnin Raditya Putra Purbono | 5027251119 | VLSM Cisco Packet Tracer |
 | Keisya Halimah Mulia | 5027251068 | CIDR GNS3 |
 
+
 ## Laporan
 
 - Spreadsheet subnetting: [Buka spreadsheet subnetting](https://docs.google.com/spreadsheets/d/1tnrkMIINtIfA9lkkEz2IxHoiGxdWwslZ/edit?usp=sharing&ouid=105300267501229657358&rtpof=true&sd=true)
