@@ -200,7 +200,7 @@ Garis berwarna menunjukkan hasil pengelompokan subnet A1-A25 menjadi
 summary B, C, D, E, dan F. Garis terluar F3 menunjukkan blok induk
 `10.66.0.0/19`.
 
-![Visualisasi penggabungan CIDR pada topologi](Assets/subnet.png)
+![Visualisasi penggabungan CIDR pada topologi](Assets/subnet2.png)
 
 ### Bukti spreadsheet penggabungan CIDR
 
@@ -218,8 +218,6 @@ summary B, C, D, E, dan F. Garis terluar F3 menunjukkan blok induk
 Tabel penggabungan dibaca dari A1-A25 menuju F3 `/19`. Tree berikut
 menampilkan proses yang sama dari arah sebaliknya, yaitu dari blok
 `10.66.0.0/19` menuju subnet akhir.
-
-![Tree CIDR](Assets/cidr-gns3/subnet2.png)
 
 <div style="overflow:auto; resize:both; width:100%; min-height:420px; border:1px solid #ccc; padding:8px;">
 
