@@ -143,8 +143,13 @@ Penggabungan terakhir adalah `D6 /20 + F2 /20`: 4.096 + 4.096 = 8.192 alamat. Ka
 
 ### Bukti spreadsheet penggabungan CIDR
 
-1. **Bukti tab Penggabungan CIDR**: [Lihat gambar](Assets/cidr-gns3/gabungCIDR.png)
-2. **Bukti lanjutan tab Penggabungan CIDR**: [Lihat gambar](Assets/cidr-gns3/gabungCIDR2.png)
+1. **Bukti tab Penggabungan CIDR**
+
+![Bukti tab Penggabungan CIDR](Assets/cidr-gns3/gabungCIDR.png)
+
+2. **Bukti lanjutan tab Penggabungan CIDR**
+
+![Bukti lanjutan tab Penggabungan CIDR](Assets/cidr-gns3/gabungCIDR2.png)
 
 
 ## 7. Tree CIDR
@@ -422,11 +427,17 @@ Kami menguji konektivitas lokal, antar-router, lintas cabang, dan akses Internet
 
 ### Bukti pengujian yang tersedia
 
-1. **Bukti ping Cyberia ke Wired dan Internet**: [Lihat bukti](Assets/cidr-gns3/01-2-cyberia-ping.png)
+1. **Bukti ping Cyberia ke Wired dan Internet**
 
-2. **Bukti ping Wired ke jaringan cabang dan Internet**: [Lihat bukti](Assets/cidr-gns3/02-2-wired-ping.png)
+![Bukti ping Cyberia ke Wired dan Internet](Assets/cidr-gns3/01-2-cyberia-ping.png)
 
-3. **Bukti ping Navi ke client dalam jaringan lokal**: [Lihat bukti](Assets/cidr-gns3/03-2-navi-ping.png)
+2. **Bukti ping Wired ke jaringan cabang dan Internet**
+
+![Bukti ping Wired ke jaringan cabang dan Internet](Assets/cidr-gns3/02-2-wired-ping.png)
+
+3. **Bukti ping Navi ke client dalam jaringan lokal**
+
+![Bukti ping Navi ke client dalam jaringan lokal](Assets/cidr-gns3/03-2-navi-ping.png)
 
 Hasil pengujian dinyatakan berhasil apabila output command menunjukkan:
 
@@ -469,9 +480,17 @@ Kami menghitung kebutuhan host setiap jaringan, memilih prefix yang memenuhi keb
 
 Tabel pembagian alamat VLSM kami cantumkan pada spreadsheet. Bukti tab pembagian alamat tersedia pada bagian ini.
 
-1. **Bukti tabel Rute VLSM**: [Lihat gambar](Assets/vlsm-cpt/rute1.png)
-2. **Bukti tabel perhitungan Rute VLSM**: [Lihat gambar](Assets/vlsm-cpt/rutevlsm.png)
-3. **Bukti tabel Pembagian IP VLSM**: [Lihat gambar](Assets/vlsm-cpt/bagiipvlsm.png)
+1. **Bukti tabel Rute VLSM**
+
+![Bukti tabel Rute VLSM](Assets/vlsm-cpt/rute1.png)
+
+2. **Bukti tabel perhitungan Rute VLSM**
+
+![Bukti tabel perhitungan Rute VLSM](Assets/vlsm-cpt/rutevlsm.png)
+
+3. **Bukti tabel Pembagian IP VLSM**
+
+![Bukti tabel Pembagian IP VLSM](Assets/vlsm-cpt/bagiipvlsm.png)
 
 ## 16. Konfigurasi Router dan Client VLSM
 
@@ -481,16 +500,45 @@ Kami menerapkan alamat hasil perhitungan VLSM pada router dan client Cisco Packe
 
 Kami menguji konektivitas antarperangkat dan memeriksa proses routing OSPF. Bukti yang tersedia:
 
-1. **Bukti ping Juri ke gateway pada percobaan awal**: [Lihat gambar](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/01_Ping_Juri_Gateway_dan_gagal_awal.png)
-2. **Bukti ping Juri ke Masayuki pada percobaan awal**: [Lihat gambar](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/02_Ping_Juri_ke_Masayuki_awal.png)
-3. **Bukti ping Masayuki ke Juri berhasil**: [Lihat gambar](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/03_Ping_Masayuki_ke_Juri_berhasil.png)
-4. **Bukti ping Karl ke Juri berhasil**: [Lihat gambar](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/04_Ping_Karl_ke_Juri_berhasil.png)
-5. **Bukti ping Juri ke Karl sebelum perbaikan**: [Lihat gambar](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/05_Ping_Juri_ke_Karl_sebelum_perbaikan.png)
-6. **Bukti OSPF neighbor Copland pada kondisi awal**: [Lihat gambar](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/06_OSPF_Copland_neighbor_awal.png)
-7. **Bukti routing table OSPF Copland**: [Lihat gambar](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/07_OSPF_Copland_routing_table.png)
-8. **Bukti log adjacency OSPF Copland**: [Lihat gambar](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/08_OSPF_Copland_adjacency_log.png)
-9. **Bukti OSPF EXSTART Psyche pada kondisi awal**: [Lihat gambar](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/09_OSPF_Psyche_EXSTART_awal.png)
-10. **Bukti ping Juri ke Karl berhasil**: [Lihat gambar](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/10_Ping_Juri_ke_Karl_berhasil.png)
+1. **Bukti ping Juri ke gateway pada percobaan awal**
+
+![Bukti ping Juri ke gateway pada percobaan awal](Assets/vlsm-cpt/01_Ping_Juri_Gateway_dan_gagal_awal.png)
+
+2. **Bukti ping Juri ke Masayuki pada percobaan awal**
+
+![Bukti ping Juri ke Masayuki pada percobaan awal](Assets/vlsm-cpt/02_Ping_Juri_ke_Masayuki_awal.png)
+
+3. **Bukti ping Masayuki ke Juri berhasil**
+
+![Bukti ping Masayuki ke Juri berhasil](Assets/vlsm-cpt/03_Ping_Masayuki_ke_Juri_berhasil.png)
+
+4. **Bukti ping Karl ke Juri berhasil**
+
+![Bukti ping Karl ke Juri berhasil](Assets/vlsm-cpt/04_Ping_Karl_ke_Juri_berhasil.png)
+
+5. **Bukti ping Juri ke Karl sebelum perbaikan**
+
+![Bukti ping Juri ke Karl sebelum perbaikan](Assets/vlsm-cpt/05_Ping_Juri_ke_Karl_sebelum_perbaikan.png)
+
+6. **Bukti OSPF neighbor Copland pada kondisi awal**
+
+![Bukti OSPF neighbor Copland pada kondisi awal](Assets/vlsm-cpt/06_OSPF_Copland_neighbor_awal.png)
+
+7. **Bukti routing table OSPF Copland**
+
+![Bukti routing table OSPF Copland](Assets/vlsm-cpt/07_OSPF_Copland_routing_table.png)
+
+8. **Bukti log adjacency OSPF Copland**
+
+![Bukti log adjacency OSPF Copland](Assets/vlsm-cpt/08_OSPF_Copland_adjacency_log.png)
+
+9. **Bukti OSPF EXSTART Psyche pada kondisi awal**
+
+![Bukti OSPF EXSTART Psyche pada kondisi awal](Assets/vlsm-cpt/09_OSPF_Psyche_EXSTART_awal.png)
+
+10. **Bukti ping Juri ke Karl berhasil**
+
+![Bukti ping Juri ke Karl berhasil](Assets/vlsm-cpt/10_Ping_Juri_ke_Karl_berhasil.png)
 
 ## 18. Kesimpulan VLSM
 
