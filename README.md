@@ -196,6 +196,8 @@ Tree CIDR menunjukkan pembagian alamat secara top-down. Root tree adalah `10.66.
 
 <div style="overflow:auto; resize:both; width:100%; min-height:420px; border:1px solid #ccc; padding:8px;">
 
+### Tree CIDR
+
 ```mermaid
 %%{init: {"flowchart": {"htmlLabels": true, "nodeWidth": 240, "padding": 18, "nodeSpacing": 30, "rankSpacing": 45, "curve": "basis"}}}%%
 flowchart TD
@@ -552,23 +554,128 @@ loss tidak digunakan sebagai bukti final.
 
 ### Sembilan screenshot pengujian final
 
-| No. | Node dan pengujian | Command utama | File bukti |
-|---:|---|---|---|
-| 1 | Konfigurasi client Lain | `sh /root/config-lain.sh` | `Assets/01-lain-konfigurasi-client.png` |
-| 2 | Protocol7 ke Knights (A14) | `ping -c 3 10.66.18.14` | `Assets/02-protocol7-ke-knights.png` |
-| 3 | Navi ke Kuma (A8) | `ping -c 3 10.66.21.4` | `Assets/03-navi-ke-kuma-satu-lan.png` |
-| 4 | Alice ke Denpa | `ping -c 3 10.66.8.3` | `Assets/04-alice-ke-denpa.png` |
-| 5 | Lain ke JJ lintas routing | `ping -c 3 10.66.24.2` | `Assets/05-lain-ke-jj-lintas-routing.png` |
-| 6 | Summary route Wired | `sh /root/config-wired.sh` | `Assets/06-wired-summary-routing.png` |
-| 7 | NAT dan routing Cyberia | `sh /root/config-cyberia.sh` | `Assets/07-cyberia-nat-routing.png` |
-| 8 | Lain ke Internet | `ping -c 3 8.8.8.8` | `Assets/08-lain-ke-internet.png` |
-| 9 | Denpa ke Alice | `ping -c 3 10.66.20.2` | `Assets/09-denpa-ke-alice.png` |
+#### 1. Konfigurasi client Lain
+
+**Command:**
+
+```sh
+sh /root/config-lain.sh
+```
+
+**Hasil yang diharapkan:** IP `10.66.19.2/26`, gateway `10.66.19.1`, dan
+route lokal `10.66.19.0/26` tampil pada terminal.
+
+![Konfigurasi client Lain](Assets/cidr-gns3/01-lain-konfigurasi-client.png)
+
+#### 2. Protocol7 ke Knights
+
+**Command:**
+
+```sh
+ping -c 3 10.66.18.14
+```
+
+**Hasil yang diharapkan:** `3 packets transmitted, 3 received, 0% packet loss`.
+Pengujian ini membuktikan link point-to-point A14 `/30`.
+
+![Protocol7 ke Knights](Assets/cidr-gns3/02-protocol7-ke-knights.png)
+
+#### 3. Navi ke Kuma dalam satu LAN
+
+**Command:**
+
+```sh
+ping -c 3 10.66.21.4
+```
+
+**Hasil yang diharapkan:** `3 packets transmitted, 3 received, 0% packet loss`.
+Navi dan Kuma berada pada LAN A8 `10.66.21.0/24`.
+
+![Navi ke Kuma dalam satu LAN](Assets/cidr-gns3/03-navi-ke-kuma-satu-lan.png)
+
+#### 4. Alice ke Denpa
+
+**Command:**
+
+```sh
+ping -c 3 10.66.8.3
+```
+
+**Hasil yang diharapkan:** `3 packets transmitted, 3 received, 0% packet loss`.
+Jalur pengujian adalah `Alice → Navi → Wired → Schumann → Accela → Denpa`.
+
+![Alice ke Denpa lintas cabang](Assets/cidr-gns3/04-alice-ke-denpa-lintas-cabang.png)
+
+#### 5. Lain ke JJ lintas routing
+
+**Command:**
+
+```sh
+ping -c 3 10.66.24.2
+```
+
+**Hasil yang diharapkan:** `3 packets transmitted, 3 received, 0% packet loss`.
+Pengujian ini membuktikan static routing dan summary CIDR end-to-end.
+
+![Lain ke JJ lintas routing](Assets/cidr-gns3/05-lain-ke-jj-lintas-routing.png)
+
+#### 6. Summary route Wired
+
+**Command:**
+
+```sh
+sh /root/config-wired.sh
+```
+
+**Hasil yang diharapkan:** summary route `/22`, default route, dan
+`ip_forward = 1` tampil pada terminal.
+
+![Summary route Wired](Assets/cidr-gns3/06-wired-summary-routing.png)
+
+#### 7. Lain ke Internet
+
+**Command:**
+
+```sh
+ping -c 3 8.8.8.8
+```
+
+**Hasil yang diharapkan:** `3 packets transmitted, 3 received, 0% packet loss`.
+Pengujian ini membuktikan default route, forwarding, dan NAT MASQUERADE
+Cyberia bekerja.
+
+![Lain ke Internet](Assets/cidr-gns3/07-lain-ke-internet.png)
+
+#### 8. Alice ke Denpa (arah pertama)
+
+**Command:**
+
+```sh
+ping -c 3 10.66.8.3
+```
+
+**Hasil yang diharapkan:** `3 packets transmitted, 3 received, 0% packet loss`.
+Pengujian ini menjadi arah pertama komunikasi dua arah Alice-Denpa.
+
+![Alice ke Denpa](Assets/cidr-gns3/08-alice-ke-denpa.png)
+
+#### 9. Denpa ke Alice
+
+**Command:**
+
+```sh
+ping -c 3 10.66.20.2
+```
+
+**Hasil yang diharapkan:** `3 packets transmitted, 3 received, 0% packet loss`.
+Pengujian arah balik membuktikan return route dan komunikasi dua arah.
+
+![Denpa ke Alice](Assets/cidr-gns3/09-denpa-ke-alice.png)
 
 SS 1 harus memperlihatkan `10.66.19.2/26` dan gateway `10.66.19.1`.
 SS 6 harus memperlihatkan summary route `/22`, default route, dan
-`ip_forward = 1`. SS 7 harus memperlihatkan `eth0 192.168.122.25/24`,
-default route ke `192.168.122.1`, serta rule `MASQUERADE` untuk source
-`10.66.0.0/19`.
+`ip_forward = 1`. Konfigurasi NAT Cyberia menggunakan script
+`config-cyberia.sh`; hasil akses Internet client dibuktikan oleh SS 7.
 
 ### Pengujian komunikasi dua arah
 
@@ -607,19 +714,43 @@ static route, summary CIDR, IP forwarding, dan return route bekerja.
 | Komunikasi dua arah dan return route | SS 4 dan SS 9 |
 | NAT dan akses Internet | SS 7 dan SS 8 |
 
-### Bukti pengujian yang tersedia
+### Bukti sembilan screenshot final
 
-1. **Bukti ping Cyberia ke Wired dan Internet**
+1. **Konfigurasi client Lain**
 
-![Bukti ping Cyberia ke Wired dan Internet](Assets/cidr-gns3/01-2-cyberia-ping.png)
+![Konfigurasi client Lain](Assets/cidr-gns3/01-lain-konfigurasi-client.png)
 
-2. **Bukti ping Wired ke jaringan cabang dan Internet**
+2. **Protocol7 ke Knights**
 
-![Bukti ping Wired ke jaringan cabang dan Internet](Assets/cidr-gns3/02-2-wired-ping.png)
+![Protocol7 ke Knights](Assets/cidr-gns3/02-protocol7-ke-knights.png)
 
-3. **Bukti ping Navi ke client dalam jaringan lokal**
+3. **Navi ke Kuma dalam satu LAN**
 
-![Bukti ping Navi ke client dalam jaringan lokal](Assets/cidr-gns3/03-2-navi-ping.png)
+![Navi ke Kuma dalam satu LAN](Assets/cidr-gns3/03-navi-ke-kuma-satu-lan.png)
+
+4. **Alice ke Denpa lintas cabang**
+
+![Alice ke Denpa lintas cabang](Assets/cidr-gns3/04-alice-ke-denpa-lintas-cabang.png)
+
+5. **Lain ke JJ lintas routing**
+
+![Lain ke JJ lintas routing](Assets/cidr-gns3/05-lain-ke-jj-lintas-routing.png)
+
+6. **Summary route Wired**
+
+![Summary route Wired](Assets/cidr-gns3/06-wired-summary-routing.png)
+
+7. **Lain ke Internet**
+
+![Lain ke Internet](Assets/cidr-gns3/07-lain-ke-internet.png)
+
+8. **Alice ke Denpa**
+
+![Alice ke Denpa](Assets/cidr-gns3/08-alice-ke-denpa.png)
+
+9. **Denpa ke Alice**
+
+![Denpa ke Alice](Assets/cidr-gns3/09-denpa-ke-alice.png)
 
 Hasil pengujian dinyatakan berhasil apabila output command menunjukkan:
 
