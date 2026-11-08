@@ -9,11 +9,30 @@
 | Ronnin Raditya Putra Purbono | 5027251119 | VLSM Cisco Packet Tracer |
 | Keisya Halimah Mulia | 5027251068 | CIDR GNS3 |
 
+## Daftar Isi CIDR GNS3
+
+1. [Tujuan Pengerjaan](#3-tujuan-pengerjaan)
+2. [Topologi Awal GNS3](#4-topologi-awal-gns3)
+3. [Menentukan Jumlah Subnet dari Topologi](#5-menentukan-jumlah-subnet-dari-topologi)
+4. [Menghitung Kebutuhan Host dan Prefix](#6-menghitung-kebutuhan-host-dan-prefix)
+5. [Pembagian IP A1-A25](#7-pembagian-ip-a1-a25)
+6. [Penggabungan CIDR](#8-penggabungan-cidr)
+7. [Tree CIDR](#9-tree-cidr)
+8. [Tabel Network ID, Broadcast, dan Range IP](#10-tabel-network-id-broadcast-dan-range-ip)
+9. [Konfigurasi Router dan Client](#11-konfigurasi-router-dan-client)
+10. [Static Routing dan NAT](#12-static-routing-dan-nat)
+11. [Testing Konektivitas](#13-testing-konektivitas)
+12. [Kesimpulan CIDR](#14-kesimpulan-cidr)
+
+## Daftar Isi VLSM Cisco Packet Tracer
+
+1. [VLSM Cisco Packet Tracer](#15-vlsm-cisco-packet-tracer)
+
 ## 2. Laporan dan Spreadsheet
 
 - Laporan dan spreadsheet subnetting: [Buka spreadsheet subnetting](https://docs.google.com/spreadsheets/d/1tnrkMIINtIfA9lkkEz2IxHoiGxdWwslZ/edit?usp=sharing&ouid=105300267501229657358&rtpof=true&sd=true)
 
-Bukti spreadsheet dikelompokkan berdasarkan pembahasan. VLSM Cisco Packet Tracer diletakkan di bagian paling akhir setelah seluruh pembahasan CIDR GNS3.
+Kami mengelompokkan bukti spreadsheet berdasarkan pembahasan. VLSM Cisco Packet Tracer kami letakkan di bagian paling akhir setelah seluruh pembahasan CIDR GNS3.
 
 ### Bukti Screenshot Spreadsheet CIDR GNS3
 
@@ -28,25 +47,6 @@ Pada praktikum ini kami melakukan subnetting dan routing menggunakan dua pendeka
 2. CIDR dan route summarization pada GNS3.
 
 Pembahasan CIDR dimulai dari analisis topologi, perhitungan kebutuhan host, pembagian subnet A1-A25, penggabungan subnet menjadi summary route, konfigurasi IP, static routing, dan pengujian konektivitas.
-
-## Daftar Isi
-
-1. [Anggota Kelompok](#1-anggota-kelompok)
-2. [Laporan dan Spreadsheet](#2-laporan-dan-spreadsheet)
-3. [Tujuan Pengerjaan](#3-tujuan-pengerjaan)
-4. [Topologi Awal GNS3](#4-topologi-awal-gns3)
-5. [Menentukan Jumlah Subnet dari Topologi](#5-menentukan-jumlah-subnet-dari-topologi)
-6. [Menghitung Kebutuhan Host dan Prefix](#6-menghitung-kebutuhan-host-dan-prefix)
-7. [Pembagian IP A1-A25](#7-pembagian-ip-a1a25)
-8. [Penggabungan CIDR](#8-penggabungan-cidr)
-9. [Tree CIDR](#9-tree-cidr)
-10. [Tabel Network ID, Broadcast, dan Range IP](#10-tabel-network-id-broadcast-dan-range-ip)
-11. [Konfigurasi Router dan Client](#11-konfigurasi-router-dan-client)
-12. [Static Routing dan NAT](#12-static-routing-dan-nat)
-13. [Testing Konektivitas](#13-testing-konektivitas)
-14. [Kesimpulan CIDR](#14-kesimpulan-cidr)
-15. [VLSM Cisco Packet Tracer](#15-vlsm-cisco-packet-tracer)
-
 
 ## 4. Topologi Awal GNS3
 
@@ -350,31 +350,31 @@ iptables -t nat -A POSTROUTING -s 10.66.0.0/19 -o eth0 -j MASQUERADE
 
 ### Rekap konfigurasi dan bukti per router
 
-1. **Cyberia**: [script](script/CIDR%20GNS/router/config-cyberia.sh), interface `10.66.24.1/25`, `10.66.24.129/30`<br>
+1. **Bukti konfigurasi interface Cyberia**: [script](script/CIDR%20GNS/router/config-cyberia.sh), interface `10.66.24.1/25`, `10.66.24.129/30`<br>
    [![Konfigurasi Cyberia](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/cidr-gns3/01-cyberia-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/cidr-gns3/01-cyberia-config.png)
-2. **Wired**: [script](script/CIDR%20GNS/router/config-wired.sh), interface `10.66.24.130/30`, `10.66.22.65/30`, `10.66.0.17/29`, `10.66.18.1/30`<br>
+2. **Bukti konfigurasi interface Wired**: [script](script/CIDR%20GNS/router/config-wired.sh), interface `10.66.24.130/30`, `10.66.22.65/30`, `10.66.0.17/29`, `10.66.18.1/30`<br>
    [![Konfigurasi Wired 1](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/cidr-gns3/02-1wired-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/cidr-gns3/02-1wired-config.png) [![Konfigurasi Wired 2](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/cidr-gns3/02-2wired-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/cidr-gns3/02-2wired-config.png)
-3. **Navi**: [script](script/CIDR%20GNS/router/config-navi.sh), interface `10.66.22.66/30`, `10.66.20.1/24`, `10.66.22.1/26`, `10.66.21.1/24`<br>
+3. **Bukti konfigurasi interface Navi**: [script](script/CIDR%20GNS/router/config-navi.sh), interface `10.66.22.66/30`, `10.66.20.1/24`, `10.66.22.1/26`, `10.66.21.1/24`<br>
    [![Konfigurasi Navi](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/cidr-gns3/03-navi-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/cidr-gns3/03-navi-config.png)
-4. **Tachibana**: [script](script/CIDR%20GNS/router/config-tachibana.sh), interface `10.66.18.2/30`, `10.66.16.1/23`, `10.66.18.5/30`<br>
+4. **Bukti konfigurasi interface Tachibana**: [script](script/CIDR%20GNS/router/config-tachibana.sh), interface `10.66.18.2/30`, `10.66.16.1/23`, `10.66.18.5/30`<br>
    [![Konfigurasi Tachibana 1](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/cidr-gns3/04-1tachibana-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/cidr-gns3/04-1tachibana-config.png) [![Konfigurasi Tachibana 2](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/cidr-gns3/04-2tachibana-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/cidr-gns3/04-2tachibana-config.png)
-5. **Deus**: [script](script/CIDR%20GNS/router/config-deus.sh), interface `10.66.18.6/30`, `10.66.18.129/25`, `10.66.18.9/30`<br>
+5. **Bukti konfigurasi interface Deus**: [script](script/CIDR%20GNS/router/config-deus.sh), interface `10.66.18.6/30`, `10.66.18.129/25`, `10.66.18.9/30`<br>
    [![Konfigurasi Deus](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/cidr-gns3/05-deus-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/cidr-gns3/05-deus-config.png)
-6. **Protocol7**: [script](script/CIDR%20GNS/router/config-protocol7.sh), interface `10.66.18.10/30`, `10.66.18.65/26`, `10.66.18.13/30`<br>
+6. **Bukti konfigurasi interface Protocol7**: [script](script/CIDR%20GNS/router/config-protocol7.sh), interface `10.66.18.10/30`, `10.66.18.65/26`, `10.66.18.13/30`<br>
    [![Konfigurasi Protocol7](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/cidr-gns3/06-protocol7-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/cidr-gns3/06-protocol7-config.png)
-7. **Knights**: [script](script/CIDR%20GNS/router/config-knights.sh), interface `10.66.18.14/30`, `10.66.18.25/29`, `10.66.18.17/30`<br>
+7. **Bukti konfigurasi interface Knights**: [script](script/CIDR%20GNS/router/config-knights.sh), interface `10.66.18.14/30`, `10.66.18.25/29`, `10.66.18.17/30`<br>
    [![Konfigurasi Knights](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/cidr-gns3/07-knights-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/cidr-gns3/07-knights-config.png)
-8. **Phantoma**: [script](script/CIDR%20GNS/router/config-phantoma.sh), interface `10.66.18.18/30`, `10.66.18.33/27`, `10.66.18.21/30`<br>
+8. **Bukti konfigurasi interface Phantoma**: [script](script/CIDR%20GNS/router/config-phantoma.sh), interface `10.66.18.18/30`, `10.66.18.33/27`, `10.66.18.21/30`<br>
    [![Konfigurasi Phantoma](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/cidr-gns3/08-phantoma-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/cidr-gns3/08-phantoma-config.png)
-9. **Shibuya**: [script](script/CIDR%20GNS/router/config-shibuya.sh), interface `10.66.18.22/30`, `10.66.19.1/26`<br>
+9. **Bukti konfigurasi interface Shibuya**: [script](script/CIDR%20GNS/router/config-shibuya.sh), interface `10.66.18.22/30`, `10.66.19.1/26`<br>
    [![Konfigurasi Shibuya](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/cidr-gns3/09-shibuya-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/cidr-gns3/09-shibuya-config.png)
-10. **Psyche**: [script](script/CIDR%20GNS/router/config-psyche.sh), interface `10.66.0.18/29`, `10.66.4.1/22`<br>
+10. **Bukti konfigurasi interface Psyche**: [script](script/CIDR%20GNS/router/config-psyche.sh), interface `10.66.0.18/29`, `10.66.4.1/22`<br>
     [![Konfigurasi Psyche](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/cidr-gns3/10-psyche-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/cidr-gns3/10-psyche-config.png)
-11. **Copland**: [script](script/CIDR%20GNS/router/config-copland.sh), interface `10.66.0.19/29`, `10.66.2.1/23`, `10.66.0.65/26`<br>
+11. **Bukti konfigurasi interface Copland**: [script](script/CIDR%20GNS/router/config-copland.sh), interface `10.66.0.19/29`, `10.66.2.1/23`, `10.66.0.65/26`<br>
     [![Konfigurasi Copland](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/cidr-gns3/11-copland-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/cidr-gns3/11-copland-config.png)
-12. **Schumann**: [script](script/CIDR%20GNS/router/config-schumann.sh), interface `10.66.0.20/29`, `10.66.0.1/29`, `10.66.0.9/30`<br>
+12. **Bukti konfigurasi interface Schumann**: [script](script/CIDR%20GNS/router/config-schumann.sh), interface `10.66.0.20/29`, `10.66.0.1/29`, `10.66.0.9/30`<br>
     [![Konfigurasi Schumann](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/cidr-gns3/12-schumann-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/cidr-gns3/12-schumann-config.png)
-13. **Accela**: [script](script/CIDR%20GNS/router/config-accela.sh), interface `10.66.0.10/30`, `10.66.8.1/22`<br>
+13. **Bukti konfigurasi interface Accela**: [script](script/CIDR%20GNS/router/config-accela.sh), interface `10.66.0.10/30`, `10.66.8.1/22`<br>
     [![Konfigurasi Accela](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/cidr-gns3/13-accela-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/cidr-gns3/13-accela-config.png)
 
 Kami menggunakan satu interface eth0 pada 25 client, dengan IP statis sesuai subnet masing-masing dan default gateway menuju router LAN. Setiap script berada di direktori `clients/`.
@@ -388,35 +388,35 @@ ip addr add 10.66.18.66/26 dev eth0
 ip route replace default via 10.66.18.65 dev eth0
 ```
 
-| Client / script | Router gateway | Subnet | IP client | Default gateway | Bukti konfigurasi |
-|---|---|---|---|---|---|
-| [JJ](clients/config-jj.sh) | Cyberia | A1 | 10.66.24.2/25 | 10.66.24.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-jj-config.png) |
-| [MyuMyu](clients/config-myumyu.sh) | Cyberia | A1 | 10.66.24.3/25 | 10.66.24.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-myumyu-config.png) |
-| [Alice](clients/config-alice.sh) | Navi | A6 | 10.66.20.2/24 | 10.66.20.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-alice-config.png) |
-| [Reika](clients/config-reika.sh) | Navi | A6 | 10.66.20.3/24 | 10.66.20.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-reika-config.png) |
-| [Taro](clients/config-taro.sh) | Navi | A7 | 10.66.22.2/26 | 10.66.22.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-taro-config.png) |
-| [Yasuo](clients/config-yasuo.sh) | Navi | A8 | 10.66.21.2/24 | 10.66.21.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-yasuo-config.png) |
-| [Miho](clients/config-miho.sh) | Navi | A8 | 10.66.21.3/24 | 10.66.21.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-miho-config.png) |
-| [Kuma](clients/config-kuma.sh) | Navi | A8 | 10.66.21.4/24 | 10.66.21.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-kuma-config.png) |
-| [Collective](clients/config-collective.sh) | Tachibana | A9 | 10.66.16.2/23 | 10.66.16.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-collective-config.png) |
-| [Ghost](clients/config-ghost.sh) | Tachibana | A9 | 10.66.16.3/23 | 10.66.16.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-ghost-config.png) |
-| [Lillith](clients/config-lillith.sh) | Deus | A11 | 10.66.18.130/25 | 10.66.18.129 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-lillith-config.png) |
-| [Specter](clients/config-specter.sh) | Deus | A11 | 10.66.18.131/25 | 10.66.18.129 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-specter-config.png) |
-| [Chisa](clients/config-chisa.sh) | Protocol7 | A13 | 10.66.18.66/26 | 10.66.18.65 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-chisa-config.png) |
-| [Hodgeson](clients/config-hodgeson.sh) | Protocol7 | A13 | 10.66.18.67/26 | 10.66.18.65 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-hodgeson-config.png) |
-| [Eiri](clients/config-eiri.sh) | Knights | A15 | 10.66.18.26/29 | 10.66.18.25 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-eiri-config.png) |
-| [Semi](clients/config-semi.sh) | Phantoma | A17 | 10.66.18.34/27 | 10.66.18.33 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-semi-config.png) |
-| [Lain](clients/config-lain.sh) | Shibuya | A19 | 10.66.19.2/26 | 10.66.19.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-lain-config.png) |
-| [Mika](clients/config-mika.sh) | Shibuya | A19 | 10.66.19.3/26 | 10.66.19.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-mika-config.png) |
-| [Karl](clients/config-karl.sh) | Psyche | A20 | 10.66.4.2/22 | 10.66.4.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-karl-config.png) |
-| [Lin](clients/config-lin.sh) | Psyche | A20 | 10.66.4.3/22 | 10.66.4.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-lin-config.png) |
-| [Masayuki](clients/config-masayuki.sh) | Copland | A21 | 10.66.2.2/23 | 10.66.2.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-masayuki-config.png) |
-| [Juri](clients/config-juri.sh) | Copland | A22 | 10.66.0.66/26 | 10.66.0.65 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-juri-config.png) |
-| [Akashic](clients/config-akashic.sh) | Schumann | A23 | 10.66.0.2/29 | 10.66.0.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-akashic-config.png) |
-| [OmniPresence](clients/config-omnipresence.sh) | Accela | A25 | 10.66.8.2/22 | 10.66.8.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-omnipresence-config.png) |
-| [Denpa](clients/config-denpa.sh) | Accela | A25 | 10.66.8.3/22 | 10.66.8.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-denpa-config.png) |
+| Client / script | Router gateway | Subnet | IP client | Default gateway |
+|---|---|---|---|---|
+| [JJ](clients/config-jj.sh) | Cyberia | A1 | 10.66.24.2/25 | 10.66.24.1 |
+| [MyuMyu](clients/config-myumyu.sh) | Cyberia | A1 | 10.66.24.3/25 | 10.66.24.1 |
+| [Alice](clients/config-alice.sh) | Navi | A6 | 10.66.20.2/24 | 10.66.20.1 |
+| [Reika](clients/config-reika.sh) | Navi | A6 | 10.66.20.3/24 | 10.66.20.1 |
+| [Taro](clients/config-taro.sh) | Navi | A7 | 10.66.22.2/26 | 10.66.22.1 |
+| [Yasuo](clients/config-yasuo.sh) | Navi | A8 | 10.66.21.2/24 | 10.66.21.1 |
+| [Miho](clients/config-miho.sh) | Navi | A8 | 10.66.21.3/24 | 10.66.21.1 |
+| [Kuma](clients/config-kuma.sh) | Navi | A8 | 10.66.21.4/24 | 10.66.21.1 |
+| [Collective](clients/config-collective.sh) | Tachibana | A9 | 10.66.16.2/23 | 10.66.16.1 |
+| [Ghost](clients/config-ghost.sh) | Tachibana | A9 | 10.66.16.3/23 | 10.66.16.1 |
+| [Lillith](clients/config-lillith.sh) | Deus | A11 | 10.66.18.130/25 | 10.66.18.129 |
+| [Specter](clients/config-specter.sh) | Deus | A11 | 10.66.18.131/25 | 10.66.18.129 |
+| [Chisa](clients/config-chisa.sh) | Protocol7 | A13 | 10.66.18.66/26 | 10.66.18.65 |
+| [Hodgeson](clients/config-hodgeson.sh) | Protocol7 | A13 | 10.66.18.67/26 | 10.66.18.65 |
+| [Eiri](clients/config-eiri.sh) | Knights | A15 | 10.66.18.26/29 | 10.66.18.25 |
+| [Semi](clients/config-semi.sh) | Phantoma | A17 | 10.66.18.34/27 | 10.66.18.33 |
+| [Lain](clients/config-lain.sh) | Shibuya | A19 | 10.66.19.2/26 | 10.66.19.1 |
+| [Mika](clients/config-mika.sh) | Shibuya | A19 | 10.66.19.3/26 | 10.66.19.1 |
+| [Karl](clients/config-karl.sh) | Psyche | A20 | 10.66.4.2/22 | 10.66.4.1 |
+| [Lin](clients/config-lin.sh) | Psyche | A20 | 10.66.4.3/22 | 10.66.4.1 |
+| [Masayuki](clients/config-masayuki.sh) | Copland | A21 | 10.66.2.2/23 | 10.66.2.1 |
+| [Juri](clients/config-juri.sh) | Copland | A22 | 10.66.0.66/26 | 10.66.0.65 |
+| [Akashic](clients/config-akashic.sh) | Schumann | A23 | 10.66.0.2/29 | 10.66.0.1 |
+| [OmniPresence](clients/config-omnipresence.sh) | Accela | A25 | 10.66.8.2/22 | 10.66.8.1 |
+| [Denpa](clients/config-denpa.sh) | Accela | A25 | 10.66.8.3/22 | 10.66.8.1 |
 
-Konfigurasi setiap client diverifikasi menggunakan `ip -br -4 addr` dan `ip route`. Bukti screenshot konfigurasi client belum dilampirkan.
+Kami menjalankan script konfigurasi pada setiap client sesuai alamat IP dan gateway yang tercantum pada tabel.
 
 ## 12. Static Routing dan NAT
 
@@ -441,21 +441,21 @@ Cyberia menjadi edge router menuju NAT. NAT dilakukan dengan `iptables` mengguna
 
 ## 13. Testing Konektivitas
 
-Kami membagi pengujian menjadi ping tetangga antar-router, router ke LAN client, lintas cabang (cross-subnet), dan akses Internet ke 8.8.8.8. Kami menulis hasil pengujian harus dinilai dari output command yang diperoleh.
+Kami membagi pengujian menjadi ping tetangga antar-router, router ke LAN client, lintas cabang (cross-subnet), dan akses Internet ke 8.8.8.8. Kami menilai keberhasilan berdasarkan output command yang diperoleh.
 
 ### 13.1. Bukti pengujian yang sudah tersedia
 
 **Cyberia**: ping ke Wired (10.66.24.130) dan Internet (8.8.8.8) menunjukkan 0% packet loss.
 
-[Lihat bukti](Assets/cidr-gns3/01-2-cyberia-ping.png)
+1. **Bukti ping Cyberia ke Wired dan Internet**: [Lihat bukti](Assets/cidr-gns3/01-2-cyberia-ping.png)
 
 **Wired**: ping ke Cyberia, Navi, Tachibana, Psyche, Copland, Schumann, dan Internet menunjukkan 0% packet loss.
 
-[Lihat bukti](Assets/cidr-gns3/02-2-wired-ping.png)
+2. **Bukti ping Wired ke jaringan cabang dan Internet**: [Lihat bukti](Assets/cidr-gns3/02-2-wired-ping.png)
 
 **Navi**: ping ke Alice (10.66.20.2), Reika (10.66.20.3), Taro (10.66.22.2), Yasuo (10.66.21.2), Miho (10.66.21.3), dan Kuma (10.66.21.4) menunjukkan 0% packet loss.
 
-[Lihat bukti](Assets/cidr-gns3/03-2-navi-ping.png)
+3. **Bukti ping Navi ke client dalam jaringan lokal**: [Lihat bukti](Assets/cidr-gns3/03-2-navi-ping.png)
 
 **Tachibana**: uji konektivitas dilakukan langsung dari Tachibana ke Wired, Deus, Cyberia, dan Internet.
 
@@ -511,13 +511,13 @@ Konfigurasi router, client, static routing, forwarding, dan NAT kemudian diuji m
 
 ### Bukti VLSM Cisco Packet Tracer
 
-1. [![Ping Juri ke gateway, percobaan awal](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/vlsm-cpt/01_Ping_Juri_Gateway_dan_gagal_awal.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/01_Ping_Juri_Gateway_dan_gagal_awal.png)
-2. [![Ping Juri ke Masayuki, percobaan awal](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/vlsm-cpt/02_Ping_Juri_ke_Masayuki_awal.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/02_Ping_Juri_ke_Masayuki_awal.png)
-3. [![Ping Masayuki ke Juri, berhasil](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/vlsm-cpt/03_Ping_Masayuki_ke_Juri_berhasil.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/03_Ping_Masayuki_ke_Juri_berhasil.png)
-4. [![Ping Karl ke Juri, berhasil](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/vlsm-cpt/04_Ping_Karl_ke_Juri_berhasil.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/04_Ping_Karl_ke_Juri_berhasil.png)
-5. [![Ping Juri ke Karl, sebelum perbaikan](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/vlsm-cpt/05_Ping_Juri_ke_Karl_sebelum_perbaikan.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/05_Ping_Juri_ke_Karl_sebelum_perbaikan.png)
-6. [![OSPF Copland neighbor awal](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/vlsm-cpt/06_OSPF_Copland_neighbor_awal.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/06_OSPF_Copland_neighbor_awal.png)
-7. [![OSPF Copland routing table](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/vlsm-cpt/07_OSPF_Copland_routing_table.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/07_OSPF_Copland_routing_table.png)
-8. [![OSPF Copland adjacency log](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/vlsm-cpt/08_OSPF_Copland_adjacency_log.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/08_OSPF_Copland_adjacency_log.png)
-9. [![OSPF Psyche EXSTART awal](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/vlsm-cpt/09_OSPF_Psyche_EXSTART_awal.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/09_OSPF_Psyche_EXSTART_awal.png)
-10. [![Ping Juri ke Karl, berhasil](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/vlsm-cpt/10_Ping_Juri_ke_Karl_berhasil.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/10_Ping_Juri_ke_Karl_berhasil.png)
+1. **Bukti ping Juri ke gateway pada percobaan awal**: [Lihat gambar](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/01_Ping_Juri_Gateway_dan_gagal_awal.png)
+2. **Bukti ping Juri ke Masayuki pada percobaan awal**: [Lihat gambar](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/02_Ping_Juri_ke_Masayuki_awal.png)
+3. **Bukti ping Masayuki ke Juri berhasil**: [Lihat gambar](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/03_Ping_Masayuki_ke_Juri_berhasil.png)
+4. **Bukti ping Karl ke Juri berhasil**: [Lihat gambar](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/04_Ping_Karl_ke_Juri_berhasil.png)
+5. **Bukti ping Juri ke Karl sebelum perbaikan**: [Lihat gambar](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/05_Ping_Juri_ke_Karl_sebelum_perbaikan.png)
+6. **Bukti OSPF neighbor Copland pada kondisi awal**: [Lihat gambar](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/06_OSPF_Copland_neighbor_awal.png)
+7. **Bukti routing table OSPF Copland**: [Lihat gambar](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/07_OSPF_Copland_routing_table.png)
+8. **Bukti log adjacency OSPF Copland**: [Lihat gambar](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/08_OSPF_Copland_adjacency_log.png)
+9. **Bukti OSPF EXSTART Psyche pada kondisi awal**: [Lihat gambar](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/09_OSPF_Psyche_EXSTART_awal.png)
+10. **Bukti ping Juri ke Karl berhasil**: [Lihat gambar](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/10_Ping_Juri_ke_Karl_berhasil.png)
