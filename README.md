@@ -13,6 +13,15 @@
 
 - [Spreadsheet subnetting dan routing](https://docs.google.com/spreadsheets/d/1tnrkMIINtIfA9lkkEz2IxHoiGxdWwslZ/edit?usp=sharing&ouid=105300267501229657358&rtpof=true&sd=true)
 
+## Ringkasan Implementasi
+
+Dokumentasi ini mencakup dua implementasi praktikum:
+
+- **CIDR GNS3**: 25 subnet, 13 router, 25 client, dan 1 NAT1 sehingga terdapat 39 perangkat.
+- **VLSM Cisco Packet Tracer**: alokasi alamat berdasarkan kebutuhan host dan routing OSPF.
+
+Pada CIDR GNS3 terdapat 38 script konfigurasi, yaitu 13 script router dan 25 script client. NAT1 merupakan node eksternal GNS3 sehingga tidak memiliki script konfigurasi.
+
 ## Daftar Isi
 
 ### A. CIDR GNS3
@@ -104,6 +113,21 @@ A1 menggunakan `10.66.24.0/25`:
 - Usable IP: `10.66.24.1-10.66.24.126`
 - Broadcast: `10.66.24.127`
 
+### Perbedaan usable IP dan block size
+
+Usable IP adalah alamat yang dapat dipakai perangkat, sedangkan block size
+adalah seluruh alamat dalam blok, termasuk Network ID dan broadcast.
+
+| Prefix | Block size | Usable IP |
+|---|---:|---:|
+| `/25` | 128 | 126 |
+| `/26` | 64 | 62 |
+| `/30` | 4 | 2 |
+
+VLSM digunakan untuk mengalokasikan alamat berdasarkan kebutuhan host, dengan
+subnet terbesar ditempatkan lebih dahulu. CIDR digunakan untuk menggabungkan
+subnet contiguous yang memiliki jalur routing sama menjadi summary route.
+
 
 ## 5. Tabel Pembagian Subnet A1-A25
 
@@ -140,6 +164,18 @@ Setiap pasangan `/30` memiliki 4 + 4 = 8 alamat, sehingga summary-nya menjadi `/
 | F3 | D6 dan F2 | /19 |
 
 Penggabungan terakhir adalah `D6 /20 + F2 /20`: 4.096 + 4.096 = 8.192 alamat. Karena 8.192 alamat setara dengan `/19`, hasil akhirnya adalah `F3 = 10.66.0.0/19`.
+
+Pengelompokan wilayahnya adalah:
+
+- `B1-B11`: cabang Tachibana sampai Shibuya
+- `C1-C3`: cabang Navi
+- `D1-D6`: Schumann, Copland, Psyche, dan Accela
+- `E1`: cabang Cyberia
+- `F1-F3`: penggabungan seluruh wilayah
+
+Spreadsheet Penggabungan CIDR menunjukkan proses bottom-up, yaitu subnet
+A1-A25 digabung sampai F3 `/19`. Sebaliknya, tree CIDR menunjukkan proses
+top-down dari `10.66.0.0/19` sampai subnet A1-A25.
 
 ### Bukti spreadsheet penggabungan CIDR
 
@@ -330,12 +366,56 @@ ip route
 cat /proc/sys/net/ipv4/ip_forward
 ```
 
-Contoh rute agregasi pada Cyberia:
+Cyberia menggunakan alamat statis pada interface WAN karena image node tidak
+menyediakan `udhcpc`, `dhclient`, atau BusyBox untuk DHCP:
 
 ```sh
+ip link set eth0 up
+ip -4 addr flush dev eth0
+ip addr add 192.168.122.25/24 dev eth0
+ip route replace default via 192.168.122.1 dev eth0
+
+ip link set eth1 up
+ip -4 addr flush dev eth1
+ip addr add 10.66.24.1/25 dev eth1
+
+ip link set eth2 up
+ip -4 addr flush dev eth2
+ip addr add 10.66.24.129/30 dev eth2
+
 ip route replace 10.66.0.0/19 via 10.66.24.130 dev eth2
 iptables -t nat -A POSTROUTING -s 10.66.0.0/19 -o eth0 -j MASQUERADE
 ```
+
+| Interface | Alamat | Fungsi |
+|---|---|---|
+| `eth0` | `192.168.122.25/24` | NAT1/Internet |
+| `eth1` | `10.66.24.1/25` | A1, JJ dan MyuMyu |
+| `eth2` | `10.66.24.129/30` | A2, menuju Wired |
+
+Expected route Cyberia:
+
+```text
+default via 192.168.122.1 dev eth0
+10.66.0.0/19 via 10.66.24.130 dev eth2
+```
+
+Mapping koneksi utama yang dipertahankan:
+
+```text
+NAT1 nat0 → Cyberia eth0
+Cyberia eth1 → Switch1 → JJ/MyuMyu
+Cyberia eth2 → Wired eth0
+Wired eth1 → Navi eth0
+Wired eth2 → Switch2 bersama
+Wired eth3 → Tachibana eth0
+```
+
+Router non-core menggunakan default route menuju parent karena seluruh
+jaringan di luar cabangnya memiliki arah keluar yang sama. Static route ke
+child tetap diperlukan agar jaringan di bawah cabang dapat dicapai. Jika
+beberapa route cocok, router memilih prefix paling panjang; karena itu route
+`/22` yang lebih spesifik dipilih sebelum default route `/0`.
 
 ### Rekap konfigurasi dan bukti per router
 
@@ -366,7 +446,7 @@ iptables -t nat -A POSTROUTING -s 10.66.0.0/19 -o eth0 -j MASQUERADE
 13. **Bukti konfigurasi interface Accela**: [script](script/CIDR%20GNS/router/config-accela.sh), interface `10.66.0.10/30`, `10.66.8.1/22`<br>
     [![Konfigurasi Accela](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/cidr-gns3/13-accela-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/cidr-gns3/13-accela-config.png)
 
-Kami menggunakan satu interface eth0 pada 25 client, dengan IP statis sesuai subnet masing-masing dan default gateway menuju router LAN. Setiap script berada di direktori `clients/`.
+Kami menggunakan satu interface eth0 pada 25 client, dengan IP statis sesuai subnet masing-masing dan default gateway menuju router LAN. Setiap script berada di direktori `script/CIDR GNS/client/`.
 
 Contoh konfigurasi pada Chisa:
 
@@ -379,31 +459,58 @@ ip route replace default via 10.66.18.65 dev eth0
 
 | Client | Subnet | IP | Gateway |
 |---|---|---|---|
-| [JJ](clients/config-jj.sh) | A1 | 10.66.24.2/25 | 10.66.24.1 |
-| [MyuMyu](clients/config-myumyu.sh) | A1 | 10.66.24.3/25 | 10.66.24.1 |
-| [Alice](clients/config-alice.sh) | A6 | 10.66.20.2/24 | 10.66.20.1 |
-| [Reika](clients/config-reika.sh) | A6 | 10.66.20.3/24 | 10.66.20.1 |
-| [Taro](clients/config-taro.sh) | A7 | 10.66.22.2/26 | 10.66.22.1 |
-| [Yasuo](clients/config-yasuo.sh) | A8 | 10.66.21.2/24 | 10.66.21.1 |
-| [Miho](clients/config-miho.sh) | A8 | 10.66.21.3/24 | 10.66.21.1 |
-| [Kuma](clients/config-kuma.sh) | A8 | 10.66.21.4/24 | 10.66.21.1 |
-| [Collective](clients/config-collective.sh) | A9 | 10.66.16.2/23 | 10.66.16.1 |
-| [Ghost](clients/config-ghost.sh) | A9 | 10.66.16.3/23 | 10.66.16.1 |
-| [Lillith](clients/config-lillith.sh) | A11 | 10.66.18.130/25 | 10.66.18.129 |
-| [Specter](clients/config-specter.sh) | A11 | 10.66.18.131/25 | 10.66.18.129 |
-| [Chisa](clients/config-chisa.sh) | A13 | 10.66.18.66/26 | 10.66.18.65 |
-| [Hodgeson](clients/config-hodgeson.sh) | A13 | 10.66.18.67/26 | 10.66.18.65 |
-| [Eiri](clients/config-eiri.sh) | A15 | 10.66.18.26/29 | 10.66.18.25 |
-| [Semi](clients/config-semi.sh) | A17 | 10.66.18.34/27 | 10.66.18.33 |
-| [Lain](clients/config-lain.sh) | A19 | 10.66.19.2/26 | 10.66.19.1 |
-| [Mika](clients/config-mika.sh) | A19 | 10.66.19.3/26 | 10.66.19.1 |
-| [Karl](clients/config-karl.sh) | A20 | 10.66.4.2/22 | 10.66.4.1 |
-| [Lin](clients/config-lin.sh) | A20 | 10.66.4.3/22 | 10.66.4.1 |
-| [Masayuki](clients/config-masayuki.sh) | A21 | 10.66.2.2/23 | 10.66.2.1 |
-| [Juri](clients/config-juri.sh) | A22 | 10.66.0.66/26 | 10.66.0.65 |
-| [Akashic](clients/config-akashic.sh) | A23 | 10.66.0.2/29 | 10.66.0.1 |
-| [OmniPresence](clients/config-omnipresence.sh) | A25 | 10.66.8.2/22 | 10.66.8.1 |
-| [Denpa](clients/config-denpa.sh) | A25 | 10.66.8.3/22 | 10.66.8.1 |
+| [JJ](script/CIDR%20GNS/client/config-jj.sh) | A1 | 10.66.24.2/25 | 10.66.24.1 |
+| [MyuMyu](script/CIDR%20GNS/client/config-myumyu.sh) | A1 | 10.66.24.3/25 | 10.66.24.1 |
+| [Alice](script/CIDR%20GNS/client/config-alice.sh) | A6 | 10.66.20.2/24 | 10.66.20.1 |
+| [Reika](script/CIDR%20GNS/client/config-reika.sh) | A6 | 10.66.20.3/24 | 10.66.20.1 |
+| [Taro](script/CIDR%20GNS/client/config-taro.sh) | A7 | 10.66.22.2/26 | 10.66.22.1 |
+| [Yasuo](script/CIDR%20GNS/client/config-yasuo.sh) | A8 | 10.66.21.2/24 | 10.66.21.1 |
+| [Miho](script/CIDR%20GNS/client/config-miho.sh) | A8 | 10.66.21.3/24 | 10.66.21.1 |
+| [Kuma](script/CIDR%20GNS/client/config-kuma.sh) | A8 | 10.66.21.4/24 | 10.66.21.1 |
+| [Collective](script/CIDR%20GNS/client/config-collective.sh) | A9 | 10.66.16.2/23 | 10.66.16.1 |
+| [Ghost](script/CIDR%20GNS/client/config-ghost.sh) | A9 | 10.66.16.3/23 | 10.66.16.1 |
+| [Lillith](script/CIDR%20GNS/client/config-lillith.sh) | A11 | 10.66.18.130/25 | 10.66.18.129 |
+| [Specter](script/CIDR%20GNS/client/config-specter.sh) | A11 | 10.66.18.131/25 | 10.66.18.129 |
+| [Chisa](script/CIDR%20GNS/client/config-chisa.sh) | A13 | 10.66.18.66/26 | 10.66.18.65 |
+| [Hodgeson](script/CIDR%20GNS/client/config-hodgeson.sh) | A13 | 10.66.18.67/26 | 10.66.18.65 |
+| [Eiri](script/CIDR%20GNS/client/config-eiri.sh) | A15 | 10.66.18.26/29 | 10.66.18.25 |
+| [Semi](script/CIDR%20GNS/client/config-semi.sh) | A17 | 10.66.18.34/27 | 10.66.18.33 |
+| [Lain](script/CIDR%20GNS/client/config-lain.sh) | A19 | 10.66.19.2/26 | 10.66.19.1 |
+| [Mika](script/CIDR%20GNS/client/config-mika.sh) | A19 | 10.66.19.3/26 | 10.66.19.1 |
+| [Karl](script/CIDR%20GNS/client/config-karl.sh) | A20 | 10.66.4.2/22 | 10.66.4.1 |
+| [Lin](script/CIDR%20GNS/client/config-lin.sh) | A20 | 10.66.4.3/22 | 10.66.4.1 |
+| [Masayuki](script/CIDR%20GNS/client/config-masayuki.sh) | A21 | 10.66.2.2/23 | 10.66.2.1 |
+| [Juri](script/CIDR%20GNS/client/config-juri.sh) | A22 | 10.66.0.66/26 | 10.66.0.65 |
+| [Akashic](script/CIDR%20GNS/client/config-akashic.sh) | A23 | 10.66.0.2/29 | 10.66.0.1 |
+| [OmniPresence](script/CIDR%20GNS/client/config-omnipresence.sh) | A25 | 10.66.8.2/22 | 10.66.8.1 |
+| [Denpa](script/CIDR%20GNS/client/config-denpa.sh) | A25 | 10.66.8.3/22 | 10.66.8.1 |
+
+Seluruh script client mengikuti pola berikut dan tidak menjalankan ping
+otomatis. Ping dijalankan manual pada tahap testing agar bukti screenshot
+hanya menampilkan pengujian yang sudah bersih:
+
+```sh
+ip link set eth0 up
+ip -4 addr flush dev eth0
+ip addr add <IP-client>/<prefix> dev eth0
+ip route replace default via <gateway> dev eth0
+ip -br -4 addr
+ip route
+```
+
+Daftar script konfigurasi terdiri dari 13 router (`config-accela.sh`,
+`config-copland.sh`, `config-cyberia.sh`, `config-deus.sh`,
+`config-knights.sh`, `config-navi.sh`, `config-phantoma.sh`,
+`config-protocol7.sh`, `config-psyche.sh`, `config-schumann.sh`,
+`config-shibuya.sh`, `config-tachibana.sh`, dan `config-wired.sh`) serta 25
+client (`config-jj.sh`, `config-myumyu.sh`, `config-alice.sh`,
+`config-reika.sh`, `config-taro.sh`, `config-yasuo.sh`, `config-miho.sh`,
+`config-kuma.sh`, `config-collective.sh`, `config-ghost.sh`,
+`config-lillith.sh`, `config-specter.sh`, `config-chisa.sh`,
+`config-hodgeson.sh`, `config-eiri.sh`, `config-semi.sh`, `config-lain.sh`,
+`config-mika.sh`, `config-karl.sh`, `config-lin.sh`, `config-masayuki.sh`,
+`config-juri.sh`, `config-akashic.sh`, `config-omnipresence.sh`, dan
+`config-denpa.sh`).
 
 ## 10. Static Routing dan NAT
 
@@ -426,6 +533,79 @@ Kami mempertahankan rute yang langsung terhubung ke interface dengan prefix yang
 Cyberia menjadi edge router menuju NAT. NAT dilakukan dengan `iptables` menggunakan source blok induk `10.66.0.0/19` dan interface keluar menuju Internet.
 
 Kami menguji konektivitas lokal, antar-router, lintas cabang, dan akses Internet. Tabel berikut berisi command utama dan fungsi pengujiannya.
+
+## 11. Testing Konektivitas
+
+Sebelum mengambil screenshot ping, jalankan satu ping pemanasan untuk ARP dan
+pembelajaran MAC switch, lalu bersihkan terminal:
+
+```sh
+ping -c 1 <IP-tujuan> >/dev/null 2>&1
+clear
+ping -c 3 <IP-tujuan>
+```
+
+Setiap screenshot ping harus memperlihatkan tiga reply dan
+`3 packets transmitted, 3 received, 0% packet loss`. Screenshot dengan
+`Destination Host Unreachable`, `Destination Net Unreachable`, atau packet
+loss tidak digunakan sebagai bukti final.
+
+### Sembilan screenshot pengujian final
+
+| No. | Node dan pengujian | Command utama | File bukti |
+|---:|---|---|---|
+| 1 | Konfigurasi client Lain | `sh /root/config-lain.sh` | `Assets/01-lain-konfigurasi-client.png` |
+| 2 | Protocol7 ke Knights (A14) | `ping -c 3 10.66.18.14` | `Assets/02-protocol7-ke-knights.png` |
+| 3 | Navi ke Kuma (A8) | `ping -c 3 10.66.21.4` | `Assets/03-navi-ke-kuma-satu-lan.png` |
+| 4 | Alice ke Denpa | `ping -c 3 10.66.8.3` | `Assets/04-alice-ke-denpa.png` |
+| 5 | Lain ke JJ lintas routing | `ping -c 3 10.66.24.2` | `Assets/05-lain-ke-jj-lintas-routing.png` |
+| 6 | Summary route Wired | `sh /root/config-wired.sh` | `Assets/06-wired-summary-routing.png` |
+| 7 | NAT dan routing Cyberia | `sh /root/config-cyberia.sh` | `Assets/07-cyberia-nat-routing.png` |
+| 8 | Lain ke Internet | `ping -c 3 8.8.8.8` | `Assets/08-lain-ke-internet.png` |
+| 9 | Denpa ke Alice | `ping -c 3 10.66.20.2` | `Assets/09-denpa-ke-alice.png` |
+
+SS 1 harus memperlihatkan `10.66.19.2/26` dan gateway `10.66.19.1`.
+SS 6 harus memperlihatkan summary route `/22`, default route, dan
+`ip_forward = 1`. SS 7 harus memperlihatkan `eth0 192.168.122.25/24`,
+default route ke `192.168.122.1`, serta rule `MASQUERADE` untuk source
+`10.66.0.0/19`.
+
+### Pengujian komunikasi dua arah
+
+Alice dan Denpa digunakan sebagai contoh komunikasi antar-cabang. Uji dari
+Alice ke Denpa:
+
+```sh
+ping -c 1 10.66.8.3 >/dev/null 2>&1
+clear
+ping -c 3 10.66.8.3
+```
+
+Jalurnya adalah `Alice → Navi → Wired → Schumann → Accela → Denpa`.
+Kemudian uji arah balik dari Denpa ke Alice:
+
+```sh
+ping -c 1 10.66.20.2 >/dev/null 2>&1
+clear
+ping -c 3 10.66.20.2
+```
+
+Jalurnya adalah `Denpa → Accela → Schumann → Wired → Navi → Alice`.
+Kedua arah yang menghasilkan 0% packet loss membuktikan default gateway,
+static route, summary CIDR, IP forwarding, dan return route bekerja.
+
+### Hubungan bukti dengan pertanyaan praktikum
+
+| Pertanyaan atau konsep | Bukti |
+|---|---|
+| Host dan interface router membutuhkan IP | SS 1 dan tabel Pembagian IP CIDR |
+| Perbedaan VLSM dan CIDR | Spreadsheet VLSM, tree CIDR, dan SS 6 |
+| VLSM dimulai dari subnet terbesar | Tab `Rute vlsm` pada spreadsheet |
+| CIDR menggabungkan jaringan contiguous | Tree, tab `Penggabungan - CIDR`, dan SS 5 |
+| Default route ke parent dan static route ke child | SS 5 dan SS 6 |
+| Longest prefix match dan summary route | SS 4, SS 6, dan SS 8 |
+| Komunikasi dua arah dan return route | SS 4 dan SS 9 |
+| NAT dan akses Internet | SS 7 dan SS 8 |
 
 ### Bukti pengujian yang tersedia
 
@@ -465,7 +645,15 @@ Setiap pengujian berhasil apabila outputnya memuat `3 packets transmitted, 3 rec
 
 Kami menyelesaikan alur CIDR GNS3 dari identifikasi topologi, penentuan 25 subnet, perhitungan host, penentuan prefix, pembagian A1-A25, penggabungan CIDR, pembentukan tree, penetapan alamat final, konfigurasi perangkat, static routing, NAT, dan testing konektivitas.
 
-Blok induk hasil route summarization adalah `10.66.0.0/19`. Pengujian konektivitas dinyatakan berhasil apabila menghasilkan `3 packets transmitted, 3 received, 0% packet loss`.
+Blok induk hasil route summarization adalah `10.66.0.0/19`. Seluruh
+skenario pengujian representatif dinyatakan berhasil apabila menghasilkan
+`3 packets transmitted, 3 received, 0% packet loss`.
+
+Pengujian Alice-Denpa dan Denpa-Alice membuktikan komunikasi lintas cabang
+dan return route berjalan dua arah. Pengujian Lain-JJ membuktikan static
+routing end-to-end serta summary CIDR bekerja. Pengujian Lain menuju
+`8.8.8.8` membuktikan default route, IP forwarding, dan NAT MASQUERADE pada
+Cyberia berfungsi.
 
 
 # B. VLSM Cisco Packet Tracer
