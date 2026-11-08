@@ -27,7 +27,7 @@
 8. [Pembagian Network ID, Broadcast, dan Range IP](#8-pembagian-network-id-broadcast-dan-range-ip)
 9. [Konfigurasi Router dan Client](#9-konfigurasi-router-dan-client)
 10. [Static Routing dan NAT](#10-static-routing-dan-nat)
-11. [Testing Konektivitas dan Bukti Screenshot](#11-testing-konektivitas)
+11. [Pengujian Konektivitas](#11-pengujian-konektivitas)
 12. [Kesimpulan CIDR](#12-kesimpulan-cidr)
 
 **B. VLSM Cisco Packet Tracer**
@@ -143,18 +143,11 @@ Kami mencatat kebutuhan, prefix, kapasitas usable, dan block size setiap subnet 
 | A20 | 881 | /22 | 1.022 | 1.024 |
 | A25 | 514 | /22 | 1.022 | 1.024 |
 
-Prefix final yang perlu diperhatikan adalah A20 dan A25 `/22`, A21 dan A9
-`/23`, serta A4 `/30`. Network ID dan broadcast tidak diberikan kepada
-perangkat.
-
-### Validasi hasil subnetting
-
-- Network ID setiap subnet berada pada boundary prefix yang valid.
-- Tidak ada subnet A1-A25 yang overlap.
-- Kebutuhan host setiap subnet terpenuhi.
-- Network ID dan broadcast tidak digunakan sebagai alamat perangkat.
-- IP gateway dan client berada dalam usable range.
-- Link antar-router menggunakan `/30` dengan dua usable address.
+Subnet terbesar adalah A20 dan A25 dengan prefix `/22`. Link
+Wired-Tachibana pada A4 menggunakan `/30` karena hanya menghubungkan dua
+interface router. Hasil pembagian diperiksa kembali menggunakan Network ID,
+broadcast, dan usable range. Tidak ditemukan overlap antara A1-A25 dan seluruh
+kebutuhan host masih berada dalam kapasitas prefix masing-masing.
 
 
 ## 6. Penggabungan CIDR
@@ -189,10 +182,9 @@ A1 /25 + A2 /30 = 128 + 4 = 132 alamat
 132 dibulatkan ke 256 alamat = E1 /24
 ```
 
-Penggabungan hanya valid jika network summary berada pada boundary yang benar.
-Ruang alamat yang belum dipakai boleh berada di dalam summary selama tidak
-terdapat jaringan aktif dengan next hop berbeda yang menyebabkan salah arah
-routing.
+Subnet yang diringkas harus berada dalam blok alamat yang sama dan mengikuti
+batas prefix yang valid. Beberapa summary masih mencakup alamat kosong, tetapi
+alamat tersebut tidak digunakan oleh cabang lain.
 
 Pengelompokan wilayahnya adalah:
 
@@ -201,10 +193,6 @@ Pengelompokan wilayahnya adalah:
 - `D1-D6`: Schumann, Copland, Psyche, dan Accela
 - `E1`: cabang Cyberia
 - `F1-F3`: penggabungan seluruh wilayah
-
-Spreadsheet Penggabungan CIDR menunjukkan proses bottom-up, yaitu subnet
-A1-A25 digabung sampai F3 `/19`. Sebaliknya, tree CIDR menunjukkan proses
-top-down dari `10.66.0.0/19` sampai subnet A1-A25.
 
 ### Bukti spreadsheet penggabungan CIDR
 
@@ -219,13 +207,13 @@ top-down dari `10.66.0.0/19` sampai subnet A1-A25.
 
 ## 7. Tree CIDR
 
-Tree CIDR menunjukkan pembagian alamat secara top-down. Root tree adalah `10.66.0.0/19`, yang dibagi menjadi `10.66.0.0/20` dan `10.66.16.0/20`. Diagram berikut memperlihatkan pembagian blok induk sampai subnet A1-A25.
+Tabel penggabungan dibaca dari A1-A25 menuju F3 `/19`. Tree berikut
+menampilkan proses yang sama dari arah sebaliknya, yaitu dari blok
+`10.66.0.0/19` menuju subnet akhir.
 
 ![Tree CIDR](Assets/cidr-gns3/subnet2.png)
 
 <div style="overflow:auto; resize:both; width:100%; min-height:420px; border:1px solid #ccc; padding:8px;">
-
-### Tree CIDR
 
 ```mermaid
 %%{init: {"flowchart": {"htmlLabels": true, "nodeWidth": 240, "padding": 18, "nodeSpacing": 30, "rankSpacing": 45, "curve": "basis"}}}%%
@@ -346,9 +334,6 @@ flowchart TD
 
 </div>
 
-Spreadsheet Penggabungan - CIDR menunjukkan proses bottom-up, sedangkan tree menunjukkan proses top-down.
-
-
 ## 8. Pembagian Network ID, Broadcast, dan Range IP
 
 Setelah tree terbentuk, kami menetapkan Network ID, prefix, broadcast, dan range IP usable untuk setiap subnet. Tabel ini menjadi dasar konfigurasi interface router dan client.
@@ -397,8 +382,8 @@ ip route
 cat /proc/sys/net/ipv4/ip_forward
 ```
 
-Cyberia menggunakan alamat statis pada interface WAN karena image node tidak
-menyediakan `udhcpc`, `dhclient`, atau BusyBox untuk DHCP:
+Cyberia menggunakan IP statis pada `eth0` karena image yang digunakan tidak
+memiliki DHCP client:
 
 ```sh
 ip link set eth0 up
@@ -529,19 +514,12 @@ ip -br -4 addr
 ip route
 ```
 
-Daftar script konfigurasi terdiri dari 13 router (`config-accela.sh`,
-`config-copland.sh`, `config-cyberia.sh`, `config-deus.sh`,
-`config-knights.sh`, `config-navi.sh`, `config-phantoma.sh`,
-`config-protocol7.sh`, `config-psyche.sh`, `config-schumann.sh`,
-`config-shibuya.sh`, `config-tachibana.sh`, dan `config-wired.sh`) serta 25
-client (`config-jj.sh`, `config-myumyu.sh`, `config-alice.sh`,
-`config-reika.sh`, `config-taro.sh`, `config-yasuo.sh`, `config-miho.sh`,
-`config-kuma.sh`, `config-collective.sh`, `config-ghost.sh`,
-`config-lillith.sh`, `config-specter.sh`, `config-chisa.sh`,
-`config-hodgeson.sh`, `config-eiri.sh`, `config-semi.sh`, `config-lain.sh`,
-`config-mika.sh`, `config-karl.sh`, `config-lin.sh`, `config-masayuki.sh`,
-`config-juri.sh`, `config-akashic.sh`, `config-omnipresence.sh`, dan
-`config-denpa.sh`).
+Seluruh script tersedia pada folder berikut:
+
+- Router: [`script/CIDR GNS/router`](script/CIDR%20GNS/router)
+- Client: [`script/CIDR GNS/client`](script/CIDR%20GNS/client)
+
+Terdapat 13 script router dan 25 script client.
 
 ## 10. Static Routing dan NAT
 
@@ -559,7 +537,9 @@ Berikut adalah contoh ringkasan rute yang kami gunakan dalam implementasi:
 | Schumann | 10.66.8.0/22 | 10.66.0.10 (Accela) |
 | Phantoma | 10.66.19.0/26 | 10.66.18.22 (Shibuya) |
 
-Kami mempertahankan rute yang langsung terhubung ke interface dengan prefix yang lebih spesifik agar tetap dipilih melalui mekanisme longest prefix match. Karena itu, agregasi rute tidak menggantikan route connected pada router.
+Route connected tetap muncul otomatis ketika alamat diberikan pada interface.
+Jika route connected dan summary sama-sama cocok, router memilih route dengan
+prefix yang lebih panjang.
 
 Summary route tidak otomatis dipasang pada setiap router. Summary hanya boleh
 digunakan ketika seluruh jaringan di dalam summary memiliki next hop yang
@@ -590,9 +570,8 @@ Shibuya -> Phantoma -> Knights -> Protocol7 -> Deus
 -> Tachibana -> Wired -> Cyberia -> NAT1
 ```
 
-Router parent menggunakan static route atau summary route menuju child.
-Dengan demikian jumlah route tetap ringkas tanpa menghilangkan jalur menuju
-jaringan di bawah cabang.
+Router cabang memakai default route menuju parent. Sebaliknya, parent
+menyimpan route menuju jaringan yang berada di bawah setiap child.
 
 ### Longest prefix match
 
@@ -617,273 +596,63 @@ alamat WAN `192.168.122.25`.
 
 Kami menguji konektivitas lokal, antar-router, lintas cabang, dan akses Internet. Tabel berikut berisi command utama dan fungsi pengujiannya.
 
-## 11. Testing Konektivitas dan Bukti Screenshot
+## 11. Pengujian Konektivitas
 
-Sebelum mengambil screenshot ping, jalankan satu ping pemanasan untuk ARP dan
-pembelajaran MAC switch, lalu bersihkan terminal:
+Pengujian dipilih untuk mewakili koneksi lokal, link antar-router, lintas
+cabang, komunikasi dua arah, dan Internet. Ping dinyatakan berhasil jika
+menghasilkan `3 received` dan `0% packet loss`.
 
-```sh
-ping -c 1 <IP-tujuan> >/dev/null 2>&1
-clear
-ping -c 3 <IP-tujuan>
-```
+| No. | Sumber | Tujuan | Command | Keterangan |
+|---:|---|---|---|---|
+| 1 | Lain | Konfigurasi lokal | `sh /root/config-lain.sh` | Memeriksa IP dan gateway A19 |
+| 2 | Protocol7 | Knights | `ping -c 3 10.66.18.14` | Link antar-router A14 |
+| 3 | Navi | Kuma | `ping -c 3 10.66.21.4` | Komunikasi dalam A8 |
+| 4 | Alice | Denpa | `ping -c 3 10.66.8.3` | Lintas cabang Navi-Accela |
+| 5 | Denpa | Alice | `ping -c 3 10.66.20.2` | Pengujian arah balik |
+| 6 | Lain | JJ | `ping -c 3 10.66.24.2` | Jalur Shibuya-Cyberia |
+| 7 | Wired | Routing table | `sh /root/config-wired.sh` | Memeriksa summary route |
+| 8 | Cyberia | NAT dan route | `sh /root/config-cyberia.sh` | Memeriksa WAN, default route, dan NAT |
+| 9 | Lain | Internet | `ping -c 3 8.8.8.8` | Jalur internal sampai NAT1 |
 
-Setiap screenshot ping harus memperlihatkan tiga reply dan
-`3 packets transmitted, 3 received, 0% packet loss`. Screenshot dengan
-`Destination Host Unreachable`, `Destination Net Unreachable`, atau packet
-loss tidak digunakan sebagai bukti final.
-
-### Sembilan screenshot pengujian final
-
-#### 1. Konfigurasi client Lain
-
-**Command:**
-
-```sh
-sh /root/config-lain.sh
-```
-
-**Hasil yang diharapkan:** IP `10.66.19.2/26`, gateway `10.66.19.1`, dan
-route lokal `10.66.19.0/26` tampil pada terminal.
+### Konfigurasi dan link lokal
 
 ![Konfigurasi client Lain](Assets/cidr-gns3/01-lain-konfigurasi-client.png)
 
-#### 2. Protocol7 ke Knights
-
-**Command:**
-
-```sh
-ping -c 3 10.66.18.14
-```
-
-**Hasil yang diharapkan:** `3 packets transmitted, 3 received, 0% packet loss`.
-Pengujian ini membuktikan link point-to-point A14 `/30`.
-
 ![Protocol7 ke Knights](Assets/cidr-gns3/02-protocol7-ke-knights.png)
 
-#### 3. Navi ke Kuma dalam satu LAN
+![Navi ke Kuma](Assets/cidr-gns3/03-navi-ke-kuma-satu-lan.png)
 
-**Command:**
+### Komunikasi dua arah
 
-```sh
-ping -c 3 10.66.21.4
-```
-
-**Hasil yang diharapkan:** `3 packets transmitted, 3 received, 0% packet loss`.
-Navi dan Kuma berada pada LAN A8 `10.66.21.0/24`.
-
-![Navi ke Kuma dalam satu LAN](Assets/cidr-gns3/03-navi-ke-kuma-satu-lan.png)
-
-#### 4. Alice ke Denpa
-
-**Command:**
-
-```sh
-ping -c 3 10.66.8.3
-```
-
-**Hasil yang diharapkan:** `3 packets transmitted, 3 received, 0% packet loss`.
-Jalur pengujian adalah `Alice → Navi → Wired → Schumann → Accela → Denpa`.
-
-![Alice ke Denpa lintas cabang](Assets/cidr-gns3/04-alice-ke-denpa-lintas-cabang.png)
-
-#### 5. Lain ke JJ lintas routing
-
-**Command:**
-
-```sh
-ping -c 3 10.66.24.2
-```
-
-**Hasil yang diharapkan:** `3 packets transmitted, 3 received, 0% packet loss`.
-Pengujian ini membuktikan static routing dan summary CIDR end-to-end.
-
-![Lain ke JJ lintas routing](Assets/cidr-gns3/05-lain-ke-jj-lintas-routing.png)
-
-#### 6. Summary route Wired
-
-**Command:**
-
-```sh
-sh /root/config-wired.sh
-```
-
-**Hasil yang diharapkan:** summary route `/22`, default route, dan
-`ip_forward = 1` tampil pada terminal.
-
-![Summary route Wired](Assets/cidr-gns3/06-wired-summary-routing.png)
-
-#### 7. Lain ke Internet
-
-**Command:**
-
-```sh
-ping -c 3 8.8.8.8
-```
-
-**Hasil yang diharapkan:** `3 packets transmitted, 3 received, 0% packet loss`.
-Pengujian ini membuktikan default route, forwarding, dan NAT MASQUERADE
-Cyberia bekerja.
-
-![Lain ke Internet](Assets/cidr-gns3/07-lain-ke-internet.png)
-
-#### 8. Alice ke Denpa (arah pertama)
-
-**Command:**
-
-```sh
-ping -c 3 10.66.8.3
-```
-
-**Hasil yang diharapkan:** `3 packets transmitted, 3 received, 0% packet loss`.
-Pengujian ini menjadi arah pertama komunikasi dua arah Alice-Denpa.
-
-![Alice ke Denpa](Assets/cidr-gns3/08-alice-ke-denpa.png)
-
-#### 9. Denpa ke Alice
-
-**Command:**
-
-```sh
-ping -c 3 10.66.20.2
-```
-
-**Hasil yang diharapkan:** `3 packets transmitted, 3 received, 0% packet loss`.
-Pengujian arah balik membuktikan return route dan komunikasi dua arah.
+![Alice ke Denpa](Assets/cidr-gns3/04-alice-ke-denpa-lintas-cabang.png)
 
 ![Denpa ke Alice](Assets/cidr-gns3/09-denpa-ke-alice.png)
 
-SS 1 harus memperlihatkan `10.66.19.2/26` dan gateway `10.66.19.1`.
-SS 6 harus memperlihatkan summary route `/22`, default route, dan
-`ip_forward = 1`. Konfigurasi NAT Cyberia menggunakan script
-`config-cyberia.sh`; hasil akses Internet client dibuktikan oleh SS 7.
+### Routing dan NAT
 
-### Pengujian komunikasi dua arah
+![Lain ke JJ](Assets/cidr-gns3/05-lain-ke-jj-lintas-routing.png)
 
-Alice dan Denpa digunakan sebagai contoh komunikasi antar-cabang. Uji dari
-Alice ke Denpa:
+![Routing Wired](Assets/cidr-gns3/06-wired-summary-routing.png)
 
-```sh
-ping -c 1 10.66.8.3 >/dev/null 2>&1
-clear
-ping -c 3 10.66.8.3
-```
+![Konfigurasi Cyberia](Assets/cidr-gns3/01-cyberia-config.png)
 
-Jalurnya adalah `Alice → Navi → Wired → Schumann → Accela → Denpa`.
-Kemudian uji arah balik dari Denpa ke Alice:
-
-```sh
-ping -c 1 10.66.20.2 >/dev/null 2>&1
-clear
-ping -c 3 10.66.20.2
-```
-
-Jalurnya adalah `Denpa → Accela → Schumann → Wired → Navi → Alice`.
-Kedua arah yang menghasilkan 0% packet loss membuktikan default gateway,
-static route, summary CIDR, IP forwarding, dan return route bekerja.
-
-### Hubungan bukti dengan pertanyaan praktikum
-
-| Pertanyaan atau konsep | Bukti |
-|---|---|
-| Host dan interface router membutuhkan IP | SS 1 dan tabel Pembagian IP CIDR |
-| Perbedaan VLSM dan CIDR | Spreadsheet VLSM, tree CIDR, dan SS 6 |
-| VLSM dimulai dari subnet terbesar | Tab `Rute vlsm` pada spreadsheet |
-| CIDR menggabungkan jaringan contiguous | Tree, tab `Penggabungan - CIDR`, dan SS 5 |
-| Default route ke parent dan static route ke child | SS 5 dan SS 6 |
-| Longest prefix match dan summary route | SS 4, SS 6, dan SS 8 |
-| Komunikasi dua arah dan return route | SS 4 dan SS 9 |
-| NAT dan akses Internet | SS 7 dan SS 8 |
-
-### Bukti sembilan screenshot final
-
-1. **Konfigurasi client Lain**
-
-![Konfigurasi client Lain](Assets/cidr-gns3/01-lain-konfigurasi-client.png)
-
-2. **Protocol7 ke Knights**
-
-![Protocol7 ke Knights](Assets/cidr-gns3/02-protocol7-ke-knights.png)
-
-3. **Navi ke Kuma dalam satu LAN**
-
-![Navi ke Kuma dalam satu LAN](Assets/cidr-gns3/03-navi-ke-kuma-satu-lan.png)
-
-4. **Alice ke Denpa lintas cabang**
-
-![Alice ke Denpa lintas cabang](Assets/cidr-gns3/04-alice-ke-denpa-lintas-cabang.png)
-
-5. **Lain ke JJ lintas routing**
-
-![Lain ke JJ lintas routing](Assets/cidr-gns3/05-lain-ke-jj-lintas-routing.png)
-
-6. **Summary route Wired**
-
-![Summary route Wired](Assets/cidr-gns3/06-wired-summary-routing.png)
-
-7. **Lain ke Internet**
+### Internet
 
 ![Lain ke Internet](Assets/cidr-gns3/07-lain-ke-internet.png)
-
-8. **Alice ke Denpa**
-
-![Alice ke Denpa](Assets/cidr-gns3/08-alice-ke-denpa.png)
-
-9. **Denpa ke Alice**
-
-![Denpa ke Alice](Assets/cidr-gns3/09-denpa-ke-alice.png)
-
-Hasil pengujian dinyatakan berhasil apabila output command menunjukkan:
-
-```text
-3 packets transmitted, 3 received, 0% packet loss
-```
-
-### Command pengujian dan fungsi
-
-| Sumber | Tujuan | Command | Fungsi |
-|---|---|---|---|
-| Chisa | Gateway Protocol7 | `ping -c 3 10.66.18.65` | Menguji LAN A13 |
-| Protocol7 | Knights | `ping -c 3 10.66.18.14` | Menguji link A14 |
-| Lain | JJ | `ping -c 3 10.66.24.2` | Menguji lintas cabang |
-| Alice | Denpa | `ping -c 3 10.66.8.3` | Menguji Navi ke Accela |
-| Lain | Internet | `ping -c 3 8.8.8.8` | Menguji NAT |
-
-Catatan Protocol7-Knights: jalankan ulang `ping -c 3 10.66.18.14` dari Protocol7 setelah route A14 diperiksa. Pengujian berhasil jika menghasilkan `3 packets transmitted, 3 received, 0% packet loss`.
-
-Setiap pengujian berhasil apabila outputnya memuat `3 packets transmitted, 3 received, 0% packet loss`. Jika berbeda, periksa IP, gateway, route, forwarding, dan NAT.
 
 ## 12. Kesimpulan CIDR
 
-Berdasarkan analisis topologi, dibutuhkan 25 subnet yang terdiri dari 15 LAN
-client, 9 link antar-router, dan 1 LAN bersama. Prefix setiap subnet
-ditentukan berdasarkan kebutuhan usable address. Total block size 4.188 alamat
-membutuhkan blok induk minimum `10.66.0.0/19`.
+Topologi GNS3 dibagi menjadi 25 subnet dalam blok `10.66.0.0/19`.
+Alamat pada setiap interface mengikuti tabel pembagian CIDR dan tidak saling
+overlap.
 
-Penggabungan CIDR dilakukan berdasarkan boundary alamat dan wilayah routing.
-Summary route hanya diterapkan ketika seluruh jaringan di dalam summary memiliki
-next hop yang sama. Router non-core memakai default route menuju parent,
-sedangkan router parent memakai static route atau summary route menuju child.
-Router memilih rute menggunakan longest prefix match.
-
-Pengujian router ke router, router ke client, lintas cabang, komunikasi dua
-arah, dan akses Internet menghasilkan 0% packet loss. Hasil tersebut
-membuktikan bahwa pembagian subnet, static routing, return route, IP
-forwarding, dan NAT berjalan sesuai rancangan.
-
-Alur validasi yang digunakan adalah:
-
-```text
-Perhitungan subnet benar
--> alamat tidak overlap
--> tree sesuai alokasi
--> summary sesuai next hop
--> routing dua arah berhasil
--> pengujian mendukung analisis
-```
+Wired menggunakan route berbeda menuju Navi, Tachibana, Psyche, Copland, dan
+Schumann. Router pada setiap cabang menggunakan default route menuju parent.
+Pengujian Alice-Denpa dalam dua arah dan Lain-JJ berhasil tanpa packet loss.
+Lain juga dapat mencapai Internet melalui Cyberia dan NAT1.
 
 
-# B. VLSM Cisco Packet Tracer
+## B. VLSM Cisco Packet Tracer
 
 ## 13. Topologi VLSM
 
@@ -915,47 +684,32 @@ Kami menerapkan alamat hasil perhitungan VLSM pada router dan client Cisco Packe
 
 ## 17. Testing VLSM
 
-Kami menguji konektivitas antarperangkat dan memeriksa proses routing OSPF. Bukti yang tersedia:
+Kami menguji konektivitas antarperangkat dan memeriksa proses routing OSPF.
+Bukti percobaan awal dan perbaikannya disimpan sebagai dokumentasi kendala.
 
-1. **Bukti ping Juri ke gateway pada percobaan awal**
+### Kendala dan Perbaikan
 
-![Bukti ping Juri ke gateway pada percobaan awal](Assets/vlsm-cpt/01_Ping_Juri_Gateway_dan_gagal_awal.png)
+![Ping Juri ke gateway pada percobaan awal](Assets/vlsm-cpt/01_Ping_Juri_Gateway_dan_gagal_awal.png)
 
-2. **Bukti ping Juri ke Masayuki pada percobaan awal**
+![Ping Juri ke Masayuki pada percobaan awal](Assets/vlsm-cpt/02_Ping_Juri_ke_Masayuki_awal.png)
 
-![Bukti ping Juri ke Masayuki pada percobaan awal](Assets/vlsm-cpt/02_Ping_Juri_ke_Masayuki_awal.png)
+![Ping Juri ke Karl sebelum perbaikan](Assets/vlsm-cpt/05_Ping_Juri_ke_Karl_sebelum_perbaikan.png)
 
-3. **Bukti ping Masayuki ke Juri berhasil**
+### Hasil Akhir
 
-![Bukti ping Masayuki ke Juri berhasil](Assets/vlsm-cpt/03_Ping_Masayuki_ke_Juri_berhasil.png)
+![Ping Masayuki ke Juri](Assets/vlsm-cpt/03_Ping_Masayuki_ke_Juri_berhasil.png)
 
-4. **Bukti ping Karl ke Juri berhasil**
+![Ping Karl ke Juri](Assets/vlsm-cpt/04_Ping_Karl_ke_Juri_berhasil.png)
 
-![Bukti ping Karl ke Juri berhasil](Assets/vlsm-cpt/04_Ping_Karl_ke_Juri_berhasil.png)
+![OSPF neighbor Copland](Assets/vlsm-cpt/06_OSPF_Copland_neighbor_awal.png)
 
-5. **Bukti ping Juri ke Karl sebelum perbaikan**
+![Routing table OSPF Copland](Assets/vlsm-cpt/07_OSPF_Copland_routing_table.png)
 
-![Bukti ping Juri ke Karl sebelum perbaikan](Assets/vlsm-cpt/05_Ping_Juri_ke_Karl_sebelum_perbaikan.png)
+![Log adjacency OSPF Copland](Assets/vlsm-cpt/08_OSPF_Copland_adjacency_log.png)
 
-6. **Bukti OSPF neighbor Copland pada kondisi awal**
+![OSPF EXSTART Psyche](Assets/vlsm-cpt/09_OSPF_Psyche_EXSTART_awal.png)
 
-![Bukti OSPF neighbor Copland pada kondisi awal](Assets/vlsm-cpt/06_OSPF_Copland_neighbor_awal.png)
-
-7. **Bukti routing table OSPF Copland**
-
-![Bukti routing table OSPF Copland](Assets/vlsm-cpt/07_OSPF_Copland_routing_table.png)
-
-8. **Bukti log adjacency OSPF Copland**
-
-![Bukti log adjacency OSPF Copland](Assets/vlsm-cpt/08_OSPF_Copland_adjacency_log.png)
-
-9. **Bukti OSPF EXSTART Psyche pada kondisi awal**
-
-![Bukti OSPF EXSTART Psyche pada kondisi awal](Assets/vlsm-cpt/09_OSPF_Psyche_EXSTART_awal.png)
-
-10. **Bukti ping Juri ke Karl berhasil**
-
-![Bukti ping Juri ke Karl berhasil](Assets/vlsm-cpt/10_Ping_Juri_ke_Karl_berhasil.png)
+![Ping Juri ke Karl](Assets/vlsm-cpt/10_Ping_Juri_ke_Karl_berhasil.png)
 
 ## 18. Kesimpulan VLSM
 
