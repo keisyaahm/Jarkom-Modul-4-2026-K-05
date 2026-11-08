@@ -1,5 +1,4 @@
-# Jarkom-Modul-4-2026-K-05
-
+﻿# Jarkom-Modul-4-2026-K-05
 ## Subnetting dan Routing - VLSM dan CIDR
 
 ## 1. Anggota Kelompok
@@ -9,7 +8,9 @@
 | Ronnin Raditya Putra Purbono | 5027251119 | VLSM Cisco Packet Tracer |
 | Keisya Halimah Mulia | 5027251068 | CIDR GNS3 |
 
-## Daftar Isi CIDR GNS3
+## Daftar Isi
+
+### CIDR GNS3
 
 1. [Tujuan Pengerjaan](#3-tujuan-pengerjaan)
 2. [Topologi Awal GNS3](#4-topologi-awal-gns3)
@@ -24,7 +25,7 @@
 11. [Testing Konektivitas](#13-testing-konektivitas)
 12. [Kesimpulan CIDR](#14-kesimpulan-cidr)
 
-## Daftar Isi VLSM Cisco Packet Tracer
+### VLSM CPT
 
 1. [VLSM Cisco Packet Tracer](#15-vlsm-cisco-packet-tracer)
 
