@@ -1,0 +1,10 @@
+# ==========================================
+# Client Configuration: Lilith (Laptop)
+# Subnet: A11 | Connected to: Deus via Switch10
+# ==========================================
+IP Address      : 10.66.14.130
+Subnet Mask     : 255.255.255.128
+Default Gateway : 10.66.14.129
+
+# Command Prompt Packet Tracer:
+# ipconfig /ip 10.66.14.130 255.255.255.128 10.66.14.129

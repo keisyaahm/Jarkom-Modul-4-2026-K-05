@@ -1,0 +1,10 @@
+# ==========================================
+# Client Configuration: Miho (Laptop)
+# Subnet: A8 | Connected to: Navi via Switch8
+# ==========================================
+IP Address      : 10.66.13.3
+Subnet Mask     : 255.255.255.0
+Default Gateway : 10.66.13.1
+
+# Command Prompt Packet Tracer:
+# ipconfig /ip 10.66.13.3 255.255.255.0 10.66.13.1

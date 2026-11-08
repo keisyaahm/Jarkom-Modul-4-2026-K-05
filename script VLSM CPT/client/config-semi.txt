@@ -1,0 +1,10 @@
+# ==========================================
+# Client Configuration: Semi (PC)
+# Subnet: A17 | Connected to: Phantoma via Switch12
+# ==========================================
+IP Address      : 10.66.16.2
+Subnet Mask     : 255.255.255.224
+Default Gateway : 10.66.16.1
+
+# Command Prompt Packet Tracer:
+# ipconfig /ip 10.66.16.2 255.255.255.224 10.66.16.1

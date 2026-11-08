@@ -1,0 +1,10 @@
+# ==========================================
+# Client Configuration: Juri (Laptop)
+# Subnet: A22 | Connected to: Copland direct
+# ==========================================
+IP Address      : 10.66.15.194
+Subnet Mask     : 255.255.255.192
+Default Gateway : 10.66.15.193
+
+# Command Prompt Packet Tracer:
+# ipconfig /ip 10.66.15.194 255.255.255.192 10.66.15.193

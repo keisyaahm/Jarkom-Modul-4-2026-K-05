@@ -1,0 +1,10 @@
+# ==========================================
+# Client Configuration: MyuMyu (Laptop)
+# Subnet: A1 | Connected to: Cyberia via Switch1
+# ==========================================
+IP Address      : 10.66.14.3
+Subnet Mask     : 255.255.255.128
+Default Gateway : 10.66.14.1
+
+# Command Prompt Packet Tracer:
+# ipconfig /ip 10.66.14.3 255.255.255.128 10.66.14.1

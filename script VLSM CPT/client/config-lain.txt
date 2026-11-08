@@ -1,0 +1,10 @@
+# ==========================================
+# Client Configuration: Lain (Laptop)
+# Subnet: A19 | Connected to: Shibuya via Switch13
+# ==========================================
+IP Address      : 10.66.15.2
+Subnet Mask     : 255.255.255.192
+Default Gateway : 10.66.15.1
+
+# Command Prompt Packet Tracer:
+# ipconfig /ip 10.66.15.2 255.255.255.192 10.66.15.1

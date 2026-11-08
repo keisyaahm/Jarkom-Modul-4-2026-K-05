@@ -1,0 +1,10 @@
+# ==========================================
+# Client Configuration: Ghost (PC)
+# Subnet: A9 | Connected to: Tachibana via Switch9
+# ==========================================
+IP Address      : 10.66.10.3
+Subnet Mask     : 255.255.254.0
+Default Gateway : 10.66.10.1
+
+# Command Prompt Packet Tracer:
+# ipconfig /ip 10.66.10.3 255.255.254.0 10.66.10.1

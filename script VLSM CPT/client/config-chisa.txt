@@ -1,0 +1,10 @@
+# ==========================================
+# Client Configuration: Chisa (Laptop)
+# Subnet: A13 | Connected to: Protocol7 via Switch11
+# ==========================================
+IP Address      : 10.66.15.130
+Subnet Mask     : 255.255.255.192
+Default Gateway : 10.66.15.129
+
+# Command Prompt Packet Tracer:
+# ipconfig /ip 10.66.15.130 255.255.255.192 10.66.15.129

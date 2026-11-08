@@ -1,0 +1,10 @@
+# ==========================================
+# Client Configuration: Alice (Laptop)
+# Subnet: A6 | Connected to: Navi via Switch6
+# ==========================================
+IP Address      : 10.66.12.2
+Subnet Mask     : 255.255.255.0
+Default Gateway : 10.66.12.1
+
+# Command Prompt Packet Tracer:
+# ipconfig /ip 10.66.12.2 255.255.255.0 10.66.12.1

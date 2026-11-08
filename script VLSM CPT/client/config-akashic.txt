@@ -1,0 +1,10 @@
+# ==========================================
+# Client Configuration: Akashic (Server)
+# Subnet: A23 | Connected to: Schumann direct
+# ==========================================
+IP Address      : 10.66.16.42
+Subnet Mask     : 255.255.255.248
+Default Gateway : 10.66.16.41
+
+# Command Prompt Packet Tracer:
+# ipconfig /ip 10.66.16.42 255.255.255.248 10.66.16.41
