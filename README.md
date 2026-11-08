@@ -156,6 +156,8 @@ Penggabungan terakhir adalah `D6 /20 + F2 /20`: 4.096 + 4.096 = 8.192 alamat. Ka
 
 Tree CIDR menunjukkan pembagian alamat secara top-down. Root tree adalah `10.66.0.0/19`, yang dibagi menjadi `10.66.0.0/20` dan `10.66.16.0/20`. Diagram berikut memperlihatkan pembagian blok induk sampai subnet A1-A25.
 
+![Tree CIDR](Assets/cidr-gns3/subnet2.png)
+
 <div style="overflow:auto; resize:both; width:100%; min-height:420px; border:1px solid #ccc; padding:8px;">
 
 ```mermaid
