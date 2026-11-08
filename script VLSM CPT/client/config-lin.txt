@@ -1,0 +1,10 @@
+# ==========================================
+# Client Configuration: Lin (Server)
+# Subnet: A20 | Connected to: Psyche via Switch3
+# ==========================================
+IP Address      : 10.66.0.3
+Subnet Mask     : 255.255.252.0
+Default Gateway : 10.66.0.1
+
+# Command Prompt Packet Tracer:
+# ipconfig /ip 10.66.0.3 255.255.252.0 10.66.0.1

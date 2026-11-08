@@ -1,0 +1,10 @@
+# ==========================================
+# Client Configuration: Masayuki (Laptop)
+# Subnet: A21 | Connected to: Copland via Switch4
+# ==========================================
+IP Address      : 10.66.8.2
+Subnet Mask     : 255.255.254.0
+Default Gateway : 10.66.8.1
+
+# Command Prompt Packet Tracer:
+# ipconfig /ip 10.66.8.2 255.255.254.0 10.66.8.1

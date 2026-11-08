@@ -1,0 +1,10 @@
+# ==========================================
+# Client Configuration: Mika (PC)
+# Subnet: A19 | Connected to: Shibuya via Switch13
+# ==========================================
+IP Address      : 10.66.15.3
+Subnet Mask     : 255.255.255.192
+Default Gateway : 10.66.15.1
+
+# Command Prompt Packet Tracer:
+# ipconfig /ip 10.66.15.3 255.255.255.192 10.66.15.1

@@ -1,0 +1,10 @@
+# ==========================================
+# Client Configuration: OmniPresence (PC)
+# Subnet: A25 | Connected to: Accela via Switch5
+# ==========================================
+IP Address      : 10.66.4.2
+Subnet Mask     : 255.255.252.0
+Default Gateway : 10.66.4.1
+
+# Command Prompt Packet Tracer:
+# ipconfig /ip 10.66.4.2 255.255.252.0 10.66.4.1
