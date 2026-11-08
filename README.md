@@ -1,4 +1,4 @@
-# JARKOM MODUL 4 K-05
+﻿# JARKOM MODUL 4 K-05
 
 **Subnetting dan Routing: VLSM dan CIDR**
 
@@ -12,15 +12,6 @@
 ### Link Spreadsheet
 
 - [Spreadsheet subnetting dan routing](https://docs.google.com/spreadsheets/d/1tnrkMIINtIfA9lkkEz2IxHoiGxdWwslZ/edit?usp=sharing&ouid=105300267501229657358&rtpof=true&sd=true)
-
-### Ringkasan Implementasi
-
-Dokumentasi ini mencakup dua implementasi praktikum:
-
-- **CIDR GNS3**: 25 subnet, 13 router, 25 client, dan 1 NAT1 sehingga terdapat 39 perangkat.
-- **VLSM Cisco Packet Tracer**: alokasi alamat berdasarkan kebutuhan host dan routing OSPF.
-
-Pada CIDR GNS3 terdapat 38 script konfigurasi, yaitu 13 script router dan 25 script client. NAT1 merupakan node eksternal GNS3 sehingga tidak memiliki script konfigurasi.
 
 ## Daftar Isi
 
