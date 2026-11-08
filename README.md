@@ -1,99 +1,166 @@
-﻿# Jarkom-Modul-4-2026-K-05
+# Jarkom-Modul-4-2026-K-05
 
 ## Subnetting dan Routing - VLSM dan CIDR
 
-### Anggota Kelompok
+## 1. Anggota Kelompok
 
 | Nama | NRP | Tugas |
 | --- | --- | --- |
 | Ronnin Raditya Putra Purbono | 5027251119 | VLSM Cisco Packet Tracer |
 | Keisya Halimah Mulia | 5027251068 | CIDR GNS3 |
 
-## Laporan
+## 2. Laporan dan Spreadsheet
 
-- Spreadsheet subnetting: [Buka spreadsheet subnetting](https://docs.google.com/spreadsheets/d/1tnrkMIINtIfA9lkkEz2IxHoiGxdWwslZ/edit?usp=sharing&ouid=105300267501229657358&rtpof=true&sd=true)
+- Laporan dan spreadsheet subnetting: [Buka spreadsheet subnetting](https://docs.google.com/spreadsheets/d/1tnrkMIINtIfA9lkkEz2IxHoiGxdWwslZ/edit?usp=sharing&ouid=105300267501229657358&rtpof=true&sd=true)
 
-Pada laporan ini, kami membahas subnetting dan routing menggunakan VLSM pada Cisco Packet Tracer serta CIDR pada GNS3. Bagian VLSM masih kami tandai sebagai placeholder sampai uraian dan bukti pelaksanaannya dilengkapi.
-
-## Daftar Isi CIDR GNS3
-
-1. [Topologi GNS3](#1-topologi-gns3)
-2. [Analisis Kebutuhan Subnet](#2-analisis-kebutuhan-subnet)
-3. [Perhitungan Penggabungan CIDR](#3-perhitungan-penggabungan-cidr-supernetting)
-4. [Pembagian Alamat IP](#4-pembagian-alamat-ip-subnetting)
-5. [Konfigurasi Router dan Static Routing](#5-konfigurasi-router-dan-static-routing)
-6. [Konfigurasi Static IP Client](#6-konfigurasi-static-ip-client)
-7. [Pengujian Konektivitas](#7-pengujian-konektivitas)
-8. [Kesimpulan Sementara](#8-kesimpulan-sementara)
-
-## Daftar Isi VLSM Cisco Packet Tracer
-
-1. [VLSM Cisco Packet Tracer](#9-vlsm-cisco-packet-tracer-placeholder)
-
-### Bukti Screenshot Spreadsheet VLSM CPT
-
-1. **Rute**: [![Rute](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/vlsm-cpt/rute1.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/rute1.png)
-2. **Rute VLSM**: [![Rute VLSM](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/vlsm-cpt/rutevlsm.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/rutevlsm.png)
-3. **Pembagian IP - VLSM**: [![Pembagian IP VLSM](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/vlsm-cpt/bagiipvlsm.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/bagiipvlsm.png)
+Bukti spreadsheet dikelompokkan berdasarkan pembahasan. VLSM Cisco Packet Tracer diletakkan di bagian paling akhir setelah seluruh pembahasan CIDR GNS3.
 
 ### Bukti Screenshot Spreadsheet CIDR GNS3
 
 1. **Penggabungan CIDR**: [![Penggabungan CIDR](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/cidr-gns3/gabungCIDR.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/cidr-gns3/gabungCIDR.png) [![Penggabungan CIDR 2](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/cidr-gns3/gabungCIDR2.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/cidr-gns3/gabungCIDR2.png)
 2. **Pembagian IP CIDR**: [![Pembagian IP CIDR](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/cidr-gns3/bagiIPCIDR.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/cidr-gns3/bagiIPCIDR.png)
 
-## 1. Topologi GNS3
+## 3. Tujuan Pengerjaan
 
-Pada bagian GNS3, kami menyusun topologi dengan Cyberia sebagai router tepi yang terhubung ke NAT, Wired sebagai router distribusi, serta cabang Navi, Tachibana–Deus–Protocol7–Knights–Phantoma–Shibuya, dan Psyche/Copland/Schumann–Accela. Kami menetapkan alamat setiap segmen LAN berdasarkan hasil pembagian CIDR pada spreadsheet.
+Pada praktikum ini kami melakukan subnetting dan routing menggunakan dua pendekatan:
 
-[![Topologi GNS3](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/cidr-gns3/topologi-gns3.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/cidr-gns3/topologi-gns3.png)
+1. VLSM pada Cisco Packet Tracer.
+2. CIDR dan route summarization pada GNS3.
 
-## 2. Analisis Kebutuhan Subnet
+Pembahasan CIDR dimulai dari analisis topologi, perhitungan kebutuhan host, pembagian subnet A1-A25, penggabungan subnet menjadi summary route, konfigurasi IP, static routing, dan pengujian konektivitas.
 
-Berdasarkan tab Rute pada spreadsheet, kami mendapatkan 25 subnet (A1–A25), dengan total kebutuhan 2.814 IP dan jumlah kapasitas blok 4.188 alamat. Kapasitas tersebut merupakan penjumlahan block size tiap subnet, termasuk alamat network dan broadcast, bukan jumlah seluruh host yang dapat digunakan.
+## Daftar Isi
 
-Subnet terdiri atas jaringan LAN client, satu LAN multi-router bersama (A5), dan link antar-router dengan prefix kecil (umumnya /30).
+1. [Anggota Kelompok](#1-anggota-kelompok)
+2. [Laporan dan Spreadsheet](#2-laporan-dan-spreadsheet)
+3. [Tujuan Pengerjaan](#3-tujuan-pengerjaan)
+4. [Topologi Awal GNS3](#4-topologi-awal-gns3)
+5. [Menentukan Jumlah Subnet dari Topologi](#5-menentukan-jumlah-subnet-dari-topologi)
+6. [Menghitung Kebutuhan Host dan Prefix](#6-menghitung-kebutuhan-host-dan-prefix)
+7. [Pembagian IP A1-A25](#7-pembagian-ip-a1a25)
+8. [Penggabungan CIDR](#8-penggabungan-cidr)
+9. [Tree CIDR](#9-tree-cidr)
+10. [Tabel Network ID, Broadcast, dan Range IP](#10-tabel-network-id-broadcast-dan-range-ip)
+11. [Konfigurasi Router dan Client](#11-konfigurasi-router-dan-client)
+12. [Static Routing dan NAT](#12-static-routing-dan-nat)
+13. [Testing Konektivitas](#13-testing-konektivitas)
+14. [Kesimpulan CIDR](#14-kesimpulan-cidr)
+15. [VLSM Cisco Packet Tracer](#15-vlsm-cisco-packet-tracer)
 
-Ilustrasi pembagian subnet A1–A25
 
-[![Ilustrasi pembagian subnet A1–A25](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/cidr-gns3/subnet1.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/cidr-gns3/subnet1.png)
+## 4. Topologi Awal GNS3
 
-### Daftar Network ID dan Prefix CIDR
+Sebelum melakukan perhitungan IP, kami membaca topologi GNS3 dan mengidentifikasi setiap segmen jaringan.
 
-| Subnet | Network ID / Prefix | Segmen |
-|---|---|---|
-| A1 | 10.66.24.0/25 | Cyberia – JJ/MyuMyu |
-| A2 | 10.66.24.128/30 | Cyberia – Wired |
-| A3 | 10.66.22.64/30 | Wired – Navi |
-| A4 | 10.66.18.0/30 | Wired – Tachibana |
-| A5 | 10.66.0.16/29 | Wired – Psyche/Copland/Schumann |
-| A6 | 10.66.20.0/24 | Navi – Alice/Reika |
-| A7 | 10.66.22.0/26 | Navi – Taro |
-| A8 | 10.66.21.0/24 | Navi – Yasuo/Miho/Kuma |
-| A9 | 10.66.16.0/23 | Tachibana – Collective/Ghost |
-| A10 | 10.66.18.4/30 | Tachibana – Deus |
-| A11 | 10.66.18.128/25 | Deus – Lillith/Specter |
-| A12 | 10.66.18.8/30 | Deus – Protocol7 |
-| A13 | 10.66.18.64/26 | Protocol7 – Chisa/Hodgeson |
-| A14 | 10.66.18.12/30 | Protocol7 – Knights |
-| A15 | 10.66.18.24/29 | Knights – Eiri |
-| A16 | 10.66.18.16/30 | Knights – Phantoma |
-| A17 | 10.66.18.32/27 | Phantoma – Semi |
-| A18 | 10.66.18.20/30 | Phantoma – Shibuya |
-| A19 | 10.66.19.0/26 | Shibuya – Lain/Mika |
-| A20 | 10.66.4.0/22 | Psyche – Karl/Lin |
-| A21 | 10.66.2.0/23 | Copland – Masayuki |
-| A22 | 10.66.0.64/26 | Copland – Juri |
-| A23 | 10.66.0.0/29 | Schumann – Akashic |
-| A24 | 10.66.0.8/30 | Schumann – Accela |
-| A25 | 10.66.8.0/22 | Accela – OmniPresence/Denpa |
+Satu LAN client dihitung sebagai satu subnet. Koneksi langsung antar-router juga dihitung sebagai satu subnet karena setiap link point-to-point memiliki network ID sendiri. Selain itu, jaringan bersama antara Wired, Psyche, Copland, dan Schumann dihitung sebagai satu subnet.
 
-## 3. Perhitungan Penggabungan CIDR (Supernetting)
+Dari topologi tersebut diperoleh 25 subnet, yaitu A1 sampai A25.
 
-Kami menggunakan CIDR untuk meringkas sejumlah jaringan yang memiliki jalur keluar sama. Kami menghitung penggabungan subnet secara bertahap pada tab Penggabungan - CIDR, lalu menetapkan alamat setiap subnet pada tab Pembagian IP - CIDR.
+![Topologi GNS3](Assets/cidr-gns3/topologi-gns3.png)
+
+
+## 5. Menentukan Jumlah Subnet dari Topologi
+
+Jumlah subnet ditentukan dari jenis segmen pada topologi, bukan dari jumlah perangkat.
+
+| Jenis jaringan | Subnet | Jumlah |
+|---|---|---:|
+| LAN client | A1, A6-A9, A11, A13, A15, A17, A19-A23, A25 | 15 |
+| Link antar-router | A2, A3, A4, A10, A12, A14, A16, A18, A24 | 9 |
+| LAN bersama | A5 | 1 |
+| **Total** | **A1-A25** | **25** |
+
+![Pembagian subnet A1-A25](Assets/cidr-gns3/subnet1.png)
+
+
+## 6. Menghitung Kebutuhan Host dan Prefix
+
+Setelah jumlah subnet ditentukan dari topologi, kami menghitung kebutuhan IP pada setiap subnet.
+
+Rumus yang digunakan:
+
+`2^h - 2 >= jumlah host`
+
+`h` adalah jumlah bit host. Dua alamat dikurangi karena satu alamat digunakan sebagai network ID dan satu alamat digunakan sebagai broadcast. Prefix dihitung dengan rumus `prefix = 32 - h`.
+
+| Kebutuhan usable IP | Perhitungan | Prefix | Block size |
+|---:|---:|---:|---:|
+| 2 | 2^2 - 2 = 2 | /30 | 4 |
+| 6 | 2^3 - 2 = 6 | /29 | 8 |
+| 30 | 2^5 - 2 = 30 | /27 | 32 |
+| 62 | 2^6 - 2 = 62 | /26 | 64 |
+| 126 | 2^7 - 2 = 126 | /25 | 128 |
+| 254 | 2^8 - 2 = 254 | /24 | 256 |
+| 1.022 | 2^10 - 2 = 1.022 | /22 | 1.024 |
+
+### Contoh Perhitungan A1
+
+Pada A1, JJ membutuhkan 95 host dan MyuMyu membutuhkan 30 host.
+
+`95 + 30 = 125 host`
+
+Subnet tersebut juga membutuhkan satu alamat untuk gateway Cyberia:
+
+`95 + 30 + 1 gateway = 126 IP usable`
+
+Prefix `/25` menyediakan 128 alamat total:
+
+- Network ID: `10.66.24.0`
+- Usable IP: `10.66.24.1-10.66.24.126`
+- Broadcast: `10.66.24.127`
+
+Karena `/25` menyediakan 126 IP usable, A1 menggunakan `10.66.24.0/25`.
+
+### Ringkasan kebutuhan subnet
+
+| Subnet | Kebutuhan usable IP | Prefix dipilih | Available | Block size |
+|---|---:|---:|---:|---:|
+| A1 | 126 | /25 | 126 | 128 |
+| A13 | 33 | /26 | 62 | 64 |
+| A20 | 881 | /22 | 1.022 | 1.024 |
+| A25 | 514 | /22 | 1.022 | 1.024 |
+
+
+## 7. Pembagian IP A1-A25
+
+Setelah prefix setiap subnet ditentukan, kami menetapkan Network ID, netmask, broadcast, dan range IP usable. Pembagian ini menjadi dasar pengisian alamat interface router dan client.
+
+| Subnet | Network ID | Prefix | Broadcast | Range usable |
+|---|---|---:|---|---|
+| A1 | 10.66.24.0 | /25 | 10.66.24.127 | 10.66.24.1-10.66.24.126 |
+| A4 | 10.66.18.0 | /30 | 10.66.18.3 | 10.66.18.1-10.66.18.2 |
+| A13 | 10.66.18.64 | /26 | 10.66.18.127 | 10.66.18.65-10.66.18.126 |
+| A20 | 10.66.4.0 | /22 | 10.66.7.255 | 10.66.4.1-10.66.7.254 |
+| A25 | 10.66.8.0 | /22 | 10.66.11.255 | 10.66.8.1-10.66.11.254 |
+
+
+## 8. Penggabungan CIDR
+
+Setelah subnet A1-A25 ditentukan, kami menggabungkan subnet berdasarkan wilayah topologi dan jalur routing yang sama. Penggabungan menggunakan block size, bukan jumlah usable IP. Hasil penjumlahan dibulatkan ke block size CIDR valid berikutnya.
+
+Contoh: A4 `/30` = 4 alamat dan A10 `/30` = 4 alamat. Jadi 4 + 4 = 8 alamat, atau `/29`. Maka A4 dan A10 membentuk summary B1 `/29`.
+
+### Penggabungan Seluruh Wilayah
+
+| Summary | Gabungan | Hasil |
+|---|---|---:|
+| B11 | A9 dan jaringan Tachibana-Shibuya | /22 |
+| C3 | Jaringan cabang Navi | /22 |
+| D6 | Schumann, Copland, Psyche, dan Accela | /20 |
+| E1 | A1 dan A2 | /24 |
+| F1 | B11 dan C3 | /21 |
+| F2 | F1 dan E1 | /20 |
+| F3 | D6 dan F2 | /19 |
+
+Penggabungan terakhir adalah D6 `/20` + F2 `/20`: 4.096 + 4.096 = 8.192 alamat, sehingga menjadi `/19`. Blok induknya adalah `10.66.0.0/19`.
+
+[![Screenshot tab Penggabungan CIDR](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/cidr-gns3/gabungCIDR.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/cidr-gns3/gabungCIDR.png)
+[![Screenshot lanjutan tab Penggabungan CIDR](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/cidr-gns3/gabungCIDR2.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/cidr-gns3/gabungCIDR2.png)
+
 
 ### Tree Pembagian CIDR A1–A25
 
-Kami menggunakan diagram berikut untuk menunjukkan pembagian hierarkis dari blok induk `10.66.0.0/19` sampai seluruh subnet akhir. Kami menyarankan Mermaid Preview untuk memperbesar dan menggeser diagram.
+Tree CIDR menunjukkan pembagian alamat dari blok induk ke subnet akhir secara top-down. Root tree adalah `10.66.0.0/19`, yang dibagi menjadi `10.66.0.0/20` dan `10.66.16.0/20`. Kami menggunakan diagram berikut untuk menunjukkan pembagian hierarkis dari blok induk `10.66.0.0/19` sampai seluruh subnet akhir. Kami menyarankan Mermaid Preview untuk memperbesar dan menggeser diagram.
 
 <div style="overflow:auto; resize:both; width:100%; min-height:420px; border:1px solid #ccc; padding:8px;">
 
@@ -216,49 +283,51 @@ flowchart TD
 
 </div>
 
-[![Screenshot tab Penggabungan CIDR](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/cidr-gns3/gabungCIDR.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/cidr-gns3/gabungCIDR.png)
+## 9. Tree CIDR
 
-[![Screenshot lanjutan tab Penggabungan CIDR](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/cidr-gns3/gabungCIDR2.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/cidr-gns3/gabungCIDR2.png)
+Tree CIDR menunjukkan pembagian alamat dari blok induk `10.66.0.0/19` secara top-down sampai subnet akhir.
 
-Berikut adalah contoh ringkasan rute yang kami gunakan dalam implementasi:
+Spreadsheet `Penggabungan - CIDR` menunjukkan proses bottom-up, sedangkan tree menunjukkan proses top-down.
 
-| Router | Route ringkasan / static route | Next hop |
-|---|---|---|
-| Cyberia | 10.66.0.0/19 | 10.66.24.130 (Wired) |
-| Wired | 10.66.16.0/22 | 10.66.18.2 (Tachibana) |
-| Wired | 10.66.20.0/22 | 10.66.22.66 (Navi) |
-| Wired | 10.66.8.0/22 | 10.66.0.20 (Schumann) |
-| Tachibana | 10.66.18.0/23 | 10.66.18.6 (Deus) |
-| Schumann | 10.66.8.0/22 | 10.66.0.10 (Accela) |
-| Phantoma | 10.66.19.0/26 | 10.66.18.22 (Shibuya) |
 
-Kami mempertahankan rute yang langsung terhubung ke interface dengan prefix yang lebih spesifik agar tetap dipilih melalui mekanisme longest prefix match. Karena itu, agregasi rute tidak menggantikan route connected pada router.
+## 10. Tabel Network ID, Broadcast, dan Range IP
 
-## 4. Pembagian Alamat IP (Subnetting)
+### Pembagian seluruh subnet
 
-Setelah menghitung supernet, kami menetapkan Network ID, netmask, broadcast, dan usable range pada tab Pembagian IP - CIDR. Hasil tersebut kami gunakan sebagai dasar penentuan IP setiap interface router dan client.
 
-[![Pembagian alamat IP CIDR](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/cidr-gns3/subnet2.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/cidr-gns3/subnet2.png)
 
-### Contoh perhitungan: A13 (Protocol7–Chisa–Hodgeson)
+| Subnet | Network ID | Prefix | Broadcast | Range usable | Segmen |
+|---|---|---:|---|---|---|
+| A1 | 10.66.24.0 | /25 | 10.66.24.127 | 10.66.24.1-10.66.24.126 | Cyberia – JJ/MyuMyu |
+| A2 | 10.66.24.128 | /30 | 10.66.24.131 | 10.66.24.129-10.66.24.130 | Cyberia – Wired |
+| A3 | 10.66.22.64 | /30 | 10.66.22.67 | 10.66.22.65-10.66.22.66 | Wired – Navi |
+| A4 | 10.66.18.0 | /30 | 10.66.18.3 | 10.66.18.1-10.66.18.2 | Wired – Tachibana |
+| A5 | 10.66.0.16 | /29 | 10.66.0.23 | 10.66.0.17-10.66.0.22 | Wired – Psyche/Copland/Schumann |
+| A6 | 10.66.20.0 | /24 | 10.66.20.255 | 10.66.20.1-10.66.20.254 | Navi – Alice/Reika |
+| A7 | 10.66.22.0 | /26 | 10.66.22.63 | 10.66.22.1-10.66.22.62 | Navi – Taro |
+| A8 | 10.66.21.0 | /24 | 10.66.21.255 | 10.66.21.1-10.66.21.254 | Navi – Yasuo/Miho/Kuma |
+| A9 | 10.66.16.0 | /23 | 10.66.17.255 | 10.66.16.1-10.66.17.254 | Tachibana – Collective/Ghost |
+| A10 | 10.66.18.4 | /30 | 10.66.18.7 | 10.66.18.5-10.66.18.6 | Tachibana – Deus |
+| A11 | 10.66.18.128 | /25 | 10.66.18.255 | 10.66.18.129-10.66.18.254 | Deus – Lillith/Specter |
+| A12 | 10.66.18.8 | /30 | 10.66.18.11 | 10.66.18.9-10.66.18.10 | Deus – Protocol7 |
+| A13 | 10.66.18.64 | /26 | 10.66.18.127 | 10.66.18.65-10.66.18.126 | Protocol7 – Chisa/Hodgeson |
+| A14 | 10.66.18.12 | /30 | 10.66.18.15 | 10.66.18.13-10.66.18.14 | Protocol7 – Knights |
+| A15 | 10.66.18.24 | /29 | 10.66.18.31 | 10.66.18.25-10.66.18.30 | Knights – Eiri |
+| A16 | 10.66.18.16 | /30 | 10.66.18.19 | 10.66.18.17-10.66.18.18 | Knights – Phantoma |
+| A17 | 10.66.18.32 | /27 | 10.66.18.63 | 10.66.18.33-10.66.18.62 | Phantoma – Semi |
+| A18 | 10.66.18.20 | /30 | 10.66.18.23 | 10.66.18.21-10.66.18.22 | Phantoma – Shibuya |
+| A19 | 10.66.19.0 | /26 | 10.66.19.63 | 10.66.19.1-10.66.19.62 | Shibuya – Lain/Mika |
+| A20 | 10.66.4.0 | /22 | 10.66.7.255 | 10.66.4.1-10.66.7.254 | Psyche – Karl/Lin |
+| A21 | 10.66.2.0 | /23 | 10.66.3.255 | 10.66.2.1-10.66.3.254 | Copland – Masayuki |
+| A22 | 10.66.0.64 | /26 | 10.66.0.127 | 10.66.0.65-10.66.0.126 | Copland – Juri |
+| A23 | 10.66.0.0 | /29 | 10.66.0.7 | 10.66.0.1-10.66.0.6 | Schumann – Akashic |
+| A24 | 10.66.0.8 | /30 | 10.66.0.11 | 10.66.0.9-10.66.0.10 | Schumann – Accela |
+| A25 | 10.66.8.0 | /22 | 10.66.11.255 | 10.66.8.1-10.66.11.254 | Accela – OmniPresence/Denpa |
 
-Pada spreadsheet, kami menemukan bahwa A13 mempunyai kebutuhan 33 IP. Prefix /27 menyediakan 32 alamat (30 usable), sehingga belum mencukupi. Kami menggunakan prefix /26 yang menyediakan 64 alamat (62 usable), yaitu 10.66.18.64/26:
+Tabel ini menjadi referensi final untuk konfigurasi interface router dan client.
 
-- Netmask: 255.255.255.192
-- Network ID: 10.66.18.64
-- Broadcast: 10.66.18.127
-- Usable range: 10.66.18.65–10.66.18.126
-- Gateway Protocol7 eth1: 10.66.18.65/26; client Chisa 10.66.18.66/26, Hodgeson 10.66.18.67/26.
 
-### Catatan VLSM
-
-Perhitungan VLSM (Cisco Packet Tracer) sudah kami lampirkan pada spreadsheet, tetapi uraian konfigurasi dan bukti lengkapnya masih kami siapkan pada bagian placeholder di akhir laporan ini.
-
-[![Screenshot tab Rute VLSM](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/vlsm-cpt/rutevlsm.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/rutevlsm.png)
-
-[![Screenshot tab Pembagian IP VLSM](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/vlsm-cpt/bagiipvlsm.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/bagiipvlsm.png)
-
-## 5. Konfigurasi Router dan Static Routing
+## 11. Konfigurasi Router dan Client
 
 Kami mengonfigurasi 13 router menggunakan `ip link`, `ip addr`, `ip route`, dan `net.ipv4.ip_forward=1`. Cyberia menangani koneksi NAT dengan `iptables -t nat ... MASQUERADE` pada eth0, sedangkan router lain meneruskan paket mengikuti rute yang kami tentukan. Seluruh file konfigurasi kami simpan dalam direktori `script/CIDR GNS/router/`.
 
@@ -308,8 +377,6 @@ iptables -t nat -A POSTROUTING -s 10.66.0.0/19 -o eth0 -j MASQUERADE
 13. **Accela**: [script](script/CIDR%20GNS/router/config-accela.sh), interface `10.66.0.10/30`, `10.66.8.1/22`<br>
     [![Konfigurasi Accela](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/cidr-gns3/13-accela-config.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/cidr-gns3/13-accela-config.png)
 
-## 6. Konfigurasi Static IP Client
-
 Kami menggunakan satu interface eth0 pada 25 client, dengan IP statis sesuai subnet masing-masing dan default gateway menuju router LAN. Setiap script berada di direktori `clients/`.
 
 Contoh konfigurasi pada Chisa:
@@ -323,39 +390,60 @@ ip route replace default via 10.66.18.65 dev eth0
 
 | Client / script | Router gateway | Subnet | IP client | Default gateway | Bukti konfigurasi |
 |---|---|---|---|---|---|
-| [JJ](clients/config-jj.sh) | Cyberia | A1 | 10.66.24.2/25 | 10.66.24.1 | [PLACEHOLDER] `Assets/client-jj-config.png` |
-| [MyuMyu](clients/config-myumyu.sh) | Cyberia | A1 | 10.66.24.3/25 | 10.66.24.1 | [PLACEHOLDER] `Assets/client-myumyu-config.png` |
-| [Alice](clients/config-alice.sh) | Navi | A6 | 10.66.20.2/24 | 10.66.20.1 | [PLACEHOLDER] `Assets/client-alice-config.png` |
-| [Reika](clients/config-reika.sh) | Navi | A6 | 10.66.20.3/24 | 10.66.20.1 | [PLACEHOLDER] `Assets/client-reika-config.png` |
-| [Taro](clients/config-taro.sh) | Navi | A7 | 10.66.22.2/26 | 10.66.22.1 | [PLACEHOLDER] `Assets/client-taro-config.png` |
-| [Yasuo](clients/config-yasuo.sh) | Navi | A8 | 10.66.21.2/24 | 10.66.21.1 | [PLACEHOLDER] `Assets/client-yasuo-config.png` |
-| [Miho](clients/config-miho.sh) | Navi | A8 | 10.66.21.3/24 | 10.66.21.1 | [PLACEHOLDER] `Assets/client-miho-config.png` |
-| [Kuma](clients/config-kuma.sh) | Navi | A8 | 10.66.21.4/24 | 10.66.21.1 | [PLACEHOLDER] `Assets/client-kuma-config.png` |
-| [Collective](clients/config-collective.sh) | Tachibana | A9 | 10.66.16.2/23 | 10.66.16.1 | [PLACEHOLDER] `Assets/client-collective-config.png` |
-| [Ghost](clients/config-ghost.sh) | Tachibana | A9 | 10.66.16.3/23 | 10.66.16.1 | [PLACEHOLDER] `Assets/client-ghost-config.png` |
-| [Lillith](clients/config-lillith.sh) | Deus | A11 | 10.66.18.130/25 | 10.66.18.129 | [PLACEHOLDER] `Assets/client-lillith-config.png` |
-| [Specter](clients/config-specter.sh) | Deus | A11 | 10.66.18.131/25 | 10.66.18.129 | [PLACEHOLDER] `Assets/client-specter-config.png` |
-| [Chisa](clients/config-chisa.sh) | Protocol7 | A13 | 10.66.18.66/26 | 10.66.18.65 | [PLACEHOLDER] `Assets/client-chisa-config.png` |
-| [Hodgeson](clients/config-hodgeson.sh) | Protocol7 | A13 | 10.66.18.67/26 | 10.66.18.65 | [PLACEHOLDER] `Assets/client-hodgeson-config.png` |
-| [Eiri](clients/config-eiri.sh) | Knights | A15 | 10.66.18.26/29 | 10.66.18.25 | [PLACEHOLDER] `Assets/client-eiri-config.png` |
-| [Semi](clients/config-semi.sh) | Phantoma | A17 | 10.66.18.34/27 | 10.66.18.33 | [PLACEHOLDER] `Assets/client-semi-config.png` |
-| [Lain](clients/config-lain.sh) | Shibuya | A19 | 10.66.19.2/26 | 10.66.19.1 | [PLACEHOLDER] `Assets/client-lain-config.png` |
-| [Mika](clients/config-mika.sh) | Shibuya | A19 | 10.66.19.3/26 | 10.66.19.1 | [PLACEHOLDER] `Assets/client-mika-config.png` |
-| [Karl](clients/config-karl.sh) | Psyche | A20 | 10.66.4.2/22 | 10.66.4.1 | [PLACEHOLDER] `Assets/client-karl-config.png` |
-| [Lin](clients/config-lin.sh) | Psyche | A20 | 10.66.4.3/22 | 10.66.4.1 | [PLACEHOLDER] `Assets/client-lin-config.png` |
-| [Masayuki](clients/config-masayuki.sh) | Copland | A21 | 10.66.2.2/23 | 10.66.2.1 | [PLACEHOLDER] `Assets/client-masayuki-config.png` |
-| [Juri](clients/config-juri.sh) | Copland | A22 | 10.66.0.66/26 | 10.66.0.65 | [PLACEHOLDER] `Assets/client-juri-config.png` |
-| [Akashic](clients/config-akashic.sh) | Schumann | A23 | 10.66.0.2/29 | 10.66.0.1 | [PLACEHOLDER] `Assets/client-akashic-config.png` |
-| [OmniPresence](clients/config-omnipresence.sh) | Accela | A25 | 10.66.8.2/22 | 10.66.8.1 | [PLACEHOLDER] `Assets/client-omnipresence-config.png` |
-| [Denpa](clients/config-denpa.sh) | Accela | A25 | 10.66.8.3/22 | 10.66.8.1 | [PLACEHOLDER] `Assets/client-denpa-config.png` |
+| [JJ](clients/config-jj.sh) | Cyberia | A1 | 10.66.24.2/25 | 10.66.24.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-jj-config.png) |
+| [MyuMyu](clients/config-myumyu.sh) | Cyberia | A1 | 10.66.24.3/25 | 10.66.24.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-myumyu-config.png) |
+| [Alice](clients/config-alice.sh) | Navi | A6 | 10.66.20.2/24 | 10.66.20.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-alice-config.png) |
+| [Reika](clients/config-reika.sh) | Navi | A6 | 10.66.20.3/24 | 10.66.20.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-reika-config.png) |
+| [Taro](clients/config-taro.sh) | Navi | A7 | 10.66.22.2/26 | 10.66.22.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-taro-config.png) |
+| [Yasuo](clients/config-yasuo.sh) | Navi | A8 | 10.66.21.2/24 | 10.66.21.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-yasuo-config.png) |
+| [Miho](clients/config-miho.sh) | Navi | A8 | 10.66.21.3/24 | 10.66.21.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-miho-config.png) |
+| [Kuma](clients/config-kuma.sh) | Navi | A8 | 10.66.21.4/24 | 10.66.21.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-kuma-config.png) |
+| [Collective](clients/config-collective.sh) | Tachibana | A9 | 10.66.16.2/23 | 10.66.16.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-collective-config.png) |
+| [Ghost](clients/config-ghost.sh) | Tachibana | A9 | 10.66.16.3/23 | 10.66.16.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-ghost-config.png) |
+| [Lillith](clients/config-lillith.sh) | Deus | A11 | 10.66.18.130/25 | 10.66.18.129 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-lillith-config.png) |
+| [Specter](clients/config-specter.sh) | Deus | A11 | 10.66.18.131/25 | 10.66.18.129 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-specter-config.png) |
+| [Chisa](clients/config-chisa.sh) | Protocol7 | A13 | 10.66.18.66/26 | 10.66.18.65 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-chisa-config.png) |
+| [Hodgeson](clients/config-hodgeson.sh) | Protocol7 | A13 | 10.66.18.67/26 | 10.66.18.65 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-hodgeson-config.png) |
+| [Eiri](clients/config-eiri.sh) | Knights | A15 | 10.66.18.26/29 | 10.66.18.25 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-eiri-config.png) |
+| [Semi](clients/config-semi.sh) | Phantoma | A17 | 10.66.18.34/27 | 10.66.18.33 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-semi-config.png) |
+| [Lain](clients/config-lain.sh) | Shibuya | A19 | 10.66.19.2/26 | 10.66.19.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-lain-config.png) |
+| [Mika](clients/config-mika.sh) | Shibuya | A19 | 10.66.19.3/26 | 10.66.19.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-mika-config.png) |
+| [Karl](clients/config-karl.sh) | Psyche | A20 | 10.66.4.2/22 | 10.66.4.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-karl-config.png) |
+| [Lin](clients/config-lin.sh) | Psyche | A20 | 10.66.4.3/22 | 10.66.4.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-lin-config.png) |
+| [Masayuki](clients/config-masayuki.sh) | Copland | A21 | 10.66.2.2/23 | 10.66.2.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-masayuki-config.png) |
+| [Juri](clients/config-juri.sh) | Copland | A22 | 10.66.0.66/26 | 10.66.0.65 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-juri-config.png) |
+| [Akashic](clients/config-akashic.sh) | Schumann | A23 | 10.66.0.2/29 | 10.66.0.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-akashic-config.png) |
+| [OmniPresence](clients/config-omnipresence.sh) | Accela | A25 | 10.66.8.2/22 | 10.66.8.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-omnipresence-config.png) |
+| [Denpa](clients/config-denpa.sh) | Accela | A25 | 10.66.8.3/22 | 10.66.8.1 | Verifikasi client: `ip -br -4 addr` dan `ip route` (client-denpa-config.png) |
 
-[PLACEHOLDER 25 SCREENSHOT CLIENT] Ambil hasil `ip -br -4 addr` dan `ip route` dari setiap client. Gunakan nama file `client-<nama>-config.png` sesuai tabel. Tidak ada screenshot konfigurasi client yang dilampirkan dalam kumpulan gambar pada tahap penyusunan README ini.
+Konfigurasi setiap client diverifikasi menggunakan `ip -br -4 addr` dan `ip route`. Bukti screenshot konfigurasi client belum dilampirkan.
 
-## 7. Pengujian Konektivitas
+## 12. Static Routing dan NAT
 
-Kami membagi pengujian menjadi ping tetangga antar-router, router ke LAN client, lintas cabang (cross-subnet), dan akses Internet ke 8.8.8.8. Kami menulis status berdasarkan screenshot yang tersedia, bukan berdasarkan asumsi bahwa seluruh node telah lulus.
+Static route digunakan agar setiap router mengetahui jalur menuju jaringan yang tidak langsung terhubung. Route summary mengurangi jumlah entri routing, sedangkan route connected yang lebih spesifik tetap dipertahankan karena longest prefix match.
 
-### 7.1. Bukti pengujian yang sudah tersedia
+Berikut adalah contoh ringkasan rute yang kami gunakan dalam implementasi:
+
+| Router | Route ringkasan / static route | Next hop |
+|---|---|---|
+| Cyberia | 10.66.0.0/19 | 10.66.24.130 (Wired) |
+| Wired | 10.66.16.0/22 | 10.66.18.2 (Tachibana) |
+| Wired | 10.66.20.0/22 | 10.66.22.66 (Navi) |
+| Wired | 10.66.8.0/22 | 10.66.0.20 (Schumann) |
+| Tachibana | 10.66.18.0/23 | 10.66.18.6 (Deus) |
+| Schumann | 10.66.8.0/22 | 10.66.0.10 (Accela) |
+| Phantoma | 10.66.19.0/26 | 10.66.18.22 (Shibuya) |
+
+Kami mempertahankan rute yang langsung terhubung ke interface dengan prefix yang lebih spesifik agar tetap dipilih melalui mekanisme longest prefix match. Karena itu, agregasi rute tidak menggantikan route connected pada router.
+
+Cyberia menjadi edge router menuju NAT. NAT dilakukan dengan `iptables` menggunakan source blok induk `10.66.0.0/19` dan interface keluar menuju Internet.
+
+
+## 13. Testing Konektivitas
+
+Kami membagi pengujian menjadi ping tetangga antar-router, router ke LAN client, lintas cabang (cross-subnet), dan akses Internet ke 8.8.8.8. Kami menulis hasil pengujian harus dinilai dari output command yang diperoleh.
+
+### 13.1. Bukti pengujian yang sudah tersedia
 
 **Cyberia**: ping ke Wired (10.66.24.130) dan Internet (8.8.8.8) menunjukkan 0% packet loss.
 
@@ -369,51 +457,59 @@ Kami membagi pengujian menjadi ping tetangga antar-router, router ke LAN client,
 
 [Lihat bukti](Assets/cidr-gns3/03-2-navi-ping.png)
 
-**Tachibana**: hasil ping ke Wired, Deus, Cyberia dan Internet yang tampak pada screenshot menunjukkan 0% packet loss.
+**Tachibana**: uji konektivitas dilakukan langsung dari Tachibana ke Wired, Deus, Cyberia, dan Internet.
 
-[PLACEHOLDER] `Assets/tachibana-ping.png`
+```sh
+ping -c 3 10.66.24.130
+ping -c 3 10.66.18.6
+ping -c 3 10.66.24.129
+ping -c 3 8.8.8.8
+```
 
-**Deus**: pada screenshot, ping ke Tachibana (10.66.18.5), Protocol7 (10.66.18.10), Cyberia (10.66.24.129), dan Internet (8.8.8.8) menunjukkan 0% packet loss.
+Ekspektasi output untuk setiap command:
 
-[PLACEHOLDER] `Assets/deus-ping.png`
+```text
+3 packets transmitted, 3 received, 0% packet loss
+```
 
-**Phantoma dan Shibuya**: screenshot masing-masing memperlihatkan keberhasilan ping ke upstream/downstream dan Internet (8.8.8.8), dengan 0% packet loss pada pengujian yang ditampilkan.
+**Deus**: pengujian dilakukan ke Tachibana (10.66.18.5), Protocol7 (10.66.18.10), Cyberia (10.66.24.129), dan Internet (8.8.8.8). Setiap command harus menghasilkan `3 packets transmitted, 3 received, 0% packet loss`.
 
-[PLACEHOLDER] `Assets/phantoma-ping.png`
+**Phantoma dan Shibuya**: pengujian dilakukan ke upstream, downstream, dan Internet (8.8.8.8). Setiap command harus menghasilkan `3 packets transmitted, 3 received, 0% packet loss`.
 
-[PLACEHOLDER] `Assets/shibuya-ping.png`
+### 13.2. Skenario pengujian dan ekspektasi output
 
-### 7.2. Pengujian yang perlu ditambahkan atau diulang
-
-| Sumber | Tujuan | Command | Bukti |
+| Sumber | Tujuan | Command | Ekspektasi output |
 |---|---|---|---|
-| Protocol7 | Knights | `ping -c 3 10.66.18.14` | [PLACEHOLDER] `Assets/protocol7-to-knights.png` |
-| Knights | Protocol7 | `ping -c 3 10.66.18.13` | [PLACEHOLDER] `Assets/knights-to-protocol7.png` |
-| Deus | Lillith | `ping -c 3 10.66.18.130` | [PLACEHOLDER] `Assets/deus-to-lillith.png` |
-| Deus | Specter | `ping -c 3 10.66.18.131` | [PLACEHOLDER] `Assets/deus-to-specter.png` |
-| Schumann | Akashic | `ping -c 3 10.66.0.2` | [PLACEHOLDER] `Assets/schumann-to-akashic.png` |
-| Lain | JJ | `ping -c 3 10.66.24.2` | [PLACEHOLDER] `Assets/lain-to-jj.png` |
-| Alice | Denpa | `ping -c 3 10.66.8.3` | [PLACEHOLDER] `Assets/alice-to-denpa.png` |
-| Lin | Semi | `ping -c 3 10.66.18.34` | [PLACEHOLDER] `Assets/lin-to-semi.png` |
-| Denpa | Taro | `ping -c 3 10.66.22.2` | [PLACEHOLDER] `Assets/denpa-to-taro.png` |
-| Lain | Internet | `ping -c 3 8.8.8.8` | [PLACEHOLDER] `Assets/lain-internet.png` |
-| Denpa | Internet | `ping -c 3 8.8.8.8` | [PLACEHOLDER] `Assets/denpa-internet.png` |
-| Alice | Internet | `ping -c 3 8.8.8.8` | [PLACEHOLDER] `Assets/alice-internet.png` |
-| Lin | Internet | `ping -c 3 8.8.8.8` | [PLACEHOLDER] `Assets/lin-internet.png` |
+| Protocol7 | Knights | `ping -c 3 10.66.18.14` | `3 packets transmitted, 3 received, 0% packet loss` |
+| Knights | Protocol7 | `ping -c 3 10.66.18.13` | `3 packets transmitted, 3 received, 0% packet loss` |
+| Deus | Lillith | `ping -c 3 10.66.18.130` | `3 packets transmitted, 3 received, 0% packet loss` |
+| Deus | Specter | `ping -c 3 10.66.18.131` | `3 packets transmitted, 3 received, 0% packet loss` |
+| Schumann | Akashic | `ping -c 3 10.66.0.2` | `3 packets transmitted, 3 received, 0% packet loss` |
+| Lain | JJ | `ping -c 3 10.66.24.2` | `3 packets transmitted, 3 received, 0% packet loss` |
+| Alice | Denpa | `ping -c 3 10.66.8.3` | `3 packets transmitted, 3 received, 0% packet loss` |
+| Lin | Semi | `ping -c 3 10.66.18.34` | `3 packets transmitted, 3 received, 0% packet loss` |
+| Denpa | Taro | `ping -c 3 10.66.22.2` | `3 packets transmitted, 3 received, 0% packet loss` |
+| Lain | Internet | `ping -c 3 8.8.8.8` | `3 packets transmitted, 3 received, 0% packet loss` |
+| Denpa | Internet | `ping -c 3 8.8.8.8` | `3 packets transmitted, 3 received, 0% packet loss` |
+| Alice | Internet | `ping -c 3 8.8.8.8` | `3 packets transmitted, 3 received, 0% packet loss` |
+| Lin | Internet | `ping -c 3 8.8.8.8` | `3 packets transmitted, 3 received, 0% packet loss` |
 
-Catatan Protocol7–Knights: pada salah satu screenshot yang kami kirim, ping 10.66.18.14 dari Protocol7 masih menghasilkan Destination Host Unreachable. Karena itu, kami hanya akan mengisi tautan `protocol7-to-knights.png` dengan screenshot pengujian ulang yang berhasil, bukan screenshot lama tersebut.
+Catatan Protocol7–Knights: jalankan ulang `ping -c 3 10.66.18.14` dari Protocol7 setelah route A14 diperiksa. Pengujian berhasil jika menghasilkan `3 packets transmitted, 3 received, 0% packet loss`.
 
-[PLACEHOLDER PING CLIENT] Untuk setiap client, lampirkan screenshot `ping -c 3 <gateway>` bila diwajibkan oleh asisten praktikum. Hasil sukses yang diharapkan adalah `3 packets transmitted, 3 received, 0% packet loss`; status belum dinyatakan lulus tanpa bukti.
+Setiap pengujian berhasil apabila outputnya memuat `3 packets transmitted, 3 received, 0% packet loss`. Jika berbeda, periksa IP, gateway, route, forwarding, dan NAT.
 
-## 8. Kesimpulan Sementara
+## 14. Kesimpulan CIDR
 
-Kami berhasil menerapkan pembagian CIDR pada konfigurasi 13 router dan 25 client dalam rancangan A1–A25. Bukti yang tersedia menunjukkan bahwa pengalamatan IP, static routing, forwarding pada router, konektivitas backbone, serta akses Internet pada sejumlah router telah berfungsi. Pengujian Navi ke enam client lokal juga berhasil. Namun, kami belum dapat menyatakan hasil akhir jaringan 100% lengkap sebelum screenshot uji ulang Protocol7–Knights, ping semua client, dan pengujian lintas cabang yang masih berupa placeholder ditambahkan.
+Alur CIDR GNS3 dimulai dari pembacaan topologi, penentuan 25 subnet, perhitungan kebutuhan host menggunakan `2^h - 2`, penentuan prefix dengan `32 - h`, pembagian alamat A1-A25, penggabungan menjadi summary route, dan pembentukan blok induk `10.66.0.0/19`.
 
-## 9. VLSM Cisco Packet Tracer (PLACEHOLDER)
+Konfigurasi router, client, static routing, forwarding, dan NAT kemudian diuji menggunakan ping. Pengujian dinyatakan berhasil apabila menghasilkan `3 packets transmitted, 3 received, 0% packet loss`; hasil yang belum memiliki bukti tidak dianggap sebagai keberhasilan final.
 
-> **PLACEHOLDER VLSM:** Bagian ini akan diisi oleh Ronnin dengan topologi Cisco Packet Tracer, perhitungan VLSM, konfigurasi perangkat, tabel IP, dan bukti pengujian konektivitas.
 
-### Bukti VLSM CPT yang Sudah Tersedia
+## 15. VLSM Cisco Packet Tracer
+
+> Bagian ini membahas pendekatan VLSM pada Cisco Packet Tracer sebagai pembahasan terpisah dari CIDR GNS3.
+
+### Bukti VLSM Cisco Packet Tracer
 
 1. [![Ping Juri ke gateway, percobaan awal](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/vlsm-cpt/01_Ping_Juri_Gateway_dan_gagal_awal.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/01_Ping_Juri_Gateway_dan_gagal_awal.png)
 2. [![Ping Juri ke Masayuki, percobaan awal](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/raw/main/Assets/vlsm-cpt/02_Ping_Juri_ke_Masayuki_awal.png)](https://github.com/keisyaahm/Jarkom-Modul-4-2026-K-05/blob/main/Assets/vlsm-cpt/02_Ping_Juri_ke_Masayuki_awal.png)
