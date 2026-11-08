@@ -194,6 +194,14 @@ Pengelompokan wilayahnya adalah:
 - `E1`: cabang Cyberia
 - `F1-F3`: penggabungan seluruh wilayah
 
+### Visualisasi Penggabungan CIDR pada Topologi
+
+Garis berwarna menunjukkan hasil pengelompokan subnet A1-A25 menjadi
+summary B, C, D, E, dan F. Garis terluar F3 menunjukkan blok induk
+`10.66.0.0/19`.
+
+![Visualisasi penggabungan CIDR pada topologi](Assets/subnet.png)
+
 ### Bukti spreadsheet penggabungan CIDR
 
 1. **Bukti tab Penggabungan CIDR**
