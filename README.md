@@ -1,19 +1,19 @@
-﻿# JARKOM MODUL 4 K-05
+# JARKOM MODUL 4 K-05
 
-## Subnetting dan Routing: VLSM dan CIDR
+**Subnetting dan Routing: VLSM dan CIDR**
 
-## Anggota Kelompok
+### Anggota Kelompok
 
 | Nama | NRP | Tugas |
 |---|---|---|
 | Ronnin Raditya Putra Purbono | 5027251119 | VLSM Cisco Packet Tracer |
 | Keisya Halimah Mulia | 5027251068 | CIDR GNS3 |
 
-## Link Spreadsheet
+### Link Spreadsheet
 
 - [Spreadsheet subnetting dan routing](https://docs.google.com/spreadsheets/d/1tnrkMIINtIfA9lkkEz2IxHoiGxdWwslZ/edit?usp=sharing&ouid=105300267501229657358&rtpof=true&sd=true)
 
-## Ringkasan Implementasi
+### Ringkasan Implementasi
 
 Dokumentasi ini mencakup dua implementasi praktikum:
 
@@ -24,7 +24,7 @@ Pada CIDR GNS3 terdapat 38 script konfigurasi, yaitu 13 script router dan 25 scr
 
 ## Daftar Isi
 
-### A. CIDR GNS3
+**A. CIDR GNS3**
 
 1. [Tujuan dan Topologi GNS3](#1-tujuan-dan-topologi-gns3)
 2. [Menentukan 25 Subnet dari Topologi](#2-menentukan-25-subnet-dari-topologi)
@@ -36,10 +36,10 @@ Pada CIDR GNS3 terdapat 38 script konfigurasi, yaitu 13 script router dan 25 scr
 8. [Pembagian Network ID, Broadcast, dan Range IP](#8-pembagian-network-id-broadcast-dan-range-ip)
 9. [Konfigurasi Router dan Client](#9-konfigurasi-router-dan-client)
 10. [Static Routing dan NAT](#10-static-routing-dan-nat)
-11. [Testing Konektivitas](#11-testing-konektivitas)
+11. [Testing Konektivitas dan Bukti Screenshot](#11-testing-konektivitas)
 12. [Kesimpulan CIDR](#12-kesimpulan-cidr)
 
-### B. VLSM Cisco Packet Tracer
+**B. VLSM Cisco Packet Tracer**
 
 13. [Topologi VLSM](#13-topologi-vlsm)
 14. [Perhitungan VLSM](#14-perhitungan-vlsm)
@@ -128,6 +128,18 @@ VLSM digunakan untuk mengalokasikan alamat berdasarkan kebutuhan host, dengan
 subnet terbesar ditempatkan lebih dahulu. CIDR digunakan untuk menggabungkan
 subnet contiguous yang memiliki jalur routing sama menjadi summary route.
 
+### Blok induk
+
+Total block size seluruh subnet A1-A25 adalah 4.188 alamat. Blok `/20`
+menyediakan 4.096 alamat sehingga belum mencukupi. Pangkat dua berikutnya
+adalah 8.192 alamat, yaitu `/19`, sehingga blok induk yang digunakan adalah
+`10.66.0.0/19`.
+
+```text
+2^12 = 4.096 alamat = /20  -> tidak cukup
+2^13 = 8.192 alamat = /19  -> cukup
+```
+
 
 ## 5. Tabel Pembagian Subnet A1-A25
 
@@ -139,6 +151,19 @@ Kami mencatat kebutuhan, prefix, kapasitas usable, dan block size setiap subnet 
 | A13 | 33 | /26 | 62 | 64 |
 | A20 | 881 | /22 | 1.022 | 1.024 |
 | A25 | 514 | /22 | 1.022 | 1.024 |
+
+Prefix final yang perlu diperhatikan adalah A20 dan A25 `/22`, A21 dan A9
+`/23`, serta A4 `/30`. Network ID dan broadcast tidak diberikan kepada
+perangkat.
+
+### Validasi hasil subnetting
+
+- Network ID setiap subnet berada pada boundary prefix yang valid.
+- Tidak ada subnet A1-A25 yang overlap.
+- Kebutuhan host setiap subnet terpenuhi.
+- Network ID dan broadcast tidak digunakan sebagai alamat perangkat.
+- IP gateway dan client berada dalam usable range.
+- Link antar-router menggunakan `/30` dengan dua usable address.
 
 
 ## 6. Penggabungan CIDR
@@ -164,6 +189,19 @@ Setiap pasangan `/30` memiliki 4 + 4 = 8 alamat, sehingga summary-nya menjadi `/
 | F3 | D6 dan F2 | /19 |
 
 Penggabungan terakhir adalah `D6 /20 + F2 /20`: 4.096 + 4.096 = 8.192 alamat. Karena 8.192 alamat setara dengan `/19`, hasil akhirnya adalah `F3 = 10.66.0.0/19`.
+
+Contoh penggabungan:
+
+```text
+A4 /30 + A10 /30 = 4 + 4 = 8 alamat = B1 /29
+A1 /25 + A2 /30 = 128 + 4 = 132 alamat
+132 dibulatkan ke 256 alamat = E1 /24
+```
+
+Penggabungan hanya valid jika network summary berada pada boundary yang benar.
+Ruang alamat yang belum dipakai boleh berada di dalam summary selama tidak
+terdapat jaringan aktif dengan next hop berbeda yang menyebabkan salah arah
+routing.
 
 Pengelompokan wilayahnya adalah:
 
@@ -532,11 +570,63 @@ Berikut adalah contoh ringkasan rute yang kami gunakan dalam implementasi:
 
 Kami mempertahankan rute yang langsung terhubung ke interface dengan prefix yang lebih spesifik agar tetap dipilih melalui mekanisme longest prefix match. Karena itu, agregasi rute tidak menggantikan route connected pada router.
 
+Summary route tidak otomatis dipasang pada setiap router. Summary hanya boleh
+digunakan ketika seluruh jaringan di dalam summary memiliki next hop yang
+sama. Cyberia dapat menggunakan `10.66.0.0/19 via 10.66.24.130` karena seluruh
+jaringan internal menuju Wired. Sebaliknya, Wired tidak dapat mengarahkan
+seluruh `10.66.0.0/20` ke satu next hop karena di dalamnya terdapat Psyche,
+Copland, dan Schumann dengan next hop berbeda.
+
+Contoh route spesifik Wired:
+
+```text
+10.66.4.0/22  via 10.66.0.18  -> Psyche
+10.66.2.0/23  via 10.66.0.19  -> Copland
+10.66.0.64/26 via 10.66.0.19  -> Copland
+10.66.0.0/28  via 10.66.0.20  -> Schumann
+10.66.8.0/22  via 10.66.0.20  -> Schumann/Accela
+```
+
+### Connected route dan default route
+
+Ketika alamat IP diberikan pada interface, Linux otomatis menambahkan
+connected route. Route ini tidak perlu ditulis ulang sebagai static route.
+Router non-core menggunakan default route menuju parent karena seluruh jaringan
+di luar cabangnya memiliki satu arah keluar yang sama:
+
+```text
+Shibuya -> Phantoma -> Knights -> Protocol7 -> Deus
+-> Tachibana -> Wired -> Cyberia -> NAT1
+```
+
+Router parent menggunakan static route atau summary route menuju child.
+Dengan demikian jumlah route tetap ringkas tanpa menghilangkan jalur menuju
+jaringan di bawah cabang.
+
+### Longest prefix match
+
+Jika beberapa route cocok, router memilih prefix paling panjang. Pada Cyberia:
+
+```text
+10.66.24.0/25   -> connected eth1
+10.66.24.128/30 -> connected eth2
+10.66.0.0/19    -> Wired
+0.0.0.0/0       -> NAT1
+```
+
+Tujuan `10.66.24.2` memilih route `/25`, tujuan internal seperti
+`10.66.18.66` memilih route `/19`, dan tujuan Internet seperti `8.8.8.8`
+memakai default route `/0`.
+
 Cyberia menjadi edge router menuju NAT. NAT dilakukan dengan `iptables` menggunakan source blok induk `10.66.0.0/19` dan interface keluar menuju Internet.
+
+Seluruh router mengaktifkan `net.ipv4.ip_forward=1`. Cyberia menggunakan
+NAT MASQUERADE pada `eth0` untuk menerjemahkan source `10.66.0.0/19` menjadi
+alamat WAN `192.168.122.25`.
 
 Kami menguji konektivitas lokal, antar-router, lintas cabang, dan akses Internet. Tabel berikut berisi command utama dan fungsi pengujiannya.
 
-## 11. Testing Konektivitas
+## 11. Testing Konektivitas dan Bukti Screenshot
 
 Sebelum mengambil screenshot ping, jalankan satu ping pemanasan untuk ARP dan
 pembelajaran MAC switch, lalu bersihkan terminal:
@@ -774,17 +864,32 @@ Setiap pengujian berhasil apabila outputnya memuat `3 packets transmitted, 3 rec
 
 ## 12. Kesimpulan CIDR
 
-Kami menyelesaikan alur CIDR GNS3 dari identifikasi topologi, penentuan 25 subnet, perhitungan host, penentuan prefix, pembagian A1-A25, penggabungan CIDR, pembentukan tree, penetapan alamat final, konfigurasi perangkat, static routing, NAT, dan testing konektivitas.
+Berdasarkan analisis topologi, dibutuhkan 25 subnet yang terdiri dari 15 LAN
+client, 9 link antar-router, dan 1 LAN bersama. Prefix setiap subnet
+ditentukan berdasarkan kebutuhan usable address. Total block size 4.188 alamat
+membutuhkan blok induk minimum `10.66.0.0/19`.
 
-Blok induk hasil route summarization adalah `10.66.0.0/19`. Seluruh
-skenario pengujian representatif dinyatakan berhasil apabila menghasilkan
-`3 packets transmitted, 3 received, 0% packet loss`.
+Penggabungan CIDR dilakukan berdasarkan boundary alamat dan wilayah routing.
+Summary route hanya diterapkan ketika seluruh jaringan di dalam summary memiliki
+next hop yang sama. Router non-core memakai default route menuju parent,
+sedangkan router parent memakai static route atau summary route menuju child.
+Router memilih rute menggunakan longest prefix match.
 
-Pengujian Alice-Denpa dan Denpa-Alice membuktikan komunikasi lintas cabang
-dan return route berjalan dua arah. Pengujian Lain-JJ membuktikan static
-routing end-to-end serta summary CIDR bekerja. Pengujian Lain menuju
-`8.8.8.8` membuktikan default route, IP forwarding, dan NAT MASQUERADE pada
-Cyberia berfungsi.
+Pengujian router ke router, router ke client, lintas cabang, komunikasi dua
+arah, dan akses Internet menghasilkan 0% packet loss. Hasil tersebut
+membuktikan bahwa pembagian subnet, static routing, return route, IP
+forwarding, dan NAT berjalan sesuai rancangan.
+
+Alur validasi yang digunakan adalah:
+
+```text
+Perhitungan subnet benar
+-> alamat tidak overlap
+-> tree sesuai alokasi
+-> summary sesuai next hop
+-> routing dua arah berhasil
+-> pengujian mendukung analisis
+```
 
 
 # B. VLSM Cisco Packet Tracer

@@ -6,14 +6,9 @@
 echo "=== CONFIG CYBERIA ==="
 
 ip link set eth0 up
-
-if ! ip -4 addr show dev eth0 | grep -q "inet "; then
-    if command -v udhcpc >/dev/null 2>&1; then
-        udhcpc -i eth0 -q
-    elif command -v dhclient >/dev/null 2>&1; then
-        dhclient eth0
-    fi
-fi
+ip -4 addr flush dev eth0
+ip addr add 192.168.122.25/24 dev eth0
+ip route replace default via 192.168.122.1 dev eth0
 
 ip link set eth1 up
 ip -4 addr flush dev eth1
