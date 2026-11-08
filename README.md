@@ -1,4 +1,4 @@
-# JARKOM MODUL 4 K-05
+﻿# JARKOM MODUL 4 K-05
 
 ## Subnetting dan Routing: VLSM dan CIDR
 
@@ -12,12 +12,6 @@
 ## Link Spreadsheet
 
 - [Spreadsheet subnetting dan routing](https://docs.google.com/spreadsheets/d/1tnrkMIINtIfA9lkkEz2IxHoiGxdWwslZ/edit?usp=sharing&ouid=105300267501229657358&rtpof=true&sd=true)
-
-## Ringkasan
-
-Pada GNS3, topologi terdiri dari 25 subnet A1-A25. Setiap subnet dibentuk berdasarkan kebutuhan host dan jenis koneksi. Setelah itu, subnet-subnet yang berada pada jalur routing yang sama digabung menggunakan CIDR sampai membentuk blok induk `10.66.0.0/19`.
-
-Konfigurasi diterapkan pada 13 router dan 25 client menggunakan script shell. Konektivitas diuji menggunakan ping lokal, ping antar-router, ping lintas cabang, dan ping Internet.
 
 ## Daftar Isi
 
